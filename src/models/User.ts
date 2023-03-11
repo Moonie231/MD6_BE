@@ -14,8 +14,10 @@ export class User{
     email : string;
     @Column({nullable : true})
     phone : string;
-    @Column({nullable : true})
+    @Column({nullable : true, default: 1})
     role : number;
     @Column({nullable : true})
     avatar : string;
+    @Column({nullable : true, default: "pending approval"})
+    status : string;
 }
