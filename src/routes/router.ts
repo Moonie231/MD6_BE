@@ -3,3 +3,4 @@ import {foodRouter} from "./foodRouter";
 
 export const router = Router()
 router.use('/foods',foodRouter);
+router.use('/users', userRouter)
