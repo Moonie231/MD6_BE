@@ -7,10 +7,14 @@ export class Merchant {
     @Column({nullable:true})
     nameMerchant: string;
     @Column({nullable:true})
+    merchantPassword: string;
+    @Column({nullable:true})
+    email: string;
+    @Column({nullable:true})
     address : string;
     @Column({nullable:true})
     phone : string;
-    @Column({nullable:true})
+    @Column({nullable:true, default: "pending approval"})
     status : string;
     @Column({nullable:true})
     image : string;

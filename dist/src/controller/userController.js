@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userService_1 = __importDefault(require("../services/userService"));
+const userService_1 = __importDefault(require("../service/userService"));
 class UserController {
     constructor() {
         this.register = async (req, res) => {
@@ -13,6 +13,20 @@ class UserController {
             }
             catch (e) {
                 console.log(e.message);
+                res.status(500).json(e.message);
+            }
+        };
+        this.login = async (req, res) => {
+            try {
+                let response = await this.userServices.checkUser(req.body);
+                if (response === "User not found" || response === "Wrong password" || response === "Account not ready" || response === "Account locked") {
+                    return res.status(200).json(response);
+                }
+                else {
+                    return res.status(200).json(Object.assign({}, response));
+                }
+            }
+            catch (e) {
                 res.status(500).json(e.message);
             }
         };

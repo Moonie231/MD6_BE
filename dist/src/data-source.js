@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppDataSource = void 0;
 require("reflect-metadata");
 const typeorm_1 = require("typeorm");
-const Merchant_1 = require("./models/Merchant");
-const User_1 = require("./models/User");
-const Food_1 = require("./models/Food");
-const Category_1 = require("./models/Category");
+const Merchant_1 = require("./model/Merchant");
+const User_1 = require("./model/User");
+const Food_1 = require("./model/Food");
+const Category_1 = require("./model/Category");
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "mysql",
     host: "localhost",
