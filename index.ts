@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import {AppDataSource} from "./src/data-source";
 
 import cors from 'cors';
-import {router} from "./src/routes/router";
+import {router} from "./src/route/router";
 
 const app = express();
 AppDataSource.initialize().then(() => {
