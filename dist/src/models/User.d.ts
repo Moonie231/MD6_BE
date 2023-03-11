@@ -7,4 +7,5 @@ export declare class User {
     phone: string;
     role: number;
     avatar: string;
+    status: string;
 }
