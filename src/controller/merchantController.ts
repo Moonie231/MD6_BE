@@ -1,17 +1,17 @@
 import {Request, Response} from "express";
-import UserService from "../service/userService";
+import MerchantService from "../service/merchantService";
 
-class UserController {
-    private userServices;
+class MerchantController {
+    private merchantService;
 
     constructor() {
-        this.userServices = UserService;
+        this.merchantService = MerchantService;
     }
 
     register = async (req: Request, res: Response) => {
         try {
-            let user = await this.userServices.register(req.body);
-            return res.status(201).json(user)
+            let merchant = await this.merchantService.register(req.body);
+            return res.status(201).json(merchant)
         } catch (e) {
             console.log(e.message)
             res.status(500).json(e.message)
@@ -20,8 +20,8 @@ class UserController {
 
     login = async (req: Request, res: Response) => {
         try {
-            let response = await this.userServices.checkUser(req.body)
-            if (response=== "User not found" || response=== "Wrong password" || response=== "Account not ready" || response=== "Account locked") {
+            let response = await this.merchantService.checkMerchant(req.body)
+            if (response=== "Merchant not found" || response=== "Wrong password" || response=== "Account not ready" || response=== "Account locked") {
                 return res.status(200).json(response)
             } else {
                 return res.status(200).json({...response})
@@ -32,4 +32,4 @@ class UserController {
     }
 }
 
-export default new UserController();
+export default new MerchantController();

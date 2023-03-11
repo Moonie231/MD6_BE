@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const data_source_1 = require("../data-source");
-const Food_1 = require("../models/Food");
+const Food_1 = require("../model/Food");
 class FoodService {
     constructor() {
         this.getAll = async () => {
