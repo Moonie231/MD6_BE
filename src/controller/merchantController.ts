@@ -22,6 +22,7 @@ class MerchantController {
         try {
             let response = await this.merchantService.checkMerchant(req.body)
             if (response=== "Merchant not found" || response=== "Wrong password" || response=== "Account not ready" || response=== "Account locked") {
+                console.log(response)
                 return res.status(200).json(response)
             } else {
                 return res.status(200).json({...response})

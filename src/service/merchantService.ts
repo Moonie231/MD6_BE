@@ -17,7 +17,7 @@ class MerchantServices {
         if (userCheck) {
             return "Email already registered";
         }
-        merchant.userPassword = await bcrypt.hash(merchant.merchantPassword, 10);
+        merchant.merchantPassword = await bcrypt.hash(merchant.merchantPassword, 10);
         return this.merchantRepository.save(merchant)
     }
 
@@ -26,16 +26,17 @@ class MerchantServices {
         if (!merchantCheck) {
             return "Merchant not found";
         } else {
-            if (merchantCheck.status === 'pending approval') {
-                return "Account not ready"
-            }
-            if (merchantCheck.status === 'locked') {
-                return "Account locked"
-            }
             let passwordCompare = await bcrypt.compare(merchant.merchantPassword, merchantCheck.merchantPassword);
+            console.log(passwordCompare)
             if (!passwordCompare) {
                 return "Wrong password"
             } else {
+                if (merchantCheck.status === 'pending approval') {
+                    return "Account not ready"
+                }
+                if (merchantCheck.status === 'locked') {
+                    return "Account locked"
+                }
                 let payload = {
                     idMerchant: merchantCheck.idUser,
                     nameMerchant: merchantCheck.nameMerchant
