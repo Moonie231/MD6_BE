@@ -46,9 +46,13 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "avatar", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true, default: "pending approval" }),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Boolean)
 ], User.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], User.prototype, "tokenEmail", void 0);
 User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

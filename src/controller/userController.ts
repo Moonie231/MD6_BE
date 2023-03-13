@@ -11,10 +11,20 @@ class UserController {
     register = async (req: Request, res: Response) => {
         try {
             let user = await this.userServices.register(req.body);
+            await this.userServices.sendEmailVerificationRequest(req.body.email)
             return res.status(201).json(user)
         } catch (e) {
             console.log(e.message)
             res.status(500).json(e.message)
+        }
+    }
+    verifyEmailUser=async (req, res)=> {
+        try {
+            let verify=await this.userServices.verifyEmail(req.body.tokenEmail);
+          return res.status(200).json(verify);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
         }
     }
 
