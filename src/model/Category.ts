@@ -5,5 +5,5 @@ export class Category{
     @PrimaryGeneratedColumn()
     idCategory : number;
     @Column()
-    nameCategory: string;
+nameCategory: string;
 }
