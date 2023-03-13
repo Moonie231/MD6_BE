@@ -80,12 +80,12 @@ class MerchantServices {
         return merchants
     }
 
-    lockMerchant = async(id) => {
+    setStatus = async(id) => {
         let checkMerchant = await this.merchantRepository.findOneBy({idMerchant :id})
         if (!checkMerchant) {
             return "Merchant not found"
         }
-        if (checkMerchant.status === "locked") {
+        if (checkMerchant.status === "locked" || checkMerchant.status === "pending approval") {
             return await this.merchantRepository.update({idMerchant :id}, {status : "active"})
         }else {
             return await this.merchantRepository.update({idMerchant :id}, {status : "locked"})

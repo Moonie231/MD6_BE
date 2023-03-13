@@ -9,5 +9,5 @@ const merchantController_1 = __importDefault(require("../controller/merchantCont
 exports.adminRouter = (0, express_1.Router)();
 exports.adminRouter.get('/', merchantController_1.default.getMerchantActive);
 exports.adminRouter.get('/pending', merchantController_1.default.getMerchantPending);
-exports.adminRouter.put('/lock/:idMerchant', merchantController_1.default.lockMerchant);
+exports.adminRouter.put('/status/:idMerchant', merchantController_1.default.setStatus);
 //# sourceMappingURL=adminRouter.js.map
