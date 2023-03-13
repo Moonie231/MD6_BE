@@ -10,6 +10,9 @@ declare class MerchantServices {
     }>;
     getMyProfile: (idMerchant: any) => Promise<any>;
     edit: (id: any, newMerchant: any) => Promise<any>;
+    getMerchantActive: () => Promise<any>;
+    getMerchantPending: () => Promise<any>;
+    lockMerchant: (id: any) => Promise<any>;
 }
 declare const _default: MerchantServices;
 export default _default;

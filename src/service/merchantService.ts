@@ -67,6 +67,30 @@ class MerchantServices {
         }
         return await this.merchantRepository.update({idMerchant :id}, newMerchant)
     }
+
+    getMerchantActive = async()  => {
+        let sql = 'select * from merchant where status = "active" or status = "locked"';
+        let merchants = await this.merchantRepository.query(sql);
+        return merchants
+    }
+
+    getMerchantPending = async() => {
+        let sql = 'select * from merchant where status = "pending approval"';
+        let merchants = await this.merchantRepository.query(sql);
+        return merchants
+    }
+
+    lockMerchant = async(id) => {
+        let checkMerchant = await this.merchantRepository.findOneBy({idMerchant :id})
+        if (!checkMerchant) {
+            return "Merchant not found"
+        }
+        if (checkMerchant.status === "locked") {
+            return await this.merchantRepository.update({idMerchant :id}, {status : "active"})
+        }else {
+            return await this.merchantRepository.update({idMerchant :id}, {status : "locked"})
+        }
+    }
 }
 
 export default new MerchantServices()
