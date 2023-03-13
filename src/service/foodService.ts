@@ -33,14 +33,13 @@ class FoodService {
     save = async (food) => {
         return this.FoodRepository.save(food);
     };
-    updateFood = async (idFood, newFood) => {
-        let foods = await this.FoodRepository.findOneBy({ idFood: idFood });
-        if (!foods) {
+    update = async (idFood, newFood)=>{
+        let food = await this.FoodRepository.findOneBy({idFood: idFood});
+        if(!food){
             return null;
         }
-        newFood.count = foods.count;
-        return this.FoodRepository.update({ idFood: idFood }, newFood);
-    };
+        return this.FoodRepository.update({idFood: idFood}, newFood);
+    }
     deleteFood= async (idFood) => {
         let foods = await this.FoodRepository.findOneBy({ idFood: idFood });
         if (!foods) {
