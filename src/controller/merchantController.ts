@@ -20,13 +20,31 @@ class MerchantController {
 
     login = async (req: Request, res: Response) => {
         try {
+
             let response = await this.merchantService.checkMerchant(req.body)
             if (response=== "Merchant not found" || response=== "Wrong password" || response=== "Account not ready" || response=== "Account locked") {
-                console.log(response)
                 return res.status(200).json(response)
             } else {
                 return res.status(200).json({...response})
             }
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
+
+    showMyProfile = async (req: Request, res: Response) => {
+        try {
+            let response = await this.merchantService.getMyProfile(req.params.idMerchant);
+            return res.status(200).json(response)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
+
+    editMerchant = async (req: Request, res: Response) => {
+        try {
+            let merchant = await this.merchantService.edit(req.params.idMerchant, req.body);
+            return res.status(201).json(merchant)
         } catch (e) {
             res.status(500).json(e.message)
         }
