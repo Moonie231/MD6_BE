@@ -27,7 +27,6 @@ class MerchantServices {
             return "Merchant not found";
         } else {
             let passwordCompare = await bcrypt.compare(merchant.merchantPassword, merchantCheck.merchantPassword);
-            console.log(passwordCompare)
             if (!passwordCompare) {
                 return "Wrong password"
             } else {
@@ -45,7 +44,7 @@ class MerchantServices {
                     expiresIn: 36000000
                 });
                 let merchantRes = {
-                    idUser: merchantCheck.idUser,
+                    idMerchant: merchantCheck.idMerchant,
                     nameMerchant: merchantCheck.nameMerchant,
                     image: merchantCheck.image,
                     token : token
@@ -54,6 +53,11 @@ class MerchantServices {
             }
         }
 
+    }
+
+    getMyProfile = async (idMerchant) => {
+        let merchant = await this.merchantRepository.findOneBy({idMerchant: idMerchant});
+        return merchant;
     }
 
     edit = async (id, newMerchant) => {

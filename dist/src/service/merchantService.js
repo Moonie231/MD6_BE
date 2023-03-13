@@ -25,7 +25,6 @@ class MerchantServices {
             }
             else {
                 let passwordCompare = await bcrypt_1.default.compare(merchant.merchantPassword, merchantCheck.merchantPassword);
-                console.log(passwordCompare);
                 if (!passwordCompare) {
                     return "Wrong password";
                 }
@@ -44,7 +43,7 @@ class MerchantServices {
                         expiresIn: 36000000
                     });
                     let merchantRes = {
-                        idUser: merchantCheck.idUser,
+                        idMerchant: merchantCheck.idMerchant,
                         nameMerchant: merchantCheck.nameMerchant,
                         image: merchantCheck.image,
                         token: token
@@ -52,6 +51,10 @@ class MerchantServices {
                     return merchantRes;
                 }
             }
+        };
+        this.getMyProfile = async (idMerchant) => {
+            let merchant = await this.merchantRepository.findOneBy({ idMerchant: idMerchant });
+            return merchant;
         };
         this.edit = async (id, newMerchant) => {
             let checkMerchant = await this.merchantRepository.findOneBy({ idMerchant: id });

@@ -10,4 +10,5 @@ exports.merchantRouter = (0, express_1.Router)();
 exports.merchantRouter.post('/register', merchantController_1.default.register);
 exports.merchantRouter.post('/login', merchantController_1.default.login);
 exports.merchantRouter.put('/edit/:idMerchant', merchantController_1.default.editMerchant);
+exports.merchantRouter.get('/my-profile/:idMerchant', merchantController_1.default.showMyProfile);
 //# sourceMappingURL=merchantRouter.js.map
