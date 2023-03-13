@@ -7,5 +7,6 @@ export declare class User {
     phone: string;
     role: number;
     avatar: string;
-    status: string;
+    status: boolean;
+    tokenEmail: string;
 }

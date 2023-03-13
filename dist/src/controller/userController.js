@@ -9,7 +9,33 @@ class UserController {
         this.register = async (req, res) => {
             try {
                 let user = await this.userServices.register(req.body);
+                await this.userServices.sendEmailVerificationRequest(req.body.email);
                 return res.status(201).json(user);
+            }
+            catch (e) {
+                console.log(e.message);
+                res.status(500).json(e.message);
+            }
+        };
+        this.verifyEmailUser = async (req, res) => {
+            try {
+                let verify = await this.userServices.verifyEmail(req.body.tokenEmail);
+                return res.status(200).json(verify);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send('Internal Server Error');
+            }
+        };
+        this.login = async (req, res) => {
+            try {
+                let response = await this.userServices.checkUser(req.body);
+                if (response === "User not found" || response === "Wrong password" || response === "Account not ready" || response === "Account locked") {
+                    return res.status(200).json(response);
+                }
+                else {
+                    return res.status(200).json(Object.assign({}, response));
+                }
             }
             catch (e) {
                 console.log(e.message);

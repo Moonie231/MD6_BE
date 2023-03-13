@@ -18,6 +18,8 @@ export class User{
     role : number;
     @Column({nullable : true})
     avatar : string;
-    @Column({nullable : true, default: "pending approval"})
-    status : string;
+    @Column({nullable : true})
+    status : boolean;
+    @Column({nullable : true})
+    tokenEmail : string;
 }
