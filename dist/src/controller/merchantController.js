@@ -66,9 +66,9 @@ class MerchantController {
                 res.status(500).json(e.message);
             }
         };
-        this.lockMerchant = async (req, res) => {
+        this.setStatus = async (req, res) => {
             try {
-                let merchant = await this.merchantService.lockMerchant(req.params.idMerchant);
+                let merchant = await this.merchantService.setStatus(req.params.idMerchant);
                 return res.status(201).json(merchant);
             }
             catch (e) {
