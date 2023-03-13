@@ -27,7 +27,6 @@ class MerchantServices {
             return "Merchant not found";
         } else {
             let passwordCompare = await bcrypt.compare(merchant.merchantPassword, merchantCheck.merchantPassword);
-            console.log(passwordCompare)
             if (!passwordCompare) {
                 return "Wrong password"
             } else {
@@ -45,7 +44,7 @@ class MerchantServices {
                     expiresIn: 36000000
                 });
                 let merchantRes = {
-                    idUser: merchantCheck.idUser,
+                    idMerchant: merchantCheck.idMerchant,
                     nameMerchant: merchantCheck.nameMerchant,
                     image: merchantCheck.image,
                     token : token
@@ -54,6 +53,43 @@ class MerchantServices {
             }
         }
 
+    }
+
+    getMyProfile = async (idMerchant) => {
+        let merchant = await this.merchantRepository.findOneBy({idMerchant: idMerchant});
+        return merchant;
+    }
+
+    edit = async (id, newMerchant) => {
+        let checkMerchant = await this.merchantRepository.findOneBy({idMerchant :id})
+        if (!checkMerchant) {
+            return "Merchant not found"
+        }
+        return await this.merchantRepository.update({idMerchant :id}, newMerchant)
+    }
+
+    getMerchantActive = async()  => {
+        let sql = 'select * from merchant where status = "active" or status = "locked"';
+        let merchants = await this.merchantRepository.query(sql);
+        return merchants
+    }
+
+    getMerchantPending = async() => {
+        let sql = 'select * from merchant where status = "pending approval"';
+        let merchants = await this.merchantRepository.query(sql);
+        return merchants
+    }
+
+    setStatus = async(id) => {
+        let checkMerchant = await this.merchantRepository.findOneBy({idMerchant :id})
+        if (!checkMerchant) {
+            return "Merchant not found"
+        }
+        if (checkMerchant.status === "locked" || checkMerchant.status === "pending approval") {
+            return await this.merchantRepository.update({idMerchant :id}, {status : "active"})
+        }else {
+            return await this.merchantRepository.update({idMerchant :id}, {status : "locked"})
+        }
     }
 }
 

@@ -25,7 +25,6 @@ class MerchantServices {
             }
             else {
                 let passwordCompare = await bcrypt_1.default.compare(merchant.merchantPassword, merchantCheck.merchantPassword);
-                console.log(passwordCompare);
                 if (!passwordCompare) {
                     return "Wrong password";
                 }
@@ -44,13 +43,46 @@ class MerchantServices {
                         expiresIn: 36000000
                     });
                     let merchantRes = {
-                        idUser: merchantCheck.idUser,
+                        idMerchant: merchantCheck.idMerchant,
                         nameMerchant: merchantCheck.nameMerchant,
                         image: merchantCheck.image,
                         token: token
                     };
                     return merchantRes;
                 }
+            }
+        };
+        this.getMyProfile = async (idMerchant) => {
+            let merchant = await this.merchantRepository.findOneBy({ idMerchant: idMerchant });
+            return merchant;
+        };
+        this.edit = async (id, newMerchant) => {
+            let checkMerchant = await this.merchantRepository.findOneBy({ idMerchant: id });
+            if (!checkMerchant) {
+                return "Merchant not found";
+            }
+            return await this.merchantRepository.update({ idMerchant: id }, newMerchant);
+        };
+        this.getMerchantActive = async () => {
+            let sql = 'select * from merchant where status = "active" or status = "locked"';
+            let merchants = await this.merchantRepository.query(sql);
+            return merchants;
+        };
+        this.getMerchantPending = async () => {
+            let sql = 'select * from merchant where status = "pending approval"';
+            let merchants = await this.merchantRepository.query(sql);
+            return merchants;
+        };
+        this.setStatus = async (id) => {
+            let checkMerchant = await this.merchantRepository.findOneBy({ idMerchant: id });
+            if (!checkMerchant) {
+                return "Merchant not found";
+            }
+            if (checkMerchant.status === "locked" || checkMerchant.status === "pending approval") {
+                return await this.merchantRepository.update({ idMerchant: id }, { status: "active" });
+            }
+            else {
+                return await this.merchantRepository.update({ idMerchant: id }, { status: "locked" });
             }
         };
         this.merchantRepository = data_source_1.AppDataSource.getRepository(Merchant_1.Merchant);
