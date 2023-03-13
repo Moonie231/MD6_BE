@@ -1,6 +1,6 @@
 
 import { AppDataSource } from "../data-source";
-import {Food} from "../models/Food";
+import {Food} from "../model/Food";
 class FoodService {
     private FoodRepository;
     constructor() {

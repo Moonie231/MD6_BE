@@ -1,4 +1,4 @@
-import {Category} from "../models/Category";
+import {Category} from "../model/Category";
 import {AppDataSource} from "../data-source";
 
 class CategoryService {

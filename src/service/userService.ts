@@ -1,4 +1,4 @@
-import {User} from "../models/User";
+import {User} from "../model/User";
 import {AppDataSource} from "../data-source";
 import bcrypt from 'bcrypt';
 

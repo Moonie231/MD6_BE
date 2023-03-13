@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Category_1 = require("../models/Category");
+const Category_1 = require("../model/Category");
 const data_source_1 = require("../data-source");
 class CategoryService {
     constructor() {

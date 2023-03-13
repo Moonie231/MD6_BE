@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userService_1 = __importDefault(require("../services/userService"));
+const userService_1 = __importDefault(require("../service/userService"));
 class UserController {
     constructor() {
         this.register = async (req, res) => {
