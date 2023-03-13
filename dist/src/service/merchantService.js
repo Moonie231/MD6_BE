@@ -53,6 +53,13 @@ class MerchantServices {
                 }
             }
         };
+        this.edit = async (id, newMerchant) => {
+            let checkMerchant = await this.merchantRepository.findOneBy({ idMerchant: id });
+            if (!checkMerchant) {
+                return "Merchant not found";
+            }
+            return await this.merchantRepository.update({ idMerchant: id }, newMerchant);
+        };
         this.merchantRepository = data_source_1.AppDataSource.getRepository(Merchant_1.Merchant);
     }
 }

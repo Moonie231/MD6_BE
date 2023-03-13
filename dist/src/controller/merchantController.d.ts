@@ -4,6 +4,7 @@ declare class MerchantController {
     constructor();
     register: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     login: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    editMerchant: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
 }
 declare const _default: MerchantController;
 export default _default;

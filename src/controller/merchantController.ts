@@ -31,6 +31,15 @@ class MerchantController {
             res.status(500).json(e.message)
         }
     }
+
+    editMerchant = async (req: Request, res: Response) => {
+        try {
+            let merchant = await this.merchantService.edit(req.params.idMerchant, req.body);
+            return res.status(201).json(merchant)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
 }
 
 export default new MerchantController();
