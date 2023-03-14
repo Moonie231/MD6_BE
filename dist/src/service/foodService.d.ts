@@ -8,7 +8,7 @@ declare class FoodService {
     update: (idFood: any, newFood: any) => Promise<any>;
     deleteFood: (idFood: any) => Promise<any>;
     findById: (idFood: any) => Promise<any>;
-    findFoodByNameFood: (value: any) => Promise<{
+    findFoodByNameFood: (id: any, value: any) => Promise<{
         foods: any;
     }>;
 }
