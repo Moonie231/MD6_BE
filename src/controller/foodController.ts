@@ -41,10 +41,10 @@ class FoodController {
             res.status(500).json(e.message);
         }
     };
-    show = async (req: Request, res: Response) => {
+    find = async (req: Request, res: Response) => {
         let idFood = req.params.idFood;
-        let food = await foodService.findById(idFood);
-        return res.status(201).json(food);
+        let foods = await foodService.findById(idFood);
+        return res.status(201).json(foods);
     }
 
     destroy = async (req: Request, res: Response) => {
@@ -55,12 +55,11 @@ class FoodController {
 
     update = async (req: Request, res: Response) => {
         let idFood = req.params.idFood;
-        let food = await foodService.updateFood(idFood, req.body);
-        if(!food){
-            return res.status(201).json("Food Not Found");
-        }
-        return res.status(201).json(food);
+        let newFood = req.body;
+        await this.foodService.update(idFood, newFood);
+        res.status(200).json('Success!')
     }
+
     findFoodByName = async (req: Request,res: Response) => {
         try {
 

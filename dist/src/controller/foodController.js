@@ -44,10 +44,10 @@ class FoodController {
                 res.status(500).json(e.message);
             }
         };
-        this.show = async (req, res) => {
+        this.find = async (req, res) => {
             let idFood = req.params.idFood;
-            let food = await foodService_1.default.findById(idFood);
-            return res.status(201).json(food);
+            let foods = await foodService_1.default.findById(idFood);
+            return res.status(201).json(foods);
         };
         this.destroy = async (req, res) => {
             let idFood = req.params.idFood;
@@ -56,11 +56,9 @@ class FoodController {
         };
         this.update = async (req, res) => {
             let idFood = req.params.idFood;
-            let food = await foodService_1.default.updateFood(idFood, req.body);
-            if (!food) {
-                return res.status(201).json("Food Not Found");
-            }
-            return res.status(201).json(food);
+            let newFood = req.body;
+            await this.foodService.update(idFood, newFood);
+            res.status(200).json('Success!');
         };
         this.findFoodByName = async (req, res) => {
             try {

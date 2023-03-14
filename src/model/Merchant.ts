@@ -16,6 +16,6 @@ export class Merchant {
     phone : string;
     @Column({nullable:true, default: "pending approval"})
     status : string;
-    @Column({nullable:true})
+    @Column({nullable:true,default :'https://img.pikbest.com/png-images/qianku/default-avatar_2406311.png!w700wp'})
     image : string;
 }

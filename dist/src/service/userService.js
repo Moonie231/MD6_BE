@@ -110,6 +110,7 @@ class UserServices {
                         username: userCheck.username,
                         role: userCheck.role,
                         avatar: userCheck.avatar,
+                        status: userCheck.status,
                         token: token
                     };
                     return userRes;
