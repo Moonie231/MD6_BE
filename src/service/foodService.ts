@@ -7,7 +7,7 @@ class FoodService {
         this.FoodRepository = AppDataSource.getRepository(Food)
     }
     getAll = async () => {
-        let sql = `select * from food f join category c on f.idCategory = c.idCategory`;
+        let sql = `select * from food f join category c on f.idCategory = c.idCategory limit 8`;
         let foods = await this.FoodRepository.query(sql);
         if (foods) {
             return "No homes found";
@@ -15,7 +15,7 @@ class FoodService {
         return foods;
     };
     getAllFood = async () => {
-        let sql = `select * from food f join merchant m on f.id_Merchant = m.idMerchant join category c on f.id_Category = c.idCategory `;
+        let sql = `select * from food f join merchant m on f.id_Merchant = m.idMerchant join category c on f.id_Category = c.idCategory limit 8`;
         let foods = await this.FoodRepository.query(sql);
         if (!foods) {
             return "No foods found";
