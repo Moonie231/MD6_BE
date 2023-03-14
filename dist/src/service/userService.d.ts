@@ -10,6 +10,7 @@ declare class UserServices {
         username: any;
         role: any;
         avatar: any;
+        status: any;
         token: string;
     }>;
 }

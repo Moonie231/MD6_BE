@@ -16,7 +16,7 @@ export class User{
     phone : string;
     @Column({nullable : true, default: 1})
     role : number;
-    @Column({nullable : true})
+    @Column({nullable : true,default :'https://img.pikbest.com/png-images/qianku/default-avatar_2406311.png!w700wp'})
     avatar : string;
     @Column({nullable : true})
     status : boolean;
