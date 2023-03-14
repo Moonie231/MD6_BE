@@ -11,4 +11,3 @@ router.use('/users', userRouter)
 router.use('/merchants', merchantRouter)
 router.use('/admin', adminRouter)
 router.use('/categories',categoryRouter);
-

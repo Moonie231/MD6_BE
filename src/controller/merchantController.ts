@@ -23,7 +23,6 @@ class MerchantController {
 
             let response = await this.merchantService.checkMerchant(req.body)
             if (response=== "Merchant not found" || response=== "Wrong password" || response=== "Account not ready" || response=== "Account locked") {
-
                 return res.status(200).json(response)
             } else {
                 return res.status(200).json({...response})
@@ -32,7 +31,6 @@ class MerchantController {
             res.status(500).json(e.message)
         }
     }
-
 
     showMyProfile = async (req: Request, res: Response) => {
         try {
@@ -78,7 +76,6 @@ class MerchantController {
             return res.status(500).json(e.message)
         }
     }
-
 }
 
 export default new MerchantController();

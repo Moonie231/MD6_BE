@@ -29,7 +29,6 @@ class UserController {
 
     login = async (req: Request, res: Response) => {
         try {
-
             let response = await this.userServices.checkUser(req.body)
 
             if (response=== "User not found" || response=== "Wrong password" || response=== "Account not ready" || response=== "Account locked") {

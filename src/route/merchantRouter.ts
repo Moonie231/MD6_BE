@@ -6,4 +6,3 @@ merchantRouter.post('/register', MerchantController.register)
 merchantRouter.post('/login', MerchantController.login)
 merchantRouter.put('/edit/:idMerchant', MerchantController.editMerchant)
 merchantRouter.get('/my-profile/:idMerchant', MerchantController.showMyProfile)
-

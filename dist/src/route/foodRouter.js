@@ -13,5 +13,6 @@ exports.foodRouter.get("/my-foods/:idMerchant", foodController_1.default.getMyFo
 exports.foodRouter.post("", foodController_1.default.createFood);
 exports.foodRouter.put("/:idFood", foodController_1.default.update);
 exports.foodRouter.delete("/:idFood", foodController_1.default.destroy);
-exports.foodRouter.get("/find-by-id/:idFood", foodController_1.default.find);
+
+exports.foodRouter.get("/find-by-id/:idFood", foodController_1.default.show);
 //# sourceMappingURL=foodRouter.js.map
