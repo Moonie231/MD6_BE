@@ -8,7 +8,24 @@ class FoodController {
     constructor() {
         this.foodService = foodService;
     }
+    getAll= async (req: Request, res: Response) => {
+        try {
+            let data;
+            let foods = await foodService.getAll();
+            let categories = await CategoryService.getAllCategory();
+            if (req["decoded"]) {
+                data = [foods,categories];
+            } else {
+                data = [foods,categories];
 
+            }
+            res.status(200).json(foods);
+
+        }
+        catch (e) {
+            res.status(500).json(e.message);
+        }
+    }
     getAllFood = async (req: Request, res: Response) => {
         try {
             let data;
@@ -72,9 +89,9 @@ class FoodController {
 
     findFoodByName = async (req: Request,res: Response) => {
         try {
-
+            let id=req.params.id
             let nameFood = req.query.nameFood;
-            let foods = await foodService.findFoodByNameFood(nameFood);
+            let foods = await foodService.findFoodByNameFood(id,nameFood);
             return res.status(201).json({
                 foods: foods.foods,
                 nameFood: nameFood

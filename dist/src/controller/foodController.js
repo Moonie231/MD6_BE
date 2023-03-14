@@ -8,6 +8,23 @@ const categoryService_1 = __importDefault(require("../service/categoryService"))
 const categoryService_2 = __importDefault(require("../service/categoryService"));
 class FoodController {
     constructor() {
+        this.getAll = async (req, res) => {
+            try {
+                let data;
+                let foods = await foodService_1.default.getAll();
+                let categories = await categoryService_1.default.getAllCategory();
+                if (req["decoded"]) {
+                    data = [foods, categories];
+                }
+                else {
+                    data = [foods, categories];
+                }
+                res.status(200).json(foods);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.getAllFood = async (req, res) => {
             try {
                 let data;
@@ -72,8 +89,9 @@ class FoodController {
         };
         this.findFoodByName = async (req, res) => {
             try {
+                let id = req.params.id;
                 let nameFood = req.query.nameFood;
-                let foods = await foodService_1.default.findFoodByNameFood(nameFood);
+                let foods = await foodService_1.default.findFoodByNameFood(id, nameFood);
                 return res.status(201).json({
                     foods: foods.foods,
                     nameFood: nameFood
