@@ -54,7 +54,7 @@ class MerchantServices {
         }
 
     }
-
+    
     getMyProfile = async (idMerchant) => {
         let merchant = await this.merchantRepository.findOneBy({idMerchant: idMerchant});
         return merchant;

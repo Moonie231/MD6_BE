@@ -9,7 +9,7 @@ const foodController_1 = __importDefault(require("../controller/foodController")
 exports.foodRouter = (0, express_1.Router)();
 exports.foodRouter.get("/merchants", foodController_1.default.getAllFood);
 exports.foodRouter.get('/find-by-nameFood', foodController_1.default.findFoodByName);
-exports.foodRouter.get("/my-foods", foodController_1.default.getMyFood);
+exports.foodRouter.get("/my-foods/:idMerchant", foodController_1.default.getMyFood);
 exports.foodRouter.post("", foodController_1.default.createFood);
 exports.foodRouter.put("/:idFood", foodController_1.default.update);
 exports.foodRouter.delete("/:idFood", foodController_1.default.destroy);
