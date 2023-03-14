@@ -28,7 +28,6 @@ class FoodController {
         this.getMyFood = async (req, res) => {
             try {
                 let idMerchant = req.params.idMerchant;
-                console.log(idMerchant);
                 let foods = await foodService_1.default.getMyFood(idMerchant);
                 return res.status(201).json(foods);
             }
