@@ -28,7 +28,7 @@ class FoodService {
         if (!foods) {
             return null;
         }
-        return {homes: foods};
+        return foods
     };
     save = async (food) => {
         return this.FoodRepository.save(food);

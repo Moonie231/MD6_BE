@@ -4,6 +4,7 @@ declare class FoodController {
     constructor();
     getAllFood: (req: Request, res: Response) => Promise<void>;
     getMyFood: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    findCategory: (req: Request, res: Response) => Promise<void>;
     createFood: (req: Request, res: Response) => Promise<void>;
     find: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     destroy: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
