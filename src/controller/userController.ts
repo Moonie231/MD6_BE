@@ -3,7 +3,6 @@ import UserService from "../service/userService";
 
 class UserController {
     private userServices;
-
     constructor() {
         this.userServices = UserService;
     }
@@ -30,7 +29,9 @@ class UserController {
 
     login = async (req: Request, res: Response) => {
         try {
+
             let response = await this.userServices.checkUser(req.body)
+
             if (response=== "User not found" || response=== "Wrong password" || response=== "Account not ready" || response=== "Account locked") {
                 return res.status(200).json(response)
             } else {

@@ -95,7 +95,11 @@ class UserServices {
             if (userCheck.status === 'locked') {
                 return "Account locked"
             }
-            let passwordCompare = await bcrypt.compare(user.userPassword, userCheck.userPassword);
+
+
+
+            let passwordCompare = await bcrypt.compare(user.password, userCheck.userPassword);
+
             if (!passwordCompare) {
                 return "Wrong password"
             } else {

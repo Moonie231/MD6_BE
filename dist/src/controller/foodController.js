@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const foodService_1 = __importDefault(require("../service/foodService"));
 const categoryService_1 = __importDefault(require("../service/categoryService"));
+const categoryService_2 = __importDefault(require("../service/categoryService"));
 class FoodController {
     constructor() {
         this.getAllFood = async (req, res) => {
@@ -26,10 +27,19 @@ class FoodController {
         };
         this.getMyFood = async (req, res) => {
             try {
-                let homes = await foodService_1.default.getMyFood(req["decoded"].idUser);
-                return res.status(201).json({
-                    homes: homes.homes,
-                });
+                let idMerchant = req.params.idMerchant;
+                console.log(idMerchant);
+                let foods = await foodService_1.default.getMyFood(idMerchant);
+                return res.status(201).json(foods);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.findCategory = async (req, res) => {
+            try {
+                let categories = await categoryService_2.default.getAllCategory();
+                res.status(200).json(categories);
             }
             catch (e) {
                 res.status(500).json(e.message);

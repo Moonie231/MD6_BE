@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
 import foodService from "../service/foodService"
 import CategoryService from "../service/categoryService";
+import categoryService from "../service/categoryService";
 
 class FoodController {
     private foodService;
@@ -25,10 +26,18 @@ class FoodController {
     };
     getMyFood = async (req: Request, res: Response) => {
         try {
-            let homes = await foodService.getMyFood(req["decoded"].idUser);
-            return res.status(201).json({
-                homes: homes.homes,
-            });
+            let idMerchant = req.params.idMerchant
+            console.log(idMerchant)
+            let foods = await foodService.getMyFood(idMerchant);
+            return res.status(201).json(foods);
+        } catch (e) {
+            res.status(500).json(e.message);
+        }
+    };
+    findCategory = async (req: Request, res: Response) => {
+        try {
+            let categories = await categoryService.getAllCategory();
+            res.status(200).json(categories);
         } catch (e) {
             res.status(500).json(e.message);
         }
@@ -41,6 +50,7 @@ class FoodController {
             res.status(500).json(e.message);
         }
     };
+
     find = async (req: Request, res: Response) => {
         let idFood = req.params.idFood;
         let foods = await foodService.findById(idFood);

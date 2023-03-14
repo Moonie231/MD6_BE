@@ -20,7 +20,6 @@ class MerchantController {
             try {
                 let response = await this.merchantService.checkMerchant(req.body);
                 if (response === "Merchant not found" || response === "Wrong password" || response === "Account not ready" || response === "Account locked") {
-                    console.log(response);
                     return res.status(200).json(response);
                 }
                 else {
@@ -29,6 +28,51 @@ class MerchantController {
             }
             catch (e) {
                 res.status(500).json(e.message);
+            }
+        };
+        this.showMyProfile = async (req, res) => {
+            try {
+                let response = await this.merchantService.getMyProfile(req.params.idMerchant);
+                return res.status(200).json(response);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.editMerchant = async (req, res) => {
+            try {
+                let merchant = await this.merchantService.edit(req.params.idMerchant, req.body);
+                return res.status(201).json(merchant);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.getMerchantActive = async (req, res) => {
+            try {
+                let merchant = await this.merchantService.getMerchantActive();
+                return res.status(200).json(merchant);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.getMerchantPending = async (req, res) => {
+            try {
+                let merchant = await this.merchantService.getMerchantPending();
+                return res.status(200).json(merchant);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.setStatus = async (req, res) => {
+            try {
+                let merchant = await this.merchantService.setStatus(req.params.idMerchant);
+                return res.status(201).json(merchant);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
             }
         };
         this.merchantService = merchantService_1.default;
