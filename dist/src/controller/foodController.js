@@ -89,9 +89,8 @@ class FoodController {
         };
         this.findFoodByName = async (req, res) => {
             try {
-                let id = req.params.id;
                 let nameFood = req.query.nameFood;
-                let foods = await foodService_1.default.findFoodByNameFood(id, nameFood);
+                let foods = await foodService_1.default.findFoodByNameFood(nameFood);
                 return res.status(201).json({
                     foods: foods.foods,
                     nameFood: nameFood
