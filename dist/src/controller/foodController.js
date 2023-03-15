@@ -10,16 +10,23 @@ class FoodController {
     constructor() {
         this.getAll = async (req, res) => {
             try {
-                let data;
-                let foods = await foodService_1.default.getAll();
+                let limit = 8;
+                let offset = 0;
+                let page = 1;
+                if (req.query.page) {
+                    page = +req.query.page;
+                    offset = (+page - 1) * limit;
+                }
+                let totalBlogs = await foodService_1.default.count();
+                const count = parseInt(totalBlogs[0]['count(idFood)']);
+                let totalPage = Math.ceil(count / limit);
+                let foods = await foodService_1.default.getAll(limit, offset);
                 let categories = await categoryService_1.default.getAllCategory();
-                if (req["decoded"]) {
-                    data = [foods, categories];
-                }
-                else {
-                    data = [foods, categories];
-                }
-                res.status(200).json(foods);
+                res.status(200).json({
+                    foods: foods,
+                    currentPage: page,
+                    totalPage: totalPage
+                });
             }
             catch (e) {
                 res.status(500).json(e.message);

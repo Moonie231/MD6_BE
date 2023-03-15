@@ -1,7 +1,8 @@
 declare class FoodService {
     private FoodRepository;
     constructor();
-    getAll: () => Promise<any>;
+    getAll: (limit: any, offset: any) => Promise<any>;
+    count: () => Promise<any>;
     getAllFood: () => Promise<any>;
     getMyFood: (idMerchant: any) => Promise<any>;
     save: (food: any) => Promise<any>;
