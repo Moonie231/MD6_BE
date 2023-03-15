@@ -46,13 +46,13 @@ class FoodService {
             let foods = await this.FoodRepository.findOneBy({ idFood: idFood });
             return foods;
         };
-        this.findFoodByNameFood = async (id, value) => {
-            let sql = `select * from food f join category c on f.id_Category = c.idCategory join merchant m on f.id_Merchant = m.idMerchant where f.id_Merchant=${id} and f.nameFood like '%${value}%'`;
+        this.findFoodByNameFood = async (value) => {
+            let sql = `select * from food f join category c on f.id_Category = c.idCategory join merchant m on f.id_Merchant = m.idMerchant where  f.nameFood like '%${value}%'`;
             let foods = await this.FoodRepository.query(sql);
             if (!foods) {
                 return null;
             }
-            return { foods: foods };
+            return foods;
         };
         this.FoodRepository = data_source_1.AppDataSource.getRepository(Food_1.Food);
     }

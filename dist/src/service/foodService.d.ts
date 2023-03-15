@@ -8,9 +8,7 @@ declare class FoodService {
     update: (idFood: any, newFood: any) => Promise<any>;
     deleteFood: (idFood: any) => Promise<any>;
     findById: (idFood: any) => Promise<any>;
-    findFoodByNameFood: (id: any, value: any) => Promise<{
-        foods: any;
-    }>;
+    findFoodByNameFood: (value: any) => Promise<any>;
 }
 declare const _default: FoodService;
 export default _default;
