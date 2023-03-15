@@ -10,16 +10,23 @@ class FoodController {
     }
     getAll= async (req: Request, res: Response) => {
         try {
-            let data;
-            let foods = await foodService.getAll();
-            let categories = await CategoryService.getAllCategory();
-            if (req["decoded"]) {
-                data = [foods,categories];
-            } else {
-                data = [foods,categories];
-
+            let limit = 8;
+            let offset = 0;
+            let page = 1;
+            if (req.query.page) {
+                page = +req.query.page;
+                offset = (+page - 1) * limit;
             }
-            res.status(200).json(foods);
+            let totalBlogs = await foodService.count();
+            const count = parseInt(totalBlogs[0]['count(idFood)']);
+            let totalPage = Math.ceil( count/limit);
+            let foods = await foodService.getAll(limit, offset);
+            let categories = await CategoryService.getAllCategory();
+            res.status(200).json({
+                foods:foods,
+                currentPage: page,
+                totalPage: totalPage
+            });
 
         }
         catch (e) {
@@ -89,12 +96,10 @@ class FoodController {
 
     findFoodByName = async (req: Request,res: Response) => {
         try {
-            let nameFood = req.query.nameFood;
-            let foods = await foodService.findFoodByNameFood(nameFood);
-            return res.status(201).json({
-                foods: foods.foods,
-                nameFood: nameFood
-            });
+            let nameFood=req.body
+            console.log(nameFood)
+            let foods = await foodService.findFoodByNameFood(nameFood.nameFood);
+            return res.status(200).json(foods);
         } catch (err) {
             res.status(500).json(err.message);
         }

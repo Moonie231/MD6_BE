@@ -4,10 +4,15 @@ const data_source_1 = require("../data-source");
 const Food_1 = require("../model/Food");
 class FoodService {
     constructor() {
-        this.getAll = async () => {
-            let sql = `select * from food f join merchant m on f.id_Merchant = m.idMerchant join category c on f.id_Category = c.idCategory`;
+        this.getAll = async (limit, offset) => {
+            let sql = `select * from food f join merchant m on f.id_Merchant = m.idMerchant join category c on f.id_Category = c.idCategory limit ${limit} offset ${offset}`;
             let foods = await this.FoodRepository.query(sql);
             return foods;
+        };
+        this.count = async () => {
+            let sql = `select count(idFood) from food `;
+            let count = await this.FoodRepository.query(sql);
+            return count;
         };
         this.getAllFood = async () => {
             let sql = `select * from food f join merchant m on f.id_Merchant = m.idMerchant join category c on f.id_Category = c.idCategory limit 8`;
@@ -52,7 +57,7 @@ class FoodService {
             if (!foods) {
                 return null;
             }
-            return { foods: foods };
+            return foods;
         };
         this.FoodRepository = data_source_1.AppDataSource.getRepository(Food_1.Food);
     }
