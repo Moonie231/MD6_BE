@@ -6,11 +6,16 @@ class FoodService {
     constructor() {
         this.FoodRepository = AppDataSource.getRepository(Food)
     }
-    getAll = async () => {
-        let sql = `select * from food f join merchant m on f.id_Merchant = m.idMerchant join category c on f.id_Category = c.idCategory`;
+    getAll = async (limit,offset) => {
+        let sql = `select * from food f join merchant m on f.id_Merchant = m.idMerchant join category c on f.id_Category = c.idCategory limit ${limit} offset ${offset}` ;
         let foods = await this.FoodRepository.query(sql);
         return foods;
     };
+    count=async ()=>{
+        let sql=`select count(idFood) from food `
+        let count=await this.FoodRepository.query(sql)
+        return count
+    }
     getAllFood = async () => {
         let sql = `select * from food f join merchant m on f.id_Merchant = m.idMerchant join category c on f.id_Category = c.idCategory limit 8`;
         let foods = await this.FoodRepository.query(sql);
