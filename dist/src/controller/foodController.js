@@ -97,7 +97,7 @@ class FoodController {
             try {
                 let nameFood = req.body;
                 let foods = await foodService_1.default.findFoodByNameFood(nameFood.nameFood);
-                return res.status(200).json(foods);
+                return res.status(200).json({ foods: foods });
             }
             catch (err) {
                 res.status(500).json(err.message);
