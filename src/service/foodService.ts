@@ -54,7 +54,7 @@ class FoodService {
         return foods;
     };
     findFoodByNameFood = async (value) => {
-        let sql = `select * from food f join category c on f.id_Category = c.idCategory join merchant m on f.id_Merchant = m.idMerchant where  f.nameFood like '%${value}%'`;
+        let sql = `select * from food f join category c on f.id_Category = c.idCategory join merchant m on f.id_Merchant = m.idMerchant where  f.nameFood like '%${value}%' limit 8`;
         let foods = await this.FoodRepository.query(sql);
         if (!foods) {
             return null;
