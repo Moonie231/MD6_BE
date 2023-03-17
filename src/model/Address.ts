@@ -1,10 +1,10 @@
 import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 @Entity()
-export class Payment{
+export class Address {
     @PrimaryGeneratedColumn()
-    idPayment : number;
+    idAddress : number;
     @Column({nullable:true})
-    id_Cart : number;
+    nameAddress : string;
     @Column({nullable:true})
-    id_food : number;
+    id_User : number;
 }
