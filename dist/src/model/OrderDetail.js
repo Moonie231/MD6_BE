@@ -9,44 +9,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Food = void 0;
+exports.OrderDetail = void 0;
 const typeorm_1 = require("typeorm");
-let Food = class Food {
+let OrderDetail = class OrderDetail {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Food.prototype, "idFood", void 0);
+], OrderDetail.prototype, "idOrderDetail", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], Food.prototype, "nameFood", void 0);
+    __metadata("design:type", Number)
+], OrderDetail.prototype, "id_Food", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], Food.prototype, "description", void 0);
+    __metadata("design:type", Number)
+], OrderDetail.prototype, "id_Order", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], OrderDetail.prototype, "quantity", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true, type: "float" }),
     __metadata("design:type", Number)
-], Food.prototype, "price", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Number)
-], Food.prototype, "id_Category", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Number)
-], Food.prototype, "id_Merchant", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Number)
-], Food.prototype, "quantityFood", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], Food.prototype, "img", void 0);
-Food = __decorate([
+], OrderDetail.prototype, "price", void 0);
+OrderDetail = __decorate([
     (0, typeorm_1.Entity)()
-], Food);
-exports.Food = Food;
-//# sourceMappingURL=Food.js.map
+], OrderDetail);
+exports.OrderDetail = OrderDetail;
+//# sourceMappingURL=OrderDetail.js.map
