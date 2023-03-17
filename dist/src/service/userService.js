@@ -117,6 +117,18 @@ class UserServices {
                 }
             }
         };
+        this.getMyProfile = async (idUser) => {
+            let user = await this.userRepository.findOneBy({ idUser: idUser });
+            return user;
+        };
+        this.edit = async (id, newUser) => {
+            console.log(newUser);
+            let checkUser = await this.userRepository.findOneBy({ idUser: id });
+            if (!checkUser) {
+                return "User not found";
+            }
+            return await this.userRepository.update({ idUser: id }, newUser);
+        };
         this.userRepository = data_source_1.AppDataSource.getRepository(User_1.User);
     }
 }
