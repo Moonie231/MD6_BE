@@ -4,16 +4,18 @@ const data_source_1 = require("../data-source");
 const Food_1 = require("../model/Food");
 class FoodService {
     constructor() {
-        this.getAll = async () => {
-            let sql = `select * from food f join category c on f.idCategory = c.idCategory`;
+        this.getAll = async (limit, offset) => {
+            let sql = `select * from food f join merchant m on f.id_Merchant = m.idMerchant join category c on f.id_Category = c.idCategory limit ${limit} offset ${offset}`;
             let foods = await this.FoodRepository.query(sql);
-            if (foods) {
-                return "No homes found";
-            }
             return foods;
         };
+        this.count = async () => {
+            let sql = `select count(idFood) from food `;
+            let count = await this.FoodRepository.query(sql);
+            return count;
+        };
         this.getAllFood = async () => {
-            let sql = `select * from food f join merchant m on f.id_Merchant = m.idMerchant join category c on f.id_Category = c.idCategory `;
+            let sql = `select * from food f join merchant m on f.id_Merchant = m.idMerchant join category c on f.id_Category = c.idCategory limit 8`;
             let foods = await this.FoodRepository.query(sql);
             if (!foods) {
                 return "No foods found";
@@ -26,17 +28,16 @@ class FoodService {
             if (!foods) {
                 return null;
             }
-            return { homes: foods };
+            return foods;
         };
         this.save = async (food) => {
             return this.FoodRepository.save(food);
         };
-        this.updateFood = async (idFood, newFood) => {
-            let foods = await this.FoodRepository.findOneBy({ idFood: idFood });
-            if (!foods) {
+        this.update = async (idFood, newFood) => {
+            let food = await this.FoodRepository.findOneBy({ idFood: idFood });
+            if (!food) {
                 return null;
             }
-            newFood.count = foods.count;
             return this.FoodRepository.update({ idFood: idFood }, newFood);
         };
         this.deleteFood = async (idFood) => {
@@ -51,12 +52,12 @@ class FoodService {
             return foods;
         };
         this.findFoodByNameFood = async (value) => {
-            let sql = `select * from food f join category c on f.id_Category = c.idCategory where f.nameFood like '%${value}%'`;
+            let sql = `select * from food f join category c on f.id_Category = c.idCategory join merchant m on f.id_Merchant = m.idMerchant where  f.nameFood like '%${value}%' limit 8`;
             let foods = await this.FoodRepository.query(sql);
             if (!foods) {
                 return null;
             }
-            return { foods: foods };
+            return foods;
         };
         this.FoodRepository = data_source_1.AppDataSource.getRepository(Food_1.Food);
     }

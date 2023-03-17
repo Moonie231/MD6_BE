@@ -42,7 +42,7 @@ __decorate([
     __metadata("design:type", String)
 ], Merchant.prototype, "status", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true, default: 'https://img.pikbest.com/png-images/qianku/default-avatar_2406311.png!w700wp' }),
     __metadata("design:type", String)
 ], Merchant.prototype, "image", void 0);
 Merchant = __decorate([

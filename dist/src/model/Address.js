@@ -9,44 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Food = void 0;
+exports.Address = void 0;
 const typeorm_1 = require("typeorm");
-let Food = class Food {
+let Address = class Address {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Food.prototype, "idFood", void 0);
+], Address.prototype, "idAddress", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], Food.prototype, "nameFood", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], Food.prototype, "description", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true, type: "float" }),
-    __metadata("design:type", Number)
-], Food.prototype, "price", void 0);
+], Address.prototype, "nameAddress", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
-], Food.prototype, "id_Category", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Number)
-], Food.prototype, "id_Merchant", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Number)
-], Food.prototype, "quantityFood", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], Food.prototype, "img", void 0);
-Food = __decorate([
+], Address.prototype, "id_User", void 0);
+Address = __decorate([
     (0, typeorm_1.Entity)()
-], Food);
-exports.Food = Food;
-//# sourceMappingURL=Food.js.map
+], Address);
+exports.Address = Address;
+//# sourceMappingURL=Address.js.map

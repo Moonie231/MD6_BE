@@ -54,13 +54,14 @@ class MerchantServices {
         }
 
     }
-
+    
     getMyProfile = async (idMerchant) => {
         let merchant = await this.merchantRepository.findOneBy({idMerchant: idMerchant});
         return merchant;
     }
 
     edit = async (id, newMerchant) => {
+        console.log(newMerchant)
         let checkMerchant = await this.merchantRepository.findOneBy({idMerchant :id})
         if (!checkMerchant) {
             return "Merchant not found"

@@ -5,8 +5,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const foodService_1 = __importDefault(require("../service/foodService"));
 const categoryService_1 = __importDefault(require("../service/categoryService"));
+const categoryService_2 = __importDefault(require("../service/categoryService"));
 class FoodController {
     constructor() {
+        this.getAll = async (req, res) => {
+            try {
+                let limit = 8;
+                let offset = 0;
+                let page = 1;
+                if (req.query.page) {
+                    page = +req.query.page;
+                    offset = (+page - 1) * limit;
+                }
+                let totalBlogs = await foodService_1.default.count();
+                const count = parseInt(totalBlogs[0]['count(idFood)']);
+                let totalPage = Math.ceil(count / limit);
+                let foods = await foodService_1.default.getAll(limit, offset);
+                let categories = await categoryService_1.default.getAllCategory();
+                res.status(200).json({
+                    foods: foods,
+                    currentPage: page,
+                    totalPage: totalPage
+                });
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.getAllFood = async (req, res) => {
             try {
                 let data;
@@ -26,10 +51,19 @@ class FoodController {
         };
         this.getMyFood = async (req, res) => {
             try {
-                let homes = await foodService_1.default.getMyFood(req["decoded"].idUser);
-                return res.status(201).json({
-                    homes: homes.homes,
-                });
+                let idMerchant = req.params.idMerchant;
+                console.log(idMerchant);
+                let foods = await foodService_1.default.getMyFood(idMerchant);
+                return res.status(201).json(foods);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.findCategory = async (req, res) => {
+            try {
+                let categories = await categoryService_2.default.getAllCategory();
+                res.status(200).json(categories);
             }
             catch (e) {
                 res.status(500).json(e.message);
@@ -44,10 +78,10 @@ class FoodController {
                 res.status(500).json(e.message);
             }
         };
-        this.show = async (req, res) => {
+        this.find = async (req, res) => {
             let idFood = req.params.idFood;
-            let food = await foodService_1.default.findById(idFood);
-            return res.status(201).json(food);
+            let foods = await foodService_1.default.findById(idFood);
+            return res.status(201).json(foods);
         };
         this.destroy = async (req, res) => {
             let idFood = req.params.idFood;
@@ -56,20 +90,16 @@ class FoodController {
         };
         this.update = async (req, res) => {
             let idFood = req.params.idFood;
-            let food = await foodService_1.default.updateFood(idFood, req.body);
-            if (!food) {
-                return res.status(201).json("Food Not Found");
-            }
-            return res.status(201).json(food);
+            let newFood = req.body;
+            await this.foodService.update(idFood, newFood);
+            res.status(200).json('Success!');
         };
         this.findFoodByName = async (req, res) => {
             try {
-                let nameFood = req.query.nameFood;
-                let foods = await foodService_1.default.findFoodByNameFood(nameFood);
-                return res.status(201).json({
-                    foods: foods.foods,
-                    nameFood: nameFood
-                });
+                let nameFood = req.body;
+                console.log(nameFood);
+                let foods = await foodService_1.default.findFoodByNameFood(nameFood.nameFood);
+                return res.status(200).json({ foods: foods });
             }
             catch (err) {
                 res.status(500).json(err.message);
