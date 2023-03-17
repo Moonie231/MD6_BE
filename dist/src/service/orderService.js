@@ -5,13 +5,13 @@ const data_source_1 = require("../data-source");
 const OrderDetail_1 = require("../model/OrderDetail");
 class OrderService {
     constructor() {
-        this.deleteCart = async (id_Order) => {
-            let cart = await this.orderDetailRepository.findOneBy({ id_Order: id_Order });
+        this.removeCart = async (idOrder) => {
+            let cart = await this.orderDetailRepository.findOneBy({ id_Order: idOrder });
+            console.log(cart);
             if (!cart) {
-                return 'Can not remove product';
+                return 'Can not remove order';
             }
-            this.orderDetailRepository.delete({ id_Order: id_Order });
-            return cart;
+            return this.orderDetailRepository.delete({ id_Order: idOrder });
         };
         this.getOrder = async (idUser) => {
             let sql = `select o.idOrder, o.Date,o. totalMoney,o.status, u.username from order o join user u on o.id_User = u.idUser where  o.status != 'buying'`;
@@ -21,13 +21,15 @@ class OrderService {
             }
             return order;
         };
-        this.showCart = async (idOrderDetail) => {
-            let sql = `select oD.idOrderdetail, f.nameFood,f.price, f.description, f.img, oD.quantity from orderDetail oD  join food f  on oD.id_Food = f.idFood where oD.id_Order = ${idOrderDetail}`;
+        this.showCart = async (idOrder) => {
+            let sql = `select o_d.idOrderdetail, f.nameFood,f.price, f.description, f.img, o_d.quantity from order_detail o_d  join food f  on o_d.id_Food = f.idFood where o_d.id_Order = ${idOrder}`;
             let cart = this.orderRepository.query(sql);
             if (!cart) {
                 return 'Can not find cart';
             }
             return cart;
+        };
+        this.checkOrder = async (sanPham) => {
         };
         this.save = async (value) => {
             let order = this.orderRepository.save(value);
@@ -68,7 +70,7 @@ class OrderService {
             return 'Saved cart';
         };
         this.countCart = async (idOrder) => {
-            let sql = `select count(.idOrder) as countCart from orderDetail oD where oD.id_Order = ${idOrder};`;
+            let sql = `select count(.idOrder) as countCart from order_detail o_d where o_d.id_Order = ${idOrder};`;
             let countCart = await this.orderRepository.query(sql);
             if (!countCart) {
                 return 'Can not countCart';

@@ -7,13 +7,9 @@ const orderService_1 = __importDefault(require("../service/orderService"));
 class OrderController {
     constructor() {
         this.deleteCart = async (req, res) => {
-            try {
-                let response = await this.orderService.deleteCart(req.params.idOrder);
-                res.status(200).json(response);
-            }
-            catch (e) {
-                res.status(500).json(e.message);
-            }
+            let idOrder = req.params.idOrder;
+            let cart = await orderService_1.default.removeCart(idOrder);
+            return res.status(200).json(cart);
         };
         this.getOrder = async (req, res) => {
             try {
@@ -95,4 +91,4 @@ class OrderController {
     }
 }
 exports.default = new OrderController();
-//# sourceMappingURL=orderController.js.map
+//# sourceMappingURL=OrderController.js.map

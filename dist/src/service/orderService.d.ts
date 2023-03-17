@@ -2,9 +2,10 @@ declare class OrderService {
     private orderRepository;
     private orderDetailRepository;
     constructor();
-    deleteCart: (id_Order: any) => Promise<any>;
+    removeCart: (idOrder: any) => Promise<any>;
     getOrder: (idUser: any) => Promise<any>;
-    showCart: (idOrderDetail: any) => Promise<any>;
+    showCart: (idOrder: any) => Promise<any>;
+    checkOrder: (sanPham: any) => Promise<void>;
     save: (value: any) => Promise<any>;
     updateOrder: (idOrder: any, newOrder: any) => Promise<"Can not update order" | "Updated order">;
     findById: (idUser: any) => Promise<any>;

@@ -11,9 +11,9 @@ exports.orderRouter.get('/getOrder', OrderController_1.default.getOrder);
 exports.orderRouter.get('/countCart/:idOrder', OrderController_1.default.countCart);
 exports.orderRouter.post('/addCart', OrderController_1.default.addCart);
 exports.orderRouter.post('/addOrder', OrderController_1.default.addOrder);
-exports.orderRouter.put('/editOrder/:id', OrderController_1.default.editOrder);
+exports.orderRouter.put('/editOrder/:idOrder', OrderController_1.default.editOrder);
 exports.orderRouter.get('/find-by-status/:idUser', OrderController_1.default.findByStatus);
 exports.orderRouter.get('/find-by-idUser/:idUser', OrderController_1.default.findById);
 exports.orderRouter.get('/show-cart/:idOrder', OrderController_1.default.showCart);
-exports.orderRouter.delete('/delete-cart/:id', OrderController_1.default.deleteCart);
+exports.orderRouter.delete('/delete-cart/:idOrder', OrderController_1.default.deleteCart);
 //# sourceMappingURL=orderRouter.js.map
