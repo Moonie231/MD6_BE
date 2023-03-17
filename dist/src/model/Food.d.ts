@@ -5,5 +5,6 @@ export declare class Food {
     price: number;
     id_Category: number;
     id_Merchant: number;
+    quantityFood: number;
     img: string;
 }

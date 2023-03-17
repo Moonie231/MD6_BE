@@ -13,6 +13,8 @@ declare class UserServices {
         status: any;
         token: string;
     }>;
+    getMyProfile: (idUser: any) => Promise<any>;
+    edit: (id: any, newUser: any) => Promise<any>;
 }
 declare const _default: UserServices;
 export default _default;

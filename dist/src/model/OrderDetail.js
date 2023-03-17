@@ -9,24 +9,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Payment = void 0;
+exports.OrderDetail = void 0;
 const typeorm_1 = require("typeorm");
-let Payment = class Payment {
+let OrderDetail = class OrderDetail {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Payment.prototype, "idPayment", void 0);
+], OrderDetail.prototype, "idOrderDetail", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
-], Payment.prototype, "id_Cart", void 0);
+], OrderDetail.prototype, "id_Food", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
-], Payment.prototype, "id_food", void 0);
-Payment = __decorate([
+], OrderDetail.prototype, "id_Order", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], OrderDetail.prototype, "quantity", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, type: "float" }),
+    __metadata("design:type", Number)
+], OrderDetail.prototype, "price", void 0);
+OrderDetail = __decorate([
     (0, typeorm_1.Entity)()
-], Payment);
-exports.Payment = Payment;
-//# sourceMappingURL=Payment.js.map
+], OrderDetail);
+exports.OrderDetail = OrderDetail;
+//# sourceMappingURL=OrderDetail.js.map

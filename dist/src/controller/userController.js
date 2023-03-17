@@ -42,6 +42,25 @@ class UserController {
                 res.status(500).json(e.message);
             }
         };
+        this.showMyProfile = async (req, res) => {
+            try {
+                let response = await this.userServices.getMyProfile(req.params.idUser);
+                return res.status(200).json(response);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.editUser = async (req, res) => {
+            try {
+                let user = await this.userServices.edit(req.params.idUser, req.body);
+                console.log(user);
+                return res.status(201).json(user);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.userServices = userService_1.default;
     }
 }
