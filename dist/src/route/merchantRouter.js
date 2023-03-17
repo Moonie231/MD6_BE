@@ -9,6 +9,9 @@ const merchantController_1 = __importDefault(require("../controller/merchantCont
 exports.merchantRouter = (0, express_1.Router)();
 exports.merchantRouter.post('/register', merchantController_1.default.register);
 exports.merchantRouter.post('/login', merchantController_1.default.login);
+exports.merchantRouter.post('/statistics-by-user/:id', merchantController_1.default.statisticsByUser);
+exports.merchantRouter.post('/statistics-by-status/:id', merchantController_1.default.statisticsByStatus);
+exports.merchantRouter.post('/statistics-by-food/:id', merchantController_1.default.statisticsByFood);
 exports.merchantRouter.put('/:idMerchant', merchantController_1.default.editMerchant);
 exports.merchantRouter.get('/my-profile/:idMerchant', merchantController_1.default.showMyProfile);
 //# sourceMappingURL=merchantRouter.js.map

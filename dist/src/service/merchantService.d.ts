@@ -1,8 +1,9 @@
 declare class MerchantServices {
     private merchantRepository;
+    private orderRepository;
     constructor();
     register: (merchant: any) => Promise<any>;
-    checkMerchant: (merchant: any) => Promise<"Account not ready" | "Account locked" | "Wrong password" | "Merchant not found" | {
+    checkMerchant: (merchant: any) => Promise<"Merchant not found" | "Wrong password" | "Account not ready" | "Account locked" | {
         idMerchant: any;
         nameMerchant: any;
         image: any;
@@ -13,6 +14,9 @@ declare class MerchantServices {
     getMerchantActive: () => Promise<any>;
     getMerchantPending: () => Promise<any>;
     setStatus: (id: any) => Promise<any>;
+    statisticsByStatus: (id: any, status: any) => Promise<any>;
+    statisticsByFood: (id: any, food: any) => Promise<any>;
+    statisticsByUser: (id: any, user: any) => Promise<any>;
 }
 declare const _default: MerchantServices;
 export default _default;

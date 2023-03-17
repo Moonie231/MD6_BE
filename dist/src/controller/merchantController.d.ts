@@ -9,6 +9,9 @@ declare class MerchantController {
     getMerchantActive: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     getMerchantPending: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     setStatus: (req: any, res: any) => Promise<any>;
+    statisticsByStatus: (req: any, res: any) => Promise<any>;
+    statisticsByFood: (req: any, res: any) => Promise<any>;
+    statisticsByUser: (req: any, res: any) => Promise<any>;
 }
 declare const _default: MerchantController;
 export default _default;
