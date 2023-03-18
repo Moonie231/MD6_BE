@@ -58,7 +58,6 @@ class UserServices {
     }
       sendEmailVerificationRequest=async (email)=>{
         const token= this.generateTokenFromString(email)
-          console.log(token)
           let options = {
             from: process.env.AUTH_EMAIL,
             to: email,
