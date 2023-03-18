@@ -50,49 +50,48 @@ class MerchantServices {
                     idMerchant: merchantCheck.idMerchant,
                     nameMerchant: merchantCheck.nameMerchant,
                     image: merchantCheck.image,
-                    token: token
+                    token : token
                 }
                 return merchantRes;
             }
         }
 
     }
-
+    
     getMyProfile = async (idMerchant) => {
         let merchant = await this.merchantRepository.findOneBy({idMerchant: idMerchant});
         return merchant;
     }
 
     edit = async (id, newMerchant) => {
-        console.log(newMerchant)
-        let checkMerchant = await this.merchantRepository.findOneBy({idMerchant: id})
+        let checkMerchant = await this.merchantRepository.findOneBy({idMerchant :id})
         if (!checkMerchant) {
             return "Merchant not found"
         }
-        return await this.merchantRepository.update({idMerchant: id}, newMerchant)
+        return await this.merchantRepository.update({idMerchant :id}, newMerchant)
     }
 
-    getMerchantActive = async () => {
+    getMerchantActive = async()  => {
         let sql = 'select * from merchant where status = "active" or status = "locked"';
         let merchants = await this.merchantRepository.query(sql);
         return merchants
     }
 
-    getMerchantPending = async () => {
+    getMerchantPending = async() => {
         let sql = 'select * from merchant where status = "pending approval"';
         let merchants = await this.merchantRepository.query(sql);
         return merchants
     }
 
-    setStatus = async (id) => {
-        let checkMerchant = await this.merchantRepository.findOneBy({idMerchant: id})
+    setStatus = async(id) => {
+        let checkMerchant = await this.merchantRepository.findOneBy({idMerchant :id})
         if (!checkMerchant) {
             return "Merchant not found"
         }
         if (checkMerchant.status === "locked" || checkMerchant.status === "pending approval") {
-            return await this.merchantRepository.update({idMerchant: id}, {status: "active"})
-        } else {
-            return await this.merchantRepository.update({idMerchant: id}, {status: "locked"})
+            return await this.merchantRepository.update({idMerchant :id}, {status : "active"})
+        }else {
+            return await this.merchantRepository.update({idMerchant :id}, {status : "locked"})
         }
     }
     statisticsByStatus = async (id) => {
