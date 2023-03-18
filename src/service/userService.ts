@@ -4,11 +4,15 @@ import bcrypt from 'bcrypt';
 import {SECRET} from "../middleware/auth";
 import jwt from "jsonwebtoken";
 import transporter from "../config/nodemailer.config";
+import {Address} from "../model/Address";
+
 class UserServices {
     private userRepository;
+    private addRepository;
 
     constructor() {
         this.userRepository = AppDataSource.getRepository(User)
+        this.addRepository = AppDataSource.getRepository(Address)
 
     }
 
@@ -133,6 +137,15 @@ class UserServices {
             return "User not found"
         }
         return await this.userRepository.update({idUser :id}, newUser)
+    }
+
+    address = async (id) => {
+        let sql = "select * from address join user on address.id_User = user.idUser where user.idUser = " + id
+        return await this.userRepository.query(sql)
+    }
+
+    addAddress = async (address) =>{
+        return await this.addRepository.save(address)
     }
 }
 

@@ -13,4 +13,6 @@ exports.userRouter.post('/login', userController_1.default.login);
 exports.userRouter.post('/verify-email', userController_1.default.verifyEmailUser);
 exports.userRouter.put('/:idUser', userController_1.default.editUser);
 exports.userRouter.get('/my-profile/:idUser', userController_2.default.showMyProfile);
+exports.userRouter.get('/address/:idUser', userController_2.default.address);
+exports.userRouter.post('/address/add', userController_2.default.addAddress);
 //# sourceMappingURL=userRouter.js.map

@@ -61,6 +61,24 @@ class UserController {
                 res.status(500).json(e.message);
             }
         };
+        this.address = async (req, res) => {
+            try {
+                let address = await this.userServices.address(req.params.idUser);
+                return res.status(201).json(address);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.addAddress = async (req, res) => {
+            try {
+                let address = await this.userServices.addAddress(req.body);
+                return res.status(201).json(address);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.userServices = userService_1.default;
     }
 }
