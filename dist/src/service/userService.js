@@ -98,7 +98,6 @@ class UserServices {
                     return "Wrong password";
                 }
                 else {
-                    console.log(1);
                     let payload = {
                         idUser: userCheck.idUser,
                         username: userCheck.username,

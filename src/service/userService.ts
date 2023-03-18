@@ -15,7 +15,6 @@ class UserServices {
     constructor() {
         this.userRepository = AppDataSource.getRepository(User)
         this.addressRepository = AppDataSource.getRepository(Address)
-
         this.orderRepository = AppDataSource.getRepository(Order)
     }
 
@@ -103,7 +102,6 @@ class UserServices {
             if (!passwordCompare) {
                 return "Wrong password"
             } else {
-                console.log(1)
                 let payload = {
                     idUser: userCheck.idUser,
                     username: userCheck.username,
