@@ -75,6 +75,38 @@ class MerchantController {
                 return res.status(500).json(e.message);
             }
         };
+        this.statisticsByStatus = async (req, res) => {
+            try {
+                let status = req.body.status;
+                let id = req.params.id;
+                let statistics = await this.merchantService.statisticsByStatus(id, status);
+                return res.status(201).json(statistics);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
+            }
+        };
+        this.statisticsByFood = async (req, res) => {
+            try {
+                let id = req.params.id;
+                let statistics = await this.merchantService.statisticsByFood(id);
+                return res.status(201).json(statistics);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
+            }
+        };
+        this.statisticsByUser = async (req, res) => {
+            try {
+                let user = req.body.username;
+                let id = req.params.id;
+                let statistics = await this.merchantService.statisticsByUser(id);
+                return res.status(201).json(statistics);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
+            }
+        };
         this.merchantService = merchantService_1.default;
     }
 }

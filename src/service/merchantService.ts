@@ -3,12 +3,15 @@ import bcrypt from 'bcrypt';
 import {SECRET} from "../middleware/auth";
 import jwt from "jsonwebtoken";
 import {Merchant} from "../model/Merchant";
+import {Order} from "../model/Order";
 
 class MerchantServices {
     private merchantRepository;
+    private orderRepository;
 
     constructor() {
         this.merchantRepository = AppDataSource.getRepository(Merchant)
+        this.orderRepository = AppDataSource.getRepository(Order)
 
     }
 
@@ -90,6 +93,43 @@ class MerchantServices {
         }else {
             return await this.merchantRepository.update({idMerchant :id}, {status : "locked"})
         }
+    }
+    statisticsByStatus = async (id) => {
+        let sql = `SELECT  o.status,SUM(od.price) as totalMoney
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                            INNER JOIN user u ON o.id_user = u.idUser
+                   where m.idMerchant=${id} 
+                   group by o.status  `
+        let statistics = await this.orderRepository.query(sql)
+        return statistics
+    }
+    statisticsByFood = async (id) => {
+        let sql = `SELECT  f.nameFood,SUM(od.price) as price
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+         INNER JOIN user u ON o.id_user = u.idUser
+where m.idMerchant=${id} and o.status='success'
+group by od.id_Food
+ `
+        let statistics = await this.orderRepository.query(sql)
+        return statistics
+    }
+    statisticsByUser = async (id) => {
+        let sql = `SELECT  u.email,SUM(od.price) as totalMoney
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                            INNER JOIN user u ON o.id_user = u.idUser
+                   where m.idMerchant=${id} and o.status='success'
+                   group by o.id_user `
+        let statistics = await this.orderRepository.query(sql)
+        return statistics
     }
 }
 

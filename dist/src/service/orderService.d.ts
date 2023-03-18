@@ -6,6 +6,7 @@ declare class OrderService {
     getOrder: (idUser: any) => Promise<any>;
     showCart: (idOrder: any) => Promise<any>;
     checkOrder: (sanPham: any) => Promise<void>;
+
     save: (value: any) => Promise<any>;
     updateOrder: (idOrder: any, newOrder: any) => Promise<"Can not update order" | "Updated order">;
     findById: (idUser: any) => Promise<any>;
