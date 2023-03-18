@@ -9,6 +9,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const auth_1 = require("../middleware/auth");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const nodemailer_config_1 = __importDefault(require("../config/nodemailer.config"));
+const Address_1 = require("../model/Address");
 class UserServices {
     constructor() {
         this.generateTokenFromString = (email) => {
@@ -128,7 +129,15 @@ class UserServices {
             }
             return await this.userRepository.update({ idUser: id }, newUser);
         };
+        this.address = async (id) => {
+            let sql = "select * from address join user on address.id_User = user.idUser where user.idUser = " + id;
+            return await this.userRepository.query(sql);
+        };
+        this.addAddress = async (address) => {
+            return await this.addRepository.save(address);
+        };
         this.userRepository = data_source_1.AppDataSource.getRepository(User_1.User);
+        this.addRepository = data_source_1.AppDataSource.getRepository(Address_1.Address);
     }
 }
 exports.default = new UserServices();

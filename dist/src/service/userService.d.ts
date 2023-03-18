@@ -1,5 +1,6 @@
 declare class UserServices {
     private userRepository;
+    private addRepository;
     constructor();
     generateTokenFromString: (email: any) => string;
     register: (user: any) => Promise<any>;
@@ -15,6 +16,8 @@ declare class UserServices {
     }>;
     getMyProfile: (idUser: any) => Promise<any>;
     edit: (id: any, newUser: any) => Promise<any>;
+    address: (id: any) => Promise<any>;
+    addAddress: (address: any) => Promise<any>;
 }
 declare const _default: UserServices;
 export default _default;

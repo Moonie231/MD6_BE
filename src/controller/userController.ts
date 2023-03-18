@@ -60,6 +60,25 @@ class UserController {
             res.status(500).json(e.message)
         }
     }
+
+    address = async (req: Request, res: Response) =>{
+        try {
+            let address = await this.userServices.address(req.params.idUser)
+            return res.status(201).json(address)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+
+    }
+
+    addAddress = async (req: Request,res: Response) => {
+        try {
+            let address = await this.userServices.addAddress(req.body)
+            return res.status(201).json(address)
+        }catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
 }
 
 export default new UserController();
