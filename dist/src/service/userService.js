@@ -10,7 +10,6 @@ const auth_1 = require("../middleware/auth");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const nodemailer_config_1 = __importDefault(require("../config/nodemailer.config"));
 const Address_1 = require("../model/Address");
-
 const Order_1 = require("../model/Order");
 class UserServices {
     constructor() {
@@ -99,7 +98,6 @@ class UserServices {
                     return "Wrong password";
                 }
                 else {
-                    console.log(1);
                     let payload = {
                         idUser: userCheck.idUser,
                         username: userCheck.username,
@@ -163,11 +161,24 @@ class UserServices {
             return await this.userRepository.query(sql);
         };
         this.addAddress = async (address) => {
-            return await this.addRepository.save(address);
+            return await this.addressRepository.save(address);
+        };
+        this.editAddress = async (idAddress, newAddress) => {
+            let address = await this.addressRepository.findOneBy({ idAddress: idAddress });
+            if (!address) {
+                return "Address not found";
+            }
+            return await this.addressRepository.update({ idAddress: idAddress }, newAddress);
+        };
+        this.deleteAddress = async (idAddress) => {
+            let address = await this.addressRepository.findOneBy({ idAddress: idAddress });
+            if (!address) {
+                return "Address not found";
+            }
+            return await this.addressRepository.delete({ idAddress: idAddress });
         };
         this.userRepository = data_source_1.AppDataSource.getRepository(User_1.User);
-        this.addRepository = data_source_1.AppDataSource.getRepository(Address_1.Address);
-
+        this.addressRepository = data_source_1.AppDataSource.getRepository(Address_1.Address);
         this.orderRepository = data_source_1.AppDataSource.getRepository(Order_1.Order);
     }
 }

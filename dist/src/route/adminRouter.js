@@ -10,4 +10,5 @@ exports.adminRouter = (0, express_1.Router)();
 exports.adminRouter.get('/', merchantController_1.default.getMerchantActive);
 exports.adminRouter.get('/pending', merchantController_1.default.getMerchantPending);
 exports.adminRouter.put('/status/:idMerchant', merchantController_1.default.setStatus);
+exports.adminRouter.get('/merchant/:idMerchant', merchantController_1.default.getMerchant);
 //# sourceMappingURL=adminRouter.js.map

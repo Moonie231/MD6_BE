@@ -68,6 +68,16 @@ class MerchantController {
         }
     }
 
+    getMerchant = async (req: Request, res: Response) => {
+        try {
+            let idMerchant = req.params.idMerchant
+            let merchant = await this.merchantService.getMerchant(idMerchant)
+            return res.status(200).json(merchant)
+        }catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
+
     setStatus = async (req, res) => {
         try {
             let merchant = await this.merchantService.setStatus(req.params.idMerchant)

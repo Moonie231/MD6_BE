@@ -22,7 +22,7 @@ class OrderService {
             return order;
         };
         this.showCart = async (idOrder) => {
-            let sql = `select o_d.idOrderdetail, f.nameFood,f.img, SUM(o_d.quantity) as quantity ,SUM(o_d.price)as price from order_detail o_d  join food f  on o_d.id_Food = f.idFood where o_d.id_Order = ${idOrder} group by id_Food`;
+            let sql = `select o_d.idOrderdetail, f.nameFood,f.img, SUM(o_d.quantity) as quantity ,SUM(o_d.price)as price from order_detail o_d  join food f  on o_d.id_Food = f.idFood where o_d.id_Order = ${idOrder} group by o_d.id_Food`;
             let cart = this.orderRepository.query(sql);
             if (!cart) {
                 return 'Can not find cart';
@@ -48,7 +48,6 @@ class OrderService {
                 status: 'pending'
             };
             this.orderRepository.update({ idOrder: idOrder }, orderInfo);
-
             return "Updated order";
         };
         this.findById = async (idUser) => {

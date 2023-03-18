@@ -9,13 +9,12 @@ import {Order} from "../model/Order";
 
 class UserServices {
     private userRepository;
-    private addRepository;
+    private addressRepository;
     private orderRepository;
 
     constructor() {
         this.userRepository = AppDataSource.getRepository(User)
-        this.addRepository = AppDataSource.getRepository(Address)
-
+        this.addressRepository = AppDataSource.getRepository(Address)
         this.orderRepository = AppDataSource.getRepository(Order)
     }
 
@@ -103,7 +102,6 @@ class UserServices {
             if (!passwordCompare) {
                 return "Wrong password"
             } else {
-                console.log(1)
                 let payload = {
                     idUser: userCheck.idUser,
                     username: userCheck.username,
@@ -172,16 +170,23 @@ class UserServices {
     }
 
     addAddress = async (address) => {
-        return await this.addRepository.save(address)
+        return await this.addressRepository.save(address)
     }
 
-    address = async (id) => {
-        let sql = "select * from address join user on address.id_User = user.idUser where user.idUser = " + id
-        return await this.userRepository.query(sql)
+    editAddress = async (idAddress, newAddress) => {
+        let address = await this.addressRepository.findOneBy({idAddress: idAddress})
+        if (!address) {
+            return "Address not found"
+        }
+        return await this.addressRepository.update({idAddress: idAddress}, newAddress)
     }
 
-    addAddress = async (address) =>{
-        return await this.addRepository.save(address)
+    deleteAddress = async (idAddress) => {
+        let address = await this.addressRepository.findOneBy({idAddress: idAddress})
+        if (!address) {
+            return "Address not found"
+        }
+        return await this.addressRepository.delete({idAddress: idAddress})
     }
 }
 

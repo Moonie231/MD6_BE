@@ -83,6 +83,11 @@ class MerchantServices {
         return merchants
     }
 
+    getMerchant = async(idMerchant) => {
+        let merchant = await this.merchantRepository.findOneBy({idMerchant:idMerchant})
+        return merchant
+    }
+
     setStatus = async(id) => {
         let checkMerchant = await this.merchantRepository.findOneBy({idMerchant :id})
         if (!checkMerchant) {
@@ -94,6 +99,7 @@ class MerchantServices {
             return await this.merchantRepository.update({idMerchant :id}, {status : "locked"})
         }
     }
+
     statisticsByStatus = async (id) => {
         let sql = `SELECT  o.status,SUM(od.price) as totalMoney
                    FROM merchant m

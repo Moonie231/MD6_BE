@@ -15,4 +15,6 @@ exports.userRouter.put('/:idUser', userController_1.default.editUser);
 exports.userRouter.get('/my-profile/:idUser', userController_2.default.showMyProfile);
 exports.userRouter.get('/address/:idUser', userController_2.default.address);
 exports.userRouter.post('/address/add', userController_2.default.addAddress);
+exports.userRouter.put('/address/edit/:idAddress', userController_2.default.editAddress);
+exports.userRouter.delete('/address/delete/:idAddress', userController_2.default.deleteAddress);
 //# sourceMappingURL=userRouter.js.map

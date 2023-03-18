@@ -74,6 +74,10 @@ class MerchantServices {
             let merchants = await this.merchantRepository.query(sql);
             return merchants;
         };
+        this.getMerchant = async (idMerchant) => {
+            let merchant = await this.merchantRepository.findOneBy({ idMerchant: idMerchant });
+            return merchant;
+        };
         this.setStatus = async (id) => {
             let checkMerchant = await this.merchantRepository.findOneBy({ idMerchant: id });
             if (!checkMerchant) {

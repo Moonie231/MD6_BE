@@ -13,6 +13,7 @@ declare class MerchantServices {
     edit: (id: any, newMerchant: any) => Promise<any>;
     getMerchantActive: () => Promise<any>;
     getMerchantPending: () => Promise<any>;
+    getMerchant: (idMerchant: any) => Promise<any>;
     setStatus: (id: any) => Promise<any>;
     statisticsByStatus: (id: any) => Promise<any>;
     statisticsByFood: (id: any) => Promise<any>;
