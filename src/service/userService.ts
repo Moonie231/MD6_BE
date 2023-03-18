@@ -15,6 +15,7 @@ class UserServices {
     constructor() {
         this.userRepository = AppDataSource.getRepository(User)
         this.addRepository = AppDataSource.getRepository(Address)
+
         this.orderRepository = AppDataSource.getRepository(Order)
     }
 
@@ -171,6 +172,15 @@ class UserServices {
     }
 
     addAddress = async (address) => {
+        return await this.addRepository.save(address)
+    }
+
+    address = async (id) => {
+        let sql = "select * from address join user on address.id_User = user.idUser where user.idUser = " + id
+        return await this.userRepository.query(sql)
+    }
+
+    addAddress = async (address) =>{
         return await this.addRepository.save(address)
     }
 }

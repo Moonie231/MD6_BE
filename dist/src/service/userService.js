@@ -10,6 +10,7 @@ const auth_1 = require("../middleware/auth");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const nodemailer_config_1 = __importDefault(require("../config/nodemailer.config"));
 const Address_1 = require("../model/Address");
+
 const Order_1 = require("../model/Order");
 class UserServices {
     constructor() {
@@ -166,6 +167,7 @@ class UserServices {
         };
         this.userRepository = data_source_1.AppDataSource.getRepository(User_1.User);
         this.addRepository = data_source_1.AppDataSource.getRepository(Address_1.Address);
+
         this.orderRepository = data_source_1.AppDataSource.getRepository(Order_1.Order);
     }
 }

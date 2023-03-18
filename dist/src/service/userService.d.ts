@@ -1,6 +1,7 @@
 declare class UserServices {
     private userRepository;
     private addRepository;
+
     private orderRepository;
     constructor();
     generateTokenFromString: (email: any) => string;

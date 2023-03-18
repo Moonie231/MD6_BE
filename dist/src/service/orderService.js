@@ -48,6 +48,7 @@ class OrderService {
                 status: 'pending'
             };
             this.orderRepository.update({ idOrder: idOrder }, orderInfo);
+
             return "Updated order";
         };
         this.findById = async (idUser) => {
