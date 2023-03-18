@@ -89,9 +89,8 @@ class MerchantController {
         };
         this.statisticsByFood = async (req, res) => {
             try {
-                let food = req.body.food;
                 let id = req.params.id;
-                let statistics = await this.merchantService.statisticsByFood(id, food);
+                let statistics = await this.merchantService.statisticsByFood(id);
                 return res.status(201).json(statistics);
             }
             catch (e) {
@@ -102,7 +101,7 @@ class MerchantController {
             try {
                 let user = req.body.username;
                 let id = req.params.id;
-                let statistics = await this.merchantService.statisticsByUser(id, user);
+                let statistics = await this.merchantService.statisticsByUser(id);
                 return res.status(201).json(statistics);
             }
             catch (e) {

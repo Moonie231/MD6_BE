@@ -14,9 +14,9 @@ declare class MerchantServices {
     getMerchantActive: () => Promise<any>;
     getMerchantPending: () => Promise<any>;
     setStatus: (id: any) => Promise<any>;
-    statisticsByStatus: (id: any, status: any) => Promise<any>;
-    statisticsByFood: (id: any, food: any) => Promise<any>;
-    statisticsByUser: (id: any, user: any) => Promise<any>;
+    statisticsByStatus: (id: any) => Promise<any>;
+    statisticsByFood: (id: any) => Promise<any>;
+    statisticsByUser: (id: any) => Promise<any>;
 }
 declare const _default: MerchantServices;
 export default _default;

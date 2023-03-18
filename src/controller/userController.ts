@@ -41,6 +41,25 @@ class UserController {
             res.status(500).json(e.message)
         }
     }
+
+    showMyProfile = async (req: Request, res: Response) => {
+        try {
+            let response = await this.userServices.getMyProfile(req.params.idUser);
+            return res.status(200).json(response)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
+
+    editUser = async (req: Request, res: Response) => {
+        try {
+            let user = await this.userServices.edit(req.params.idUser, req.body);
+            console.log(user)
+            return res.status(201).json(user)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
 }
 
 export default new UserController();
