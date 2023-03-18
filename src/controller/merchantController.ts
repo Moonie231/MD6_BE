@@ -68,6 +68,16 @@ class MerchantController {
         }
     }
 
+    getMerchant = async (req: Request, res: Response) => {
+        try {
+            let idMerchant = req.params.idMerchant
+            let merchant = await this.merchantService.getMerchant(idMerchant)
+            return res.status(200).json(merchant)
+        }catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
+
     setStatus = async (req, res) => {
         try {
             let merchant = await this.merchantService.setStatus(req.params.idMerchant)
@@ -76,6 +86,36 @@ class MerchantController {
             return res.status(500).json(e.message)
         }
     }
+    statisticsByStatus=async (req, res) => {
+        try {
+            let status=req.body.status
+            let id=req.params.id
+            let statistics=await this.merchantService.statisticsByStatus(id,status)
+            return res.status(201).json(statistics)
+        }catch (e) {
+            return res.status(500).json(e.message)
+        }
+    }
+    statisticsByFood=async (req, res) => {
+        try {
+            let id=req.params.id
+            let statistics=await this.merchantService.statisticsByFood(id)
+            return res.status(201).json(statistics)
+        }catch (e) {
+            return res.status(500).json(e.message)
+        }
+    }
+    statisticsByUser=async (req, res) => {
+        try {
+            let user=req.body.username
+            let id=req.params.id
+            let statistics=await this.merchantService.statisticsByUser(id)
+            return res.status(201).json(statistics)
+        }catch (e) {
+            return res.status(500).json(e.message)
+        }
+    }
+
 }
 
 export default new MerchantController();

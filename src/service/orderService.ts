@@ -33,18 +33,16 @@ class OrderService {
     }
 
     showCart = async (idOrder) => {
-        let sql = `select o_d.idOrderdetail, f.nameFood,f.price, f.description, f.img, o_d.quantity from order_detail o_d  join food f  on o_d.id_Food = f.idFood where o_d.id_Order = ${idOrder}`
+        let sql = `select o_d.idOrderdetail, f.nameFood,f.img, SUM(o_d.quantity) as quantity ,SUM(o_d.price)as price from order_detail o_d  join food f  on o_d.id_Food = f.idFood where o_d.id_Order = ${idOrder} group by o_d.id_Food`
+
         let cart = this.orderRepository.query(sql)
         if(!cart){
             return 'Can not find cart'
         }
         return  cart
     }
-    checkOrder = async (sanPham) =>{
-        //Lây mảng food trong orderdt []
-// duyet có idFood = idFodd trong sp => ++
-    }
 
+   
 
     save = async (value) => {
         let order = this.orderRepository.save(value);
@@ -59,7 +57,15 @@ class OrderService {
         if(!order){
             return 'Can not update order';
         }
-        this.orderRepository.update({idOrder: idOrder}, newOrder);
+        let orderInfo={
+            id_user:newOrder.id_user,
+            totalMoney:newOrder.totalMoney,
+            date:new Date().toLocaleDateString(),
+            status:'pending'
+        }
+
+        this.orderRepository.update({idOrder: idOrder}, orderInfo);
+
         return "Updated order"
     }
 

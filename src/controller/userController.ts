@@ -79,6 +79,26 @@ class UserController {
             res.status(500).json(e.message)
         }
     }
+
+    editAddress = async (req: Request,res: Response) =>{
+        try {
+            let idAddress = req.params.idAddress
+            await this.userServices.editAddress(idAddress, req.body)
+            return res.status(200).json('Success!')
+        }catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
+
+    deleteAddress = async (req:Request,res:Response) => {
+        try {
+            let idAddress = req.params.idAddress
+            let address = await this.userServices.deleteAddress(idAddress)
+            return res.status(200).json(address)
+        }catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
 }
 
 export default new UserController();
