@@ -16,6 +16,9 @@ declare class MerchantServices {
     getMerchant: (idMerchant: any) => Promise<any>;
     setStatus: (id: any) => Promise<any>;
     statisticsByStatus: (id: any) => Promise<any>;
+    statisticsByDay: (month: any, id: any) => Promise<any>;
+    statisticsByMonth: (year: any, id: any) => Promise<any>;
+    statisticsByYear: (id: any) => Promise<any>;
     statisticsByFood: (id: any) => Promise<any>;
     statisticsByUser: (id: any) => Promise<any>;
 }
