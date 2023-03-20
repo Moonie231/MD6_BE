@@ -4,12 +4,15 @@ declare class OrderController {
     constructor();
     deleteCart: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     getOrder: (req: Request, res: Response) => Promise<void>;
+    setStatusConfirm: (req: any, res: any) => Promise<any>;
+    setStatusCancelled: (req: any, res: any) => Promise<any>;
     showCart: (req: Request, res: Response) => Promise<void>;
     addCart: (req: Request, res: Response) => Promise<void>;
     addOrder: (req: Request, res: Response) => Promise<void>;
     editOrder: (req: Request, res: Response) => Promise<void>;
     findByStatus: (req: Request, res: Response) => Promise<void>;
     findById: (req: Request, res: Response) => Promise<void>;
+    findByIdOrder: (req: Request, res: Response) => Promise<void>;
     countCart: (req: Request, res: Response) => Promise<void>;
 }
 declare const _default: OrderController;

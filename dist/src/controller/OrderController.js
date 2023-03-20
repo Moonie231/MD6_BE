@@ -21,6 +21,24 @@ class OrderController {
                 res.status(500).json(e.message);
             }
         };
+        this.setStatusConfirm = async (req, res) => {
+            try {
+                let order = await this.orderService.setStatusConfirm(req.params.idOrder);
+                return res.status(201).json(order);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
+            }
+        };
+        this.setStatusCancelled = async (req, res) => {
+            try {
+                let order = await this.orderService.setStatusCancelled(req.params.idOrder);
+                return res.status(201).json(order);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
+            }
+        };
         this.showCart = async (req, res) => {
             try {
                 let response = await this.orderService.showCart(req.params.idOrder);
@@ -73,6 +91,16 @@ class OrderController {
             try {
                 let id_User = req.params.id_User;
                 let response = await this.orderService.findById(id_User);
+                res.status(200).json(response);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.findByIdOrder = async (req, res) => {
+            try {
+                let idOrder = req.params.idOrder;
+                let response = await this.orderService.findByIdOrder(idOrder);
                 res.status(200).json(response);
             }
             catch (e) {

@@ -6,15 +6,14 @@ const OrderDetail_1 = require("../model/OrderDetail");
 class OrderService {
     constructor() {
         this.removeCart = async (idOrder) => {
-            let cart = await this.orderDetailRepository.findOneBy({ id_Order: idOrder });
-            console.log(cart);
+            let cart = await this.orderDetailRepository.findOneBy({ idOrderDetail: idOrder });
             if (!cart) {
                 return 'Can not remove order';
             }
-            return this.orderDetailRepository.delete({ id_Order: idOrder });
+            return this.orderDetailRepository.delete({ idOrderDetail: idOrder });
         };
         this.getOrder = async (idMerchant) => {
-            let sql = `SELECT f.nameFood, SUM(od.quantity) as quantity,SUM(od.price) as price, o.totalMoney, o.status
+            let sql = `SELECT o.idOrder,f.nameFood, SUM(od.quantity) as quantity,SUM(od.price) as price, o.totalMoney, o.status
                   FROM merchant m
                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
                            INNER JOIN order_detail od ON f.idFood = od.id_Food
@@ -23,6 +22,24 @@ class OrderService {
                   where m.idMerchant=${idMerchant} and o.status != 'watching' group by f.idFood`;
             let order = await this.orderRepository.query(sql);
             return order;
+        };
+        this.setStatusConfirm = async (idOrder) => {
+            let checkOrder = await this.orderRepository.findOneBy({ idOrder: idOrder });
+            if (!checkOrder) {
+                return "Order not found";
+            }
+            if (checkOrder.status === "pending") {
+                return await this.orderRepository.update({ idOrder: idOrder }, { status: "delivery" });
+            }
+        };
+        this.setStatusCancelled = async (idOrder) => {
+            let checkOrder = await this.orderRepository.findOneBy({ idOrder: idOrder });
+            if (!checkOrder) {
+                return "Order not found";
+            }
+            if (checkOrder.status === "pending") {
+                return await this.orderRepository.update({ idOrder: idOrder }, { status: "cancelled" });
+            }
         };
         this.showCart = async (idOrder) => {
             let sql = `select o_d.idOrderdetail, f.nameFood,f.img, SUM(o_d.quantity) as quantity ,SUM(o_d.price)as price from order_detail o_d  join food f  on o_d.id_Food = f.idFood where o_d.id_Order = ${idOrder} group by o_d.id_Food`;
@@ -62,6 +79,19 @@ class OrderService {
         this.findById = async (idUser) => {
             let sql = `select * from order o where o.id_User = ${idUser} and  o.status != 'buying'`;
             let order = await this.orderRepository.query(sql);
+            if (!order) {
+                return 'Can not find by id order';
+            }
+            return order;
+        };
+        this.findByIdOrder = async (idOrder) => {
+            let sql = `select *
+                   from order_detail
+                            join food f on order_detail.id_Food = f.idFood
+                            join \`order\` on order_detail.id_Order = \`order\`.idOrder
+                   where \`order\`.idOrder = ${idOrder}`;
+            let order = await this.orderRepository.query(sql);
+            console.log(order);
             if (!order) {
                 return 'Can not find by id order';
             }
