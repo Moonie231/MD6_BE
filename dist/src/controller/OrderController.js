@@ -13,8 +13,9 @@ class OrderController {
         };
         this.getOrder = async (req, res) => {
             try {
-                let response = await this.orderService.getOrder();
-                res.status(200).json(response);
+                let idMerchant = req.params.idMerchant;
+                let order = await orderService_1.default.getOrder(idMerchant);
+                res.status(200).json(order);
             }
             catch (e) {
                 res.status(500).json(e.message);

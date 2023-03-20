@@ -7,7 +7,7 @@ exports.orderRouter = void 0;
 const express_1 = require("express");
 const OrderController_1 = __importDefault(require("../controller/OrderController"));
 exports.orderRouter = (0, express_1.Router)();
-exports.orderRouter.get('/getOrder', OrderController_1.default.getOrder);
+exports.orderRouter.get('/getOrder/:idMerchant', OrderController_1.default.getOrder);
 exports.orderRouter.get('/countCart/:idOrder', OrderController_1.default.countCart);
 exports.orderRouter.post('/addCart', OrderController_1.default.addCart);
 exports.orderRouter.post('/addOrder', OrderController_1.default.addOrder);
