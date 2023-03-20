@@ -6,7 +6,7 @@ export class Order {
     @Column({nullable:true})
     id_user : number;
     @Column({nullable:true})
-    Date :Date;
+    Date :string;
     @Column({nullable:true,type:"float"})
     totalMoney :number;
     @Column({nullable:true})

@@ -6,12 +6,11 @@ const OrderDetail_1 = require("../model/OrderDetail");
 class OrderService {
     constructor() {
         this.removeCart = async (idOrder) => {
-            let cart = await this.orderDetailRepository.findOneBy({ id_Order: idOrder });
-            console.log(cart);
+            let cart = await this.orderDetailRepository.findOneBy({ idOrderDetail: idOrder });
             if (!cart) {
                 return 'Can not remove order';
             }
-            return this.orderDetailRepository.delete({ id_Order: idOrder });
+            return this.orderDetailRepository.delete({ idOrderDetail: idOrder });
         };
         this.getOrder = async (idUser) => {
             let sql = `select o.idOrder, o.Date,o. totalMoney,o.status, u.username from order o join user u on o.id_User = u.idUser where  o.status != 'buying'`;
