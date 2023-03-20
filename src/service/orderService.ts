@@ -1,4 +1,4 @@
-import {Order} from "../model/order";
+import {Order} from "../model/Order";
 import {AppDataSource} from "../data-source";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -57,16 +57,20 @@ class OrderService {
         if(!order){
             return 'Can not update order';
         }
-        let orderInfo={
-            id_user:newOrder.id_user,
-            totalMoney:newOrder.totalMoney,
-            date:new Date().toLocaleDateString(),
-            status:'pending'
+        else {
+            let orderInfo={
+                id_user:newOrder.id_user,
+                totalMoney:newOrder.totalMoney,
+                Date:new Date().toLocaleDateString(),
+                status:'pending'
+            }
+            let data={
+                id_user:newOrder.id_user,
+                status:'watching'
+            }
+            await this.orderRepository.update({idOrder: idOrder}, orderInfo);
+            return await this.orderRepository.save(data);
         }
-
-        this.orderRepository.update({idOrder: idOrder}, orderInfo);
-
-        return "Updated order"
     }
 
     findById = async (idUser)=> {

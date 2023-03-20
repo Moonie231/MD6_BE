@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const order_1 = require("../model/order");
+const Order_1 = require("../model/Order");
 const data_source_1 = require("../data-source");
 const OrderDetail_1 = require("../model/OrderDetail");
 class OrderService {
@@ -41,14 +41,20 @@ class OrderService {
             if (!order) {
                 return 'Can not update order';
             }
-            let orderInfo = {
-                id_user: newOrder.id_user,
-                totalMoney: newOrder.totalMoney,
-                date: new Date().toLocaleDateString(),
-                status: 'pending'
-            };
-            this.orderRepository.update({ idOrder: idOrder }, orderInfo);
-            return "Updated order";
+            else {
+                let orderInfo = {
+                    id_user: newOrder.id_user,
+                    totalMoney: newOrder.totalMoney,
+                    Date: new Date().toLocaleDateString(),
+                    status: 'pending'
+                };
+                let data = {
+                    id_user: newOrder.id_user,
+                    status: 'watching'
+                };
+                await this.orderRepository.update({ idOrder: idOrder }, orderInfo);
+                return await this.orderRepository.save(data);
+            }
         };
         this.findById = async (idUser) => {
             let sql = `select * from order o where o.id_User = ${idUser} and  o.status != 'buying'`;
@@ -81,7 +87,7 @@ class OrderService {
             }
             return countCart[0].countCart;
         };
-        this.orderRepository = data_source_1.AppDataSource.getRepository(order_1.Order);
+        this.orderRepository = data_source_1.AppDataSource.getRepository(Order_1.Order);
         this.orderDetailRepository = data_source_1.AppDataSource.getRepository(OrderDetail_1.OrderDetail);
     }
 }
