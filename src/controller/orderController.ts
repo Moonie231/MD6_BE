@@ -19,13 +19,30 @@ class OrderController {
 
     getOrder = async (req: Request, res: Response)=>{
         try{
-            let response = await this.orderService.getOrder();
-            res.status(200).json(response)
+            let idMerchant = req.params.idMerchant
+            let order = await orderService.getOrder(idMerchant)
+            res.status(200).json(order)
         } catch (e) {
             res.status(500).json(e.message)
         }
-
     }
+    setStatusConfirm = async (req, res) => {
+        try {
+            let order = await this.orderService.setStatusConfirm(req.params.idOrder)
+            return res.status(201).json(order)
+        }catch (e) {
+            return res.status(500).json(e.message)
+        }
+    }
+    setStatusCancelled = async (req, res) => {
+        try {
+            let order = await this.orderService.setStatusCancelled(req.params.idOrder)
+            return res.status(201).json(order)
+        }catch (e) {
+            return res.status(500).json(e.message)
+        }
+    }
+
 
     showCart = async (req: Request, res: Response)=>{
         try {
@@ -92,6 +109,17 @@ class OrderController {
         }
 
     }
+    findByIdOrder = async (req: Request, res: Response)=>{
+        try{
+            let idOrder = req.params.idOrder
+            let response = await this.orderService.findByIdOrder(idOrder);
+            res.status(200).json(response)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+
+    }
+
 
     countCart = async (req: Request, res: Response)=>{
         try{
