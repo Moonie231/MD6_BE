@@ -91,7 +91,6 @@ class OrderService {
                             join \`order\` on order_detail.id_Order = \`order\`.idOrder
                    where \`order\`.idOrder = ${idOrder}`;
             let order = await this.orderRepository.query(sql);
-            console.log(order);
             if (!order) {
                 return 'Can not find by id order';
             }

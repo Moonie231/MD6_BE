@@ -41,7 +41,6 @@ class OrderController {
         };
         this.showCart = async (req, res) => {
             try {
-                console.log();
                 let response = await this.orderService.showCart(req.params.idOrder);
                 res.status(200).json(response);
             }
