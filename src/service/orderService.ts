@@ -1,7 +1,5 @@
 import {Order} from "../model/order";
 import {AppDataSource} from "../data-source";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import {OrderDetail} from "../model/OrderDetail";
 
 class OrderService {
@@ -34,7 +32,6 @@ class OrderService {
 
     showCart = async (idOrder) => {
         let sql = `select o_d.idOrderdetail, f.nameFood,f.img, SUM(o_d.quantity) as quantity ,SUM(o_d.price)as price from order_detail o_d  join food f  on o_d.id_Food = f.idFood where o_d.id_Order = ${idOrder} group by o_d.id_Food`
-
         let cart = this.orderRepository.query(sql)
         if(!cart){
             return 'Can not find cart'
