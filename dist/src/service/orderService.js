@@ -41,6 +41,15 @@ class OrderService {
                 return await this.orderRepository.update({ idOrder: idOrder }, { status: "cancelled" });
             }
         };
+        this.setStatusSuccess = async (idOrder) => {
+            let checkOrder = await this.orderRepository.findOneBy({ idOrder: idOrder });
+            if (!checkOrder) {
+                return "Order not found";
+            }
+            if (checkOrder.status === "delivery") {
+                return await this.orderRepository.update({ idOrder: idOrder }, { status: "success" });
+            }
+        };
         this.showCart = async (idOrder) => {
             let sql = `select o_d.idOrderdetail, f.nameFood,f.img, SUM(o_d.quantity) as quantity ,SUM(o_d.price)as price from order_detail o_d  join food f  on o_d.id_Food = f.idFood where o_d.id_Order = ${idOrder} group by o_d.id_Food`;
             let cart = this.orderRepository.query(sql);
@@ -119,6 +128,24 @@ class OrderService {
                 return 'Can not countCart';
             }
             return countCart[0].countCart;
+        };
+        this.myOrderFood = async (idUser, idOder) => {
+            let sql = `SELECT f.nameFood, f.img, c.nameCategory, SUM(od.quantity) as quantity,SUM(od.price) as price, o.totalMoney, o.status
+                  FROM merchant m
+                           INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                           inner join category c on f.id_Category = c.idCategory
+                           INNER JOIN order_detail od ON f.idFood = od.id_Food
+                           INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                           INNER JOIN user u ON o.id_user = u.idUser
+                  where u.idUser=${idUser} and o.idOrder = ${idOder} group by f.idFood `;
+            let food = await this.orderRepository.query(sql);
+            return food;
+        };
+        this.myOrder = async (idUser) => {
+            let sql = `select *
+                   from \`order\` where id_user = ${idUser} and status != 'watching' `;
+            let order = await this.orderRepository.query(sql);
+            return order;
         };
         this.orderRepository = data_source_1.AppDataSource.getRepository(Order_1.Order);
         this.orderDetailRepository = data_source_1.AppDataSource.getRepository(OrderDetail_1.OrderDetail);
