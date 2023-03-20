@@ -9,6 +9,8 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const auth_1 = require("../middleware/auth");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const nodemailer_config_1 = __importDefault(require("../config/nodemailer.config"));
+const Address_1 = require("../model/Address");
+const Order_1 = require("../model/Order");
 class UserServices {
     constructor() {
         this.generateTokenFromString = (email) => {
@@ -104,15 +106,41 @@ class UserServices {
                     const token = jsonwebtoken_1.default.sign(payload, auth_1.SECRET, {
                         expiresIn: 36000000
                     });
-                    let userRes = {
-                        idUser: userCheck.idUser,
-                        username: userCheck.username,
-                        role: userCheck.role,
-                        avatar: userCheck.avatar,
-                        status: userCheck.status,
-                        token: token
-                    };
-                    return userRes;
+                    let sql = `select *
+                   from user u
+                            inner join \`order\` o on u.idUser = o.id_user
+                   where idUser=${userCheck.idUser} and o.status='watching'`;
+                    let order = await this.orderRepository.query(sql);
+                    if (order.length === 0) {
+                        let data = {
+                            id_user: userCheck.idUser,
+                            status: 'watching'
+                        };
+                        let orderNew = await this.orderRepository.save(data);
+                        let userRes = {
+                            idUser: userCheck.idUser,
+                            username: userCheck.username,
+                            role: userCheck.role,
+                            avatar: userCheck.avatar,
+                            status: userCheck.status,
+                            token: token,
+                            id_Order: orderNew.idOrder
+                        };
+                        return userRes;
+                    }
+                    else {
+                        const idOrder = order[0].idOrder;
+                        let userRes = {
+                            idUser: userCheck.idUser,
+                            username: userCheck.username,
+                            role: userCheck.role,
+                            avatar: userCheck.avatar,
+                            status: userCheck.status,
+                            token: token,
+                            id_Order: idOrder
+                        };
+                        return userRes;
+                    }
                 }
             }
         };
@@ -128,7 +156,30 @@ class UserServices {
             }
             return await this.userRepository.update({ idUser: id }, newUser);
         };
+        this.address = async (id) => {
+            let sql = "select * from address join user on address.id_User = user.idUser where user.idUser = " + id;
+            return await this.userRepository.query(sql);
+        };
+        this.addAddress = async (address) => {
+            return await this.addressRepository.save(address);
+        };
+        this.editAddress = async (idAddress, newAddress) => {
+            let address = await this.addressRepository.findOneBy({ idAddress: idAddress });
+            if (!address) {
+                return "Address not found";
+            }
+            return await this.addressRepository.update({ idAddress: idAddress }, newAddress);
+        };
+        this.deleteAddress = async (idAddress) => {
+            let address = await this.addressRepository.findOneBy({ idAddress: idAddress });
+            if (!address) {
+                return "Address not found";
+            }
+            return await this.addressRepository.delete({ idAddress: idAddress });
+        };
         this.userRepository = data_source_1.AppDataSource.getRepository(User_1.User);
+        this.addressRepository = data_source_1.AppDataSource.getRepository(Address_1.Address);
+        this.orderRepository = data_source_1.AppDataSource.getRepository(Order_1.Order);
     }
 }
 exports.default = new UserServices();

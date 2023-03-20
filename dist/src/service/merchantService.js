@@ -8,6 +8,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const auth_1 = require("../middleware/auth");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const Merchant_1 = require("../model/Merchant");
+const Order_1 = require("../model/Order");
 class MerchantServices {
     constructor() {
         this.register = async (merchant) => {
@@ -73,6 +74,10 @@ class MerchantServices {
             let merchants = await this.merchantRepository.query(sql);
             return merchants;
         };
+        this.getMerchant = async (idMerchant) => {
+            let merchant = await this.merchantRepository.findOneBy({ idMerchant: idMerchant });
+            return merchant;
+        };
         this.setStatus = async (id) => {
             let checkMerchant = await this.merchantRepository.findOneBy({ idMerchant: id });
             if (!checkMerchant) {
@@ -85,7 +90,45 @@ class MerchantServices {
                 return await this.merchantRepository.update({ idMerchant: id }, { status: "locked" });
             }
         };
+        this.statisticsByStatus = async (id) => {
+            let sql = `SELECT  o.status,SUM(od.price) as totalMoney
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                            INNER JOIN user u ON o.id_user = u.idUser
+                   where m.idMerchant=${id} 
+                   group by o.status  `;
+            let statistics = await this.orderRepository.query(sql);
+            return statistics;
+        };
+        this.statisticsByFood = async (id) => {
+            let sql = `SELECT  f.nameFood,SUM(od.price) as price
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+         INNER JOIN user u ON o.id_user = u.idUser
+where m.idMerchant=${id} and o.status='success'
+group by od.id_Food
+ `;
+            let statistics = await this.orderRepository.query(sql);
+            return statistics;
+        };
+        this.statisticsByUser = async (id) => {
+            let sql = `SELECT  u.email,SUM(od.price) as totalMoney
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                            INNER JOIN user u ON o.id_user = u.idUser
+                   where m.idMerchant=${id} and o.status='success'
+                   group by o.id_user `;
+            let statistics = await this.orderRepository.query(sql);
+            return statistics;
+        };
         this.merchantRepository = data_source_1.AppDataSource.getRepository(Merchant_1.Merchant);
+        this.orderRepository = data_source_1.AppDataSource.getRepository(Order_1.Order);
     }
 }
 exports.default = new MerchantServices();
