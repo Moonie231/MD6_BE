@@ -48,8 +48,9 @@ class FoodService {
             return this.FoodRepository.delete({ idFood: idFood });
         };
         this.findById = async (idFood) => {
-            let foods = await this.FoodRepository.findOneBy({ idFood: idFood });
-            return foods;
+            let sql = `select * from food join category on food.id_Category = category.idCategory where food.idFood = ${idFood}`;
+            let food = await this.FoodRepository.query(sql);
+            return food;
         };
         this.findFoodByNameFood = async (value) => {
             let sql = `select * from food f join category c on f.id_Category = c.idCategory join merchant m on f.id_Merchant = m.idMerchant where  f.nameFood like '%${value}%' limit 8`;
