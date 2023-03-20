@@ -50,89 +50,139 @@ class MerchantServices {
                     idMerchant: merchantCheck.idMerchant,
                     nameMerchant: merchantCheck.nameMerchant,
                     image: merchantCheck.image,
-                    token : token
+                    token: token
                 }
                 return merchantRes;
             }
         }
 
     }
-    
+
     getMyProfile = async (idMerchant) => {
         let merchant = await this.merchantRepository.findOneBy({idMerchant: idMerchant});
         return merchant;
     }
 
     edit = async (id, newMerchant) => {
-        let checkMerchant = await this.merchantRepository.findOneBy({idMerchant :id})
+        let checkMerchant = await this.merchantRepository.findOneBy({idMerchant: id})
         if (!checkMerchant) {
             return "Merchant not found"
         }
-        return await this.merchantRepository.update({idMerchant :id}, newMerchant)
+        return await this.merchantRepository.update({idMerchant: id}, newMerchant)
     }
 
-    getMerchantActive = async()  => {
+    getMerchantActive = async () => {
         let sql = 'select * from merchant where status = "active" or status = "locked"';
         let merchants = await this.merchantRepository.query(sql);
         return merchants
     }
 
-    getMerchantPending = async() => {
+    getMerchantPending = async () => {
         let sql = 'select * from merchant where status = "pending approval"';
         let merchants = await this.merchantRepository.query(sql);
         return merchants
     }
 
-    getMerchant = async(idMerchant) => {
-        let merchant = await this.merchantRepository.findOneBy({idMerchant:idMerchant})
+    getMerchant = async (idMerchant) => {
+        let merchant = await this.merchantRepository.findOneBy({idMerchant: idMerchant})
         return merchant
     }
 
-    setStatus = async(id) => {
-        let checkMerchant = await this.merchantRepository.findOneBy({idMerchant :id})
+    setStatus = async (id) => {
+        let checkMerchant = await this.merchantRepository.findOneBy({idMerchant: id})
         if (!checkMerchant) {
             return "Merchant not found"
         }
         if (checkMerchant.status === "locked" || checkMerchant.status === "pending approval") {
-            return await this.merchantRepository.update({idMerchant :id}, {status : "active"})
-        }else {
-            return await this.merchantRepository.update({idMerchant :id}, {status : "locked"})
+            return await this.merchantRepository.update({idMerchant: id}, {status: "active"})
+        } else {
+            return await this.merchantRepository.update({idMerchant: id}, {status: "locked"})
         }
     }
 
     statisticsByStatus = async (id) => {
-        let sql = `SELECT  o.status,SUM(od.price) as totalMoney
+        let sql = `SELECT o.status, SUM(od.price) as totalMoney
                    FROM merchant m
                             INNER JOIN food f ON m.idMerchant = f.id_Merchant
                             INNER JOIN order_detail od ON f.idFood = od.id_Food
                             INNER JOIN \`order\` o ON od.id_Order = o.idOrder
                             INNER JOIN user u ON o.id_user = u.idUser
-                   where m.idMerchant=${id} 
+                   where m.idMerchant = ${id}
                    group by o.status  `
         let statistics = await this.orderRepository.query(sql)
         return statistics
     }
-    statisticsByFood = async (id) => {
-        let sql = `SELECT  f.nameFood,SUM(od.price) as price
+    statisticsByDay = async (month,id) => {
+        console.log(month)
+        let sql = `SELECT CONCAT('Week ', FLOOR((DAY(o.Date)) / 7) + 1) AS week, DAY (o.Date),
+                       SUM (od.price) AS totalMoney
                    FROM merchant m
-                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
-                            INNER JOIN order_detail od ON f.idFood = od.id_Food
-                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
-         INNER JOIN user u ON o.id_user = u.idUser
-where m.idMerchant=${id} and o.status='success'
-group by od.id_Food
- `
+                       INNER JOIN food f
+                   ON m.idMerchant = f.id_Merchant
+                       INNER JOIN order_detail od ON f.idFood = od.id_Food
+                       INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                       INNER JOIN user u ON o.id_user = u.idUser
+                   WHERE m.idMerchant = ${id} and MONTH(o.Date)=${month}
+                   GROUP BY week
+                   ORDER BY week ASC`
         let statistics = await this.orderRepository.query(sql)
         return statistics
     }
-    statisticsByUser = async (id) => {
-        let sql = `SELECT  u.email,SUM(od.price) as totalMoney
+    statisticsByMonth = async (year,id) => {
+        let sql = `SELECT CONCAT('Precious ', FLOOR((MONTH(o.Date)) / 3) + 1) AS month,
+       SUM(od.price) AS totalMoney
+                   FROM merchant m
+                       INNER JOIN food f
+                   ON m.idMerchant = f.id_Merchant
+                       INNER JOIN order_detail od ON f.idFood = od.id_Food
+                       INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                       INNER JOIN user u ON o.id_user = u.idUser 
+                   WHERE m.idMerchant = ${id} and YEAR(o.Date)=${year}
+                   GROUP BY month
+                   ORDER BY month ASC
+        `
+        let statistics = await this.orderRepository.query(sql)
+        return statistics
+    }
+    statisticsByYear = async (id) => {
+        let sql = `SELECT CONCAT('Year ', YEAR(o.Date)) AS year,
+       SUM(od.price) AS totalMoney
+                   FROM merchant m
+                       INNER JOIN food f
+                   ON m.idMerchant = f.id_Merchant
+                       INNER JOIN order_detail od ON f.idFood = od.id_Food
+                       INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                       INNER JOIN user u ON o.id_user = u.idUser
+                   WHERE m.idMerchant = ${id}
+                   GROUP BY year
+                   ORDER BY year ASC
+        `
+        let statistics = await this.orderRepository.query(sql)
+        return statistics
+    }
+    statisticsByFood = async (id) => {
+        let sql = `SELECT f.nameFood, SUM(od.price) as price
                    FROM merchant m
                             INNER JOIN food f ON m.idMerchant = f.id_Merchant
                             INNER JOIN order_detail od ON f.idFood = od.id_Food
                             INNER JOIN \`order\` o ON od.id_Order = o.idOrder
                             INNER JOIN user u ON o.id_user = u.idUser
-                   where m.idMerchant=${id} and o.status='success'
+                   where m.idMerchant = ${id}
+                     and o.status = 'success'
+                   group by od.id_Food
+        `
+        let statistics = await this.orderRepository.query(sql)
+        return statistics
+    }
+    statisticsByUser = async (id) => {
+        let sql = `SELECT u.email, SUM(od.price) as totalMoney
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                            INNER JOIN user u ON o.id_user = u.idUser
+                   where m.idMerchant = ${id}
+                     and o.status = 'success'
                    group by o.id_user `
         let statistics = await this.orderRepository.query(sql)
         return statistics

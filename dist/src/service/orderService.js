@@ -44,7 +44,7 @@ class OrderService {
                 let orderInfo = {
                     id_user: newOrder.id_user,
                     totalMoney: newOrder.totalMoney,
-                    Date: new Date().toLocaleDateString(),
+                    Date: new Date().toISOString(),
                     status: 'pending'
                 };
                 let data = {
