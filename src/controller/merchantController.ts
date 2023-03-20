@@ -107,9 +107,37 @@ class MerchantController {
     }
     statisticsByUser=async (req, res) => {
         try {
-            let user=req.body.username
             let id=req.params.id
             let statistics=await this.merchantService.statisticsByUser(id)
+            return res.status(201).json(statistics)
+        }catch (e) {
+            return res.status(500).json(e.message)
+        }
+    }
+    statisticsByWeek=async (req, res) => {
+        try {
+            let month=req.query.month
+            let id=req.params.id
+            let statistics=await this.merchantService.statisticsByDay(month,id)
+            return res.status(201).json(statistics)
+        }catch (e) {
+            return res.status(500).json(e.message)
+        }
+    }
+    statisticsByMonth=async (req, res) => {
+        try {
+            let id=req.params.id
+            let year=req.query.year
+            let statistics=await this.merchantService.statisticsByMonth(year,id)
+            return res.status(201).json(statistics)
+        }catch (e) {
+            return res.status(500).json(e.message)
+        }
+    }
+    statisticsByYear=async (req, res) => {
+        try {
+            let id=req.params.id
+            let statistics=await this.merchantService.statisticsByYear(id)
             return res.status(201).json(statistics)
         }catch (e) {
             return res.status(500).json(e.message)

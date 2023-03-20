@@ -76,7 +76,10 @@ class OrderService {
             let orderInfo={
                 id_user:newOrder.id_user,
                 totalMoney:newOrder.totalMoney,
-                Date:new Date().toLocaleDateString(),
+                // Date:new Date().getDate().toString()+'-'+new Date().getMonth().toString()+
+                //     '-'+new Date().getFullYear()+' '+new Date().getHours().toString()+':'+new Date().getMinutes().toString()
+                //     +':'+new Date().getSeconds().toString(),
+                Date:new Date().toISOString(),
                 status:'pending'
             }
             let data={

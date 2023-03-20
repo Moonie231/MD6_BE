@@ -13,6 +13,9 @@ declare class MerchantController {
     statisticsByStatus: (req: any, res: any) => Promise<any>;
     statisticsByFood: (req: any, res: any) => Promise<any>;
     statisticsByUser: (req: any, res: any) => Promise<any>;
+    statisticsByWeek: (req: any, res: any) => Promise<any>;
+    statisticsByMonth: (req: any, res: any) => Promise<any>;
+    statisticsByYear: (req: any, res: any) => Promise<any>;
 }
 declare const _default: MerchantController;
 export default _default;
