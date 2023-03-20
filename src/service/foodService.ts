@@ -53,7 +53,7 @@ class FoodService {
         let sql = `select * from food join category on food.id_Category = category.idCategory where food.idFood = ${idFood}`
         // let foods = await this.FoodRepository.findOneBy({ idFood: idFood });
         let food = await this.FoodRepository.query(sql);
-        return food;
+        return food[0];
     };
 
     findFoodByNameFood = async (value) => {
