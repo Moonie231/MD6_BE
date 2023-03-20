@@ -13,12 +13,11 @@ class OrderService {
     }
 
     removeCart = async (idOrder)=> {
-        let cart = await this.orderDetailRepository.findOneBy({id_Order:idOrder});
-        console.log(cart)
+        let cart = await this.orderDetailRepository.findOneBy({idOrderDetail:idOrder});
         if(!cart){
             return 'Can not remove order';
         }
-        return this.orderDetailRepository.delete({id_Order: idOrder});
+        return this.orderDetailRepository.delete({idOrderDetail: idOrder});
 
 
     }

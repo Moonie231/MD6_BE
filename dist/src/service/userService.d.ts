@@ -7,7 +7,7 @@ declare class UserServices {
     register: (user: any) => Promise<any>;
     verifyEmail: (tokenEmail: any) => Promise<any>;
     sendEmailVerificationRequest: (email: any) => Promise<void>;
-    checkUser: (user: any) => Promise<"User not found" | "Account not ready" | "Account locked" | "Wrong password" | {
+    checkUser: (user: any) => Promise<"Wrong password" | "Account not ready" | "Account locked" | "User not found" | {
         idUser: any;
         username: any;
         role: any;
