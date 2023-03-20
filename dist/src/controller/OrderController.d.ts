@@ -11,6 +11,8 @@ declare class OrderController {
     findByStatus: (req: Request, res: Response) => Promise<void>;
     findById: (req: Request, res: Response) => Promise<void>;
     countCart: (req: Request, res: Response) => Promise<void>;
+    myOrderFood: (req: Request, res: Response) => Promise<void>;
+    myOrder: (req: Request, res: Response) => Promise<void>;
 }
 declare const _default: OrderController;
 export default _default;

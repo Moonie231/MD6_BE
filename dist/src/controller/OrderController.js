@@ -87,6 +87,27 @@ class OrderController {
                 res.status(500).json(e.message);
             }
         };
+        this.myOrderFood = async (req, res) => {
+            try {
+                let idUser = req.params.idUser;
+                let idOrder = req.params.idOrder;
+                let food = await this.orderService.myOrderFood(idUser, idOrder);
+                res.status(200).json(food);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.myOrder = async (req, res) => {
+            try {
+                let idUser = req.params.idUser;
+                let order = await this.orderService.myOrder(idUser);
+                res.status(200).json(order);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.orderService = orderService_1.default;
     }
 }

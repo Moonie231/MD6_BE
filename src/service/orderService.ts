@@ -13,12 +13,11 @@ class OrderService {
     }
 
     removeCart = async (idOrder)=> {
-        let cart = await this.orderDetailRepository.findOneBy({id_Order:idOrder});
-        console.log(cart)
+        let cart = await this.orderDetailRepository.findOneBy({idOrderDetail:idOrder});
         if(!cart){
             return 'Can not remove order';
         }
-        return this.orderDetailRepository.delete({id_Order: idOrder});
+        return this.orderDetailRepository.delete({idOrderDetail: idOrder});
 
 
     }
@@ -106,6 +105,27 @@ class OrderService {
             return 'Can not countCart';
         }
         return countCart[0].countCart;
+    }
+
+    myOrderFood = async (idUser, idOder)=> {
+        let sql =`SELECT f.nameFood, f.img, c.nameCategory, SUM(od.quantity) as quantity,SUM(od.price) as price, o.totalMoney, o.status
+                  FROM merchant m
+                           INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                           inner join category c on f.id_Category = c.idCategory
+                           INNER JOIN order_detail od ON f.idFood = od.id_Food
+                           INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                           INNER JOIN user u ON o.id_user = u.idUser
+                  where u.idUser=${idUser} and o.idOrder = ${idOder} group by f.idFood `
+
+        let food = await this.orderRepository.query(sql)
+        return food
+    }
+
+    myOrder = async (idUser)=> {
+        let sql = `select *
+                   from \`order\` where id_user = ${idUser} and status != 'watching' `
+        let order = await this.orderRepository.query(sql)
+        return order
     }
 
 }

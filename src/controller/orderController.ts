@@ -98,10 +98,28 @@ class OrderController {
         } catch (e) {
             res.status(500).json(e.message)
         }
-
     }
 
+    myOrderFood = async (req: Request, res: Response) => {
+        try{
+            let idUser = req.params.idUser
+            let idOrder = req.params.idOrder
+            let food = await this.orderService.myOrderFood(idUser, idOrder)
+            res.status(200).json(food)
+        }catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
 
+    myOrder = async (req: Request, res: Response) => {
+        try{
+            let idUser = req.params.idUser
+            let order = await this.orderService.myOrder(idUser)
+            res.status(200).json(order)
+        }catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
 }
 
 export default new OrderController();
