@@ -159,7 +159,8 @@ class OrderController {
     findByOrder = async (req: Request,res: Response) => {
         try {
             let data = req.body
-            let order = await orderService.findByOrder(data[0]);
+            let idMerchant = req.body.idMerchant
+            let order = await orderService.findByOrder(data[0],idMerchant);
             return res.status(200).json({order: order});
 
         } catch (err) {

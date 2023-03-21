@@ -17,7 +17,7 @@ declare class OrderService {
     countCart: (idOrder: any) => Promise<number | "Can not countCart">;
     myOrderFood: (idUser: any, idOder: any) => Promise<any>;
     myOrder: (idUser: any) => Promise<any>;
-    findByOrder: (value: any) => Promise<any>;
+    findByOrder: (value: any, idMerchant: any) => Promise<any>;
 }
 declare const _default: OrderService;
 export default _default;
