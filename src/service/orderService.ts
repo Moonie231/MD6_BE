@@ -186,9 +186,10 @@ class OrderService {
     }
 
     orderDetail = async (idOder) => {
-        let sql = `select \`order\`.*, user.username, user.phone
+        let sql = `select \`order\`.*, user.username, user.phone, address.nameAddress
                    from \`order\`
                             join user on \`order\`.id_user = user.idUser
+                   join address on \`order\`.id_Address = address.idAddress
                    where \`order\`.idOrder = ${idOder}
                      and \`order\`.status != 'watching' `
         let order = await this.orderRepository.query(sql)

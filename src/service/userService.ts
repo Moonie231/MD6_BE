@@ -111,16 +111,27 @@ class UserServices {
                     expiresIn: 36000000
                 });
                 let sql = `select *
-                   from user u
-                            inner join \`order\` o on u.idUser = o.id_user
-                   where idUser=${userCheck.idUser} and o.status='watching'`
-                let order=await this.orderRepository.query(sql)
-                if (order.length===0){
-                    let data={
+                           from user u
+                                    inner join \`order\` o on u.idUser = o.id_user
+                           where idUser = ${userCheck.idUser}
+                             and o.status = 'watching'`
+                let order = await this.orderRepository.query(sql)
+                let sql2 = `SELECT *
+                            FROM merchant m
+                                     INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                                     INNER JOIN order_detail od ON f.idFood = od.id_Food
+                                     INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                                     INNER JOIN user u ON o.id_user = u.idUser
+                            where o.id_user = ${userCheck.idUser}
+                              and o.status = 'watching'
+                            group by u.email`
+                let order2=await this.orderRepository.query(sql2)
+                if (order.length === 0) {
+                    let data = {
                         id_user: userCheck.idUser,
-                        status:'watching'
+                        status: 'watching'
                     }
-                    let orderNew=await this.orderRepository.save(data)
+                    let orderNew = await this.orderRepository.save(data)
                     let userRes = {
                         idUser: userCheck.idUser,
                         username: userCheck.username,
@@ -128,9 +139,24 @@ class UserServices {
                         avatar: userCheck.avatar,
                         status: userCheck.status,
                         token: token,
-                        id_Order:orderNew.idOrder
+                        id_Order: orderNew.idOrder,
+                        idMerchantByOrder: null
                     }
                     return userRes
+                } else if(order.length > 0 && order2.length<1){
+                    const idOrder = order[0].idOrder;
+                    let userRes = {
+                        idUser: userCheck.idUser,
+                        username: userCheck.username,
+                        role: userCheck.role,
+                        avatar: userCheck.avatar,
+                        status: userCheck.status,
+                        token: token,
+                        id_Order: idOrder,
+                        idMerchantByOrder: null
+                    }
+
+                    return userRes;
                 }else {
                     const idOrder = order[0].idOrder;
                     let userRes = {
@@ -140,9 +166,10 @@ class UserServices {
                         avatar: userCheck.avatar,
                         status: userCheck.status,
                         token: token,
-                        id_Order:idOrder
+                        id_Order: idOrder,
+                        idMerchantByOrder: order2[0].idMerchant
                     }
-                    return userRes;
+                    return userRes
                 }
 
             }
