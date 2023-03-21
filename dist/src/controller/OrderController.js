@@ -146,6 +146,16 @@ class OrderController {
                 res.status(500).json(e.message);
             }
         };
+        this.findByOrder = async (req, res) => {
+            try {
+                let data = req.body;
+                let order = await orderService_1.default.findByOrder(data[0]);
+                return res.status(200).json({ order: order });
+            }
+            catch (err) {
+                res.status(500).json(err.message);
+            }
+        };
         this.orderService = orderService_1.default;
     }
 }
