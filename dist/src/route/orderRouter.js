@@ -20,6 +20,7 @@ exports.orderRouter.delete('/delete-cart/:idOrder', OrderController_1.default.de
 exports.orderRouter.put('/statusConfirm/:idOrder', OrderController_1.default.setStatusConfirm);
 exports.orderRouter.put('/statusCancelled/:idOrder', OrderController_1.default.setStatusCancelled);
 exports.orderRouter.put('/statusSuccess/:idOrder', OrderController_1.default.setStatusSuccess);
-exports.orderRouter.get('/my-order-food/:idUser/:idOrder', OrderController_1.default.myOrderFood);
+exports.orderRouter.get('/my-order-food/:idOrder', OrderController_1.default.myOrderFood);
 exports.orderRouter.get('/my-order/:idUser', OrderController_1.default.myOrder);
+exports.orderRouter.get('/orderDetail/:idOrder', OrderController_1.default.orderDetail);
 //# sourceMappingURL=orderRouter.js.map

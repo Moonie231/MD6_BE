@@ -11,4 +11,6 @@ export class Order {
     totalMoney :number;
     @Column({nullable:true})
     status :string;
+    @Column({nullable:true})
+    id_Address :number;
 }
