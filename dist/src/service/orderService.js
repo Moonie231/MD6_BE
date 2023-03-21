@@ -52,7 +52,7 @@ class OrderService {
             }
         };
         this.showCart = async (idOrder) => {
-            let sql = `select o_d.idOrderdetail, f.nameFood,f.img, SUM(o_d.quantity) as quantity ,SUM(o_d.price)as price from order_detail o_d  join food f  on o_d.id_Food = f.idFood where o_d.id_Order = ${idOrder} group by o_d.id_Food`;
+            let sql = `select o_d.idOrderdetail, f.nameFood,f.id_Merchant,f.img, SUM(o_d.quantity) as quantity ,SUM(o_d.price)as price from order_detail o_d  join food f  on o_d.id_Food = f.idFood where o_d.id_Order = ${idOrder} group by o_d.id_Food`;
             let cart = this.orderRepository.query(sql);
             if (!cart) {
                 return 'Can not find cart';
@@ -122,12 +122,12 @@ class OrderService {
             return 'Saved cart';
         };
         this.countCart = async (idOrder) => {
-            let sql = `select count(.idOrder) as countCart from order_detail o_d where o_d.id_Order = ${idOrder};`;
+            let sql = `select count(o_d.idOrderDetail) as countCart from order_detail o_d where o_d.id_Order = ${idOrder};`;
             let countCart = await this.orderRepository.query(sql);
             if (!countCart) {
                 return 'Can not countCart';
             }
-            return countCart[0].countCart;
+            return +countCart[0].countCart;
         };
         this.myOrderFood = async (idUser, idOder) => {
             let sql = `SELECT f.nameFood, f.img, c.nameCategory, SUM(od.quantity) as quantity,SUM(od.price) as price, o.totalMoney, o.status
