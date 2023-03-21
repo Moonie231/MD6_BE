@@ -4,4 +4,5 @@ export declare class Order {
     Date: Date;
     totalMoney: number;
     status: string;
+    id_Address: number;
 }
