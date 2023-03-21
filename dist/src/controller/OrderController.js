@@ -39,6 +39,15 @@ class OrderController {
                 return res.status(500).json(e.message);
             }
         };
+        this.setStatusSuccess = async (req, res) => {
+            try {
+                let order = await this.orderService.setStatusSuccess(req.params.idOrder);
+                return res.status(201).json(order);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
+            }
+        };
         this.showCart = async (req, res) => {
             try {
                 let response = await this.orderService.showCart(req.params.idOrder);
@@ -114,6 +123,37 @@ class OrderController {
             }
             catch (e) {
                 res.status(500).json(e.message);
+            }
+        };
+        this.myOrderFood = async (req, res) => {
+            try {
+                let idUser = req.params.idUser;
+                let idOrder = req.params.idOrder;
+                let food = await this.orderService.myOrderFood(idUser, idOrder);
+                res.status(200).json(food);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.myOrder = async (req, res) => {
+            try {
+                let idUser = req.params.idUser;
+                let order = await this.orderService.myOrder(idUser);
+                res.status(200).json(order);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.findByOrder = async (req, res) => {
+            try {
+                let data = req.body;
+                let order = await orderService_1.default.findByOrder(data[0]);
+                return res.status(200).json({ order: order });
+            }
+            catch (err) {
+                res.status(500).json(err.message);
             }
         };
         this.orderService = orderService_1.default;

@@ -34,6 +34,7 @@ class OrderController {
             return res.status(500).json(e.message)
         }
     }
+
     setStatusCancelled = async (req, res) => {
         try {
             let order = await this.orderService.setStatusCancelled(req.params.idOrder)
@@ -43,6 +44,14 @@ class OrderController {
         }
     }
 
+    setStatusSuccess = async (req, res) => {
+        try {
+            let order = await this.orderService.setStatusSuccess(req.params.idOrder)
+            return res.status(201).json(order)
+        }catch (e) {
+            return res.status(500).json(e.message)
+        }
+    }
 
     showCart = async (req: Request, res: Response)=>{
         try {
@@ -51,7 +60,6 @@ class OrderController {
         } catch (e){
             res.status(500).json(e.message)
         }
-
 
     }
 
@@ -119,7 +127,6 @@ class OrderController {
 
     }
 
-
     countCart = async (req: Request, res: Response)=>{
         try{
             let response = await this.orderService.countCart(req.params.idOrder);
@@ -127,9 +134,38 @@ class OrderController {
         } catch (e) {
             res.status(500).json(e.message)
         }
-
     }
 
+    myOrderFood = async (req: Request, res: Response) => {
+        try{
+            let idUser = req.params.idUser
+            let idOrder = req.params.idOrder
+            let food = await this.orderService.myOrderFood(idUser, idOrder)
+            res.status(200).json(food)
+        }catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
+
+    myOrder = async (req: Request, res: Response) => {
+        try{
+            let idUser = req.params.idUser
+            let order = await this.orderService.myOrder(idUser)
+            res.status(200).json(order)
+        }catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
+    findByOrder = async (req: Request,res: Response) => {
+        try {
+            let data = req.body
+            let order = await orderService.findByOrder(data[0]);
+            return res.status(200).json({order: order});
+
+        } catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
 
 }
 
