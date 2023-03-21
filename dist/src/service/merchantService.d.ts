@@ -3,7 +3,7 @@ declare class MerchantServices {
     private orderRepository;
     constructor();
     register: (merchant: any) => Promise<any>;
-    checkMerchant: (merchant: any) => Promise<"Merchant not found" | "Wrong password" | "Account not ready" | "Account locked" | {
+    checkMerchant: (merchant: any) => Promise<"Account not ready" | "Account locked" | "Wrong password" | "Merchant not found" | {
         idMerchant: any;
         nameMerchant: any;
         image: any;
