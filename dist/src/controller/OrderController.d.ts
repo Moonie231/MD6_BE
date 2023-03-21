@@ -18,6 +18,7 @@ declare class OrderController {
     myOrderFood: (req: Request, res: Response) => Promise<void>;
     myOrder: (req: Request, res: Response) => Promise<void>;
     orderDetail: (req: Request, res: Response) => Promise<void>;
+    findByOrder: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
 }
 declare const _default: OrderController;
 export default _default;

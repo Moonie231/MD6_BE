@@ -13,20 +13,14 @@ class OrderService {
             return this.orderDetailRepository.delete({ idOrderDetail: idOrder });
         };
         this.getOrder = async (idMerchant) => {
-            let sql = `SELECT o.idOrder,
-                          f.nameFood,
-                          SUM(od.quantity) as quantity,
-                          SUM(od.price)    as price,
-                          o.totalMoney,
-                          o.status
-                   FROM merchant m
-                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
-                            INNER JOIN order_detail od ON f.idFood = od.id_Food
-                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
-                            INNER JOIN user u ON o.id_user = u.idUser
-                   where m.idMerchant = ${idMerchant}
-                     and o.status != 'watching'
-                   group by f.idFood`;
+            let sql = `SELECT o.idOrder,f.nameFood,f.img,c.nameCategory,u.username,u.phone, SUM(od.quantity) as quantity,SUM(od.price) as price, o.totalMoney, o.status
+                  FROM merchant m
+                           INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                           inner join category c on f.id_Category = c.idCategory
+                           INNER JOIN order_detail od ON f.idFood = od.id_Food
+                           INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                           INNER JOIN user u ON o.id_user = u.idUser
+                  where m.idMerchant=${idMerchant} and o.status != 'watching' group by f.idFood`;
             let order = await this.orderRepository.query(sql);
             return order;
         };
@@ -111,7 +105,6 @@ class OrderService {
                             join \`order\` on order_detail.id_Order = \`order\`.idOrder
                    where \`order\`.idOrder = ${idOrder}`;
             let order = await this.orderRepository.query(sql);
-            console.log(order);
             if (!order) {
                 return 'Can not find by id order';
             }
@@ -179,6 +172,22 @@ class OrderService {
                      and \`order\`.status != 'watching' `;
             let order = await this.orderRepository.query(sql);
             return order[0];
+        };
+        this.findByOrder = async (value) => {
+            let sql = `select u.username,o.idOrder,f.nameFood,f.img,c.nameCategory,o_d.quantity,o_d.price,o.status,u.phone  from order_detail o_d 
+                    join \`order\` o on o_d.id_Order = o.idOrder 
+                    join user u on o.id_User = u.idUser 
+                    join food f on o_d.id_Food = f.idFood      
+                    join category c on f.id_Category = c.idCategory
+                    
+                    where  u.phone like '%${value}%'
+                       or u.username like '%${value}%' 
+                       or o.idOrder like '%${value}%'`;
+            let order = await this.orderRepository.query(sql);
+            if (!order) {
+                return null;
+            }
+            return order;
         };
         this.orderRepository = data_source_1.AppDataSource.getRepository(Order_1.Order);
         this.orderDetailRepository = data_source_1.AppDataSource.getRepository(OrderDetail_1.OrderDetail);

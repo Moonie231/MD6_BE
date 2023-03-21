@@ -18,6 +18,7 @@ declare class OrderService {
     myOrderFood: (idOder: any) => Promise<any>;
     myOrder: (idUser: any) => Promise<any>;
     orderDetail: (idOder: any) => Promise<any>;
+    findByOrder: (value: any) => Promise<any>;
 }
 declare const _default: OrderService;
 export default _default;
