@@ -15,6 +15,7 @@ declare class UserServices {
         status: any;
         token: string;
         id_Order: any;
+        idMerchantByOrder: any;
     }>;
     getMyProfile: (idUser: any) => Promise<any>;
     edit: (id: any, newUser: any) => Promise<any>;
