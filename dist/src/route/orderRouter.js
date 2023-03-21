@@ -22,4 +22,5 @@ exports.orderRouter.put('/statusCancelled/:idOrder', OrderController_1.default.s
 exports.orderRouter.put('/statusSuccess/:idOrder', OrderController_1.default.setStatusSuccess);
 exports.orderRouter.get('/my-order-food/:idUser/:idOrder', OrderController_1.default.myOrderFood);
 exports.orderRouter.get('/my-order/:idUser', OrderController_1.default.myOrder);
+exports.orderRouter.post('/find-by-order', OrderController_1.default.findByOrder);
 //# sourceMappingURL=orderRouter.js.map

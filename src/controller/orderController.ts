@@ -156,6 +156,17 @@ class OrderController {
             res.status(500).json(e.message)
         }
     }
+    findByOrder = async (req: Request,res: Response) => {
+        try {
+            let data = req.body
+            let order = await orderService.findByOrder(data[0]);
+            return res.status(200).json({order: order});
+
+        } catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
+
 }
 
 export default new OrderController();
