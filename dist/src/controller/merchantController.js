@@ -42,7 +42,6 @@ class MerchantController {
         this.editMerchant = async (req, res) => {
             try {
                 let merchant = await this.merchantService.edit(req.params.idMerchant, req.body);
-                console.log(merchant);
                 return res.status(201).json(merchant);
             }
             catch (e) {
@@ -67,10 +66,83 @@ class MerchantController {
                 res.status(500).json(e.message);
             }
         };
+        this.getMerchant = async (req, res) => {
+            try {
+                let idMerchant = req.params.idMerchant;
+                let merchant = await this.merchantService.getMerchant(idMerchant);
+                return res.status(200).json(merchant);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.setStatus = async (req, res) => {
             try {
                 let merchant = await this.merchantService.setStatus(req.params.idMerchant);
                 return res.status(201).json(merchant);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
+            }
+        };
+        this.statisticsByStatus = async (req, res) => {
+            try {
+                let status = req.body.status;
+                let id = req.params.id;
+                let statistics = await this.merchantService.statisticsByStatus(id, status);
+                return res.status(201).json(statistics);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
+            }
+        };
+        this.statisticsByFood = async (req, res) => {
+            try {
+                let id = req.params.id;
+                let statistics = await this.merchantService.statisticsByFood(id);
+                return res.status(201).json(statistics);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
+            }
+        };
+        this.statisticsByUser = async (req, res) => {
+            try {
+                let id = req.params.id;
+                let statistics = await this.merchantService.statisticsByUser(id);
+                return res.status(201).json(statistics);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
+            }
+        };
+        this.statisticsByWeek = async (req, res) => {
+            try {
+                let month = req.query.month;
+                let id = req.params.id;
+                let statistics = await this.merchantService.statisticsByDay(month, id);
+                return res.status(201).json(statistics);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
+            }
+        };
+        this.statisticsByMonth = async (req, res) => {
+            try {
+                let id = req.params.id;
+                let year = req.query.year;
+                let statistics = await this.merchantService.statisticsByMonth(year, id);
+                return res.status(201).json(statistics);
+            }
+            catch (e) {
+                return res.status(500).json(e.message);
+            }
+        };
+        this.statisticsByYear = async (req, res) => {
+            try {
+                let id = req.params.id;
+                let statistics = await this.merchantService.statisticsByYear(id);
+                return res.status(201).json(statistics);
             }
             catch (e) {
                 return res.status(500).json(e.message);

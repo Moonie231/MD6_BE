@@ -8,6 +8,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const auth_1 = require("../middleware/auth");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const Merchant_1 = require("../model/Merchant");
+const Order_1 = require("../model/Order");
 class MerchantServices {
     constructor() {
         this.register = async (merchant) => {
@@ -57,7 +58,6 @@ class MerchantServices {
             return merchant;
         };
         this.edit = async (id, newMerchant) => {
-            console.log(newMerchant);
             let checkMerchant = await this.merchantRepository.findOneBy({ idMerchant: id });
             if (!checkMerchant) {
                 return "Merchant not found";
@@ -74,6 +74,10 @@ class MerchantServices {
             let merchants = await this.merchantRepository.query(sql);
             return merchants;
         };
+        this.getMerchant = async (idMerchant) => {
+            let merchant = await this.merchantRepository.findOneBy({ idMerchant: idMerchant });
+            return merchant;
+        };
         this.setStatus = async (id) => {
             let checkMerchant = await this.merchantRepository.findOneBy({ idMerchant: id });
             if (!checkMerchant) {
@@ -86,7 +90,95 @@ class MerchantServices {
                 return await this.merchantRepository.update({ idMerchant: id }, { status: "locked" });
             }
         };
+        this.statisticsByStatus = async (id) => {
+            let sql = `SELECT o.status, SUM(od.price) as totalMoney
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                            INNER JOIN user u ON o.id_user = u.idUser
+                   where m.idMerchant = ${id}
+                   group by o.status  `;
+            let statistics = await this.orderRepository.query(sql);
+            return statistics;
+        };
+        this.statisticsByDay = async (month, id) => {
+            console.log(month);
+            let sql = `SELECT CONCAT('Week ', FLOOR((DAY(o.Date)) / 7) + 1) AS week, DAY (o.Date),
+                       SUM (od.price) AS totalMoney
+                   FROM merchant m
+                       INNER JOIN food f
+                   ON m.idMerchant = f.id_Merchant
+                       INNER JOIN order_detail od ON f.idFood = od.id_Food
+                       INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                       INNER JOIN user u ON o.id_user = u.idUser
+                   WHERE m.idMerchant = ${id} and MONTH(o.Date)=${month}
+                   GROUP BY week
+                   ORDER BY week ASC`;
+            let statistics = await this.orderRepository.query(sql);
+            return statistics;
+        };
+        this.statisticsByMonth = async (year, id) => {
+            let sql = `SELECT CONCAT('Precious ', FLOOR((MONTH(o.Date)) / 3) + 1) AS month,
+       SUM(od.price) AS totalMoney
+                   FROM merchant m
+                       INNER JOIN food f
+                   ON m.idMerchant = f.id_Merchant
+                       INNER JOIN order_detail od ON f.idFood = od.id_Food
+                       INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                       INNER JOIN user u ON o.id_user = u.idUser 
+                   WHERE m.idMerchant = ${id} and YEAR(o.Date)=${year}
+                   GROUP BY month
+                   ORDER BY month ASC
+        `;
+            let statistics = await this.orderRepository.query(sql);
+            return statistics;
+        };
+        this.statisticsByYear = async (id) => {
+            let sql = `SELECT CONCAT('Year ', YEAR(o.Date)) AS year,
+       SUM(od.price) AS totalMoney
+                   FROM merchant m
+                       INNER JOIN food f
+                   ON m.idMerchant = f.id_Merchant
+                       INNER JOIN order_detail od ON f.idFood = od.id_Food
+                       INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                       INNER JOIN user u ON o.id_user = u.idUser
+                   WHERE m.idMerchant = ${id}
+                   GROUP BY year
+                   ORDER BY year ASC
+        `;
+            let statistics = await this.orderRepository.query(sql);
+            return statistics;
+        };
+        this.statisticsByFood = async (id) => {
+            let sql = `SELECT f.nameFood, SUM(od.price) as price
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                            INNER JOIN user u ON o.id_user = u.idUser
+                   where m.idMerchant = ${id}
+                     and o.status = 'success'
+                   group by od.id_Food
+        `;
+            let statistics = await this.orderRepository.query(sql);
+            return statistics;
+        };
+        this.statisticsByUser = async (id) => {
+            let sql = `SELECT u.email, SUM(od.price) as totalMoney
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                            INNER JOIN user u ON o.id_user = u.idUser
+                   where m.idMerchant = ${id}
+                     and o.status = 'success'
+                   group by o.id_user `;
+            let statistics = await this.orderRepository.query(sql);
+            return statistics;
+        };
         this.merchantRepository = data_source_1.AppDataSource.getRepository(Merchant_1.Merchant);
+        this.orderRepository = data_source_1.AppDataSource.getRepository(Order_1.Order);
     }
 }
 exports.default = new MerchantServices();

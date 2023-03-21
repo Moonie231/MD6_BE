@@ -27,12 +27,16 @@ __decorate([
 ], Order.prototype, "Date", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true, type: "float" }),
-    __metadata("design:type", Date)
+    __metadata("design:type", Number)
 ], Order.prototype, "totalMoney", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Order.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], Order.prototype, "id_Address", void 0);
 Order = __decorate([
     (0, typeorm_1.Entity)()
 ], Order);

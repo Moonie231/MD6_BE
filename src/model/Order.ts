@@ -8,7 +8,9 @@ export class Order {
     @Column({nullable:true})
     Date :Date;
     @Column({nullable:true,type:"float"})
-    totalMoney :Date;
+    totalMoney :number;
     @Column({nullable:true})
     status :string;
+    @Column({nullable:true})
+    id_Address :number;
 }
