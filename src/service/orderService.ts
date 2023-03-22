@@ -17,9 +17,8 @@ class OrderService {
             return 'Can not remove order';
         }
         return this.orderDetailRepository.delete({idOrderDetail: idOrder});
-
-
     }
+
     getOrder = async (idMerchant) => {
         let sql = `SELECT o.*, u.username
                    FROM merchant m
@@ -28,7 +27,7 @@ class OrderService {
                             INNER JOIN order_detail od ON f.idFood = od.id_Food
                             INNER JOIN \`order\` o ON od.id_Order = o.idOrder
                             INNER JOIN user u ON o.id_user = u.idUser
-                   where m.idMerchant = ${idMerchant}
+                   where m.idMerchant = ${idMerchant} and o.status != 'watching'
                    group by o.idOrder`
         let order = await this.orderRepository.query(sql)
         return order
@@ -67,6 +66,7 @@ class OrderService {
                           f.nameFood,
                           f.id_Merchant,
                           f.img,
+                          o_d.id_Food,
                           SUM(o_d.quantity) as quantity,
                           SUM(o_d.price)    as price
                    from order_detail o_d
@@ -206,7 +206,6 @@ class OrderService {
         let order = await this.orderRepository.query(sql)
         return order[0]
     }
-
     findByOrder = async (value) => {
         let sql = `select u.username,
                           o.idOrder,

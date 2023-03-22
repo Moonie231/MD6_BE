@@ -103,6 +103,16 @@ class FoodController {
             res.status(500).json(err.message);
         }
     }
+    updateQuantity = async (req: Request,res: Response) => {
+        try {
+            let id=req.params.id
+            let foods = await foodService.updateQuantity(id)
+            return res.status(200).json(foods)
+
+        } catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
 
 }
 export default new FoodController();
