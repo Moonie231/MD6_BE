@@ -16,7 +16,7 @@ class OrderService {
             for (let i = 0; i < order.length; i++) {
                 await this.orderDetailRepository.delete({ id_Food: idFood });
             }
-            return order;
+            return this.orderDetailRepository.delete({ idOrderDetail: idOrder });
         };
         this.getOrder = async (idMerchant) => {
             let sql = `SELECT o.*, u.username
@@ -28,7 +28,6 @@ class OrderService {
                             INNER JOIN user u ON o.id_user = u.idUser
                    where m.idMerchant = ${idMerchant} and o.status != 'watching'
                    group by o.idOrder`;
-
             let order = await this.orderRepository.query(sql);
             return order;
         };
