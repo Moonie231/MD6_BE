@@ -2,7 +2,7 @@ declare class OrderService {
     private orderRepository;
     private orderDetailRepository;
     constructor();
-    removeCart: (idOrder: any) => Promise<any>;
+    removeCart: (idOrder: any, idFood: any) => Promise<any>;
     getOrder: (idMerchant: any) => Promise<any>;
     setStatusConfirm: (idOrder: any) => Promise<any>;
     setStatusCancelled: (idOrder: any) => Promise<any>;

@@ -11,6 +11,7 @@ declare class FoodController {
     destroy: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     update: (req: Request, res: Response) => Promise<void>;
     findFoodByName: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    updateQuantity: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
 }
 declare const _default: FoodController;
 export default _default;
