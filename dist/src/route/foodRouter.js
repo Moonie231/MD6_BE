@@ -15,4 +15,5 @@ exports.foodRouter.post("", foodController_1.default.createFood);
 exports.foodRouter.put("/:idFood", foodController_1.default.update);
 exports.foodRouter.delete("/:idFood", foodController_1.default.destroy);
 exports.foodRouter.get("/find-by-id/:idFood", foodController_1.default.find);
+exports.foodRouter.put("/quantity/:id", foodController_1.default.updateQuantity);
 //# sourceMappingURL=foodRouter.js.map
