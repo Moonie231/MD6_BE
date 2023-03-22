@@ -11,24 +11,25 @@ class OrderService {
         this.orderDetailRepository = AppDataSource.getRepository(OrderDetail)
     }
 
-    removeCart = async (idOrder) => {
+  removeCart = async (idOrder) => {
         let cart = await this.orderDetailRepository.findOneBy({idOrderDetail: idOrder});
         if (!cart) {
             return 'Can not remove order';
         }
         return this.orderDetailRepository.delete({idOrderDetail: idOrder});
-
-
     }
-    getOrder = async (idMerchant)=> {
-        let sql =`SELECT o.idOrder,f.nameFood,f.img,c.nameCategory,u.username,u.phone, SUM(od.quantity) as quantity,SUM(od.price) as price, o.totalMoney, o.status
-                  FROM merchant m
-                           INNER JOIN food f ON m.idMerchant = f.id_Merchant
-                           inner join category c on f.id_Category = c.idCategory
-                           INNER JOIN order_detail od ON f.idFood = od.id_Food
-                           INNER JOIN \`order\` o ON od.id_Order = o.idOrder
-                           INNER JOIN user u ON o.id_user = u.idUser
-                  where m.idMerchant=${idMerchant} and o.status != 'watching' group by f.idFood`
+    
+    getOrder = async (idMerchant) => {
+        let sql = `SELECT o.*, u.username
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            inner join category c on f.id_Category = c.idCategory
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                            INNER JOIN user u ON o.id_user = u.idUser
+                   where m.idMerchant = ${idMerchant} and o.status != 'watching'
+                   group by o.idOrder`
+
         let order = await this.orderRepository.query(sql)
         return order
     }
@@ -62,7 +63,17 @@ class OrderService {
     }
 
     showCart = async (idOrder) => {
-        let sql = `select o_d.idOrderdetail, f.nameFood,f.id_Merchant,f.img, SUM(o_d.quantity) as quantity ,SUM(o_d.price)as price from order_detail o_d  join food f  on o_d.id_Food = f.idFood where o_d.id_Order = ${idOrder} group by o_d.id_Food`
+        let sql = `select o_d.idOrderdetail,
+                          f.nameFood,
+                          f.id_Merchant,
+                          f.img,
+                          o_d.id_Food,
+                          SUM(o_d.quantity) as quantity,
+                          SUM(o_d.price)    as price
+                   from order_detail o_d
+                            join food f on o_d.id_Food = f.idFood
+                   where o_d.id_Order = ${idOrder}
+                   group by o_d.id_Food`
         let cart = this.orderRepository.query(sql)
         if (!cart) {
             return 'Can not find cart'
@@ -78,19 +89,18 @@ class OrderService {
         return order
     }
 
-    updateOrder = async (idOrder, newOrder)=>{
-        let order = await this.orderRepository.findOneBy({idOrder:idOrder});
-        if(!order){
+    updateOrder = async (idOrder, newOrder) => {
+        let order = await this.orderRepository.findOneBy({idOrder: idOrder});
+        if (!order) {
             return 'Can not update order';
-        }
-        else {
+        } else {
 
-            let orderInfo={
-                id_user:newOrder.id_user,
-                totalMoney:newOrder.totalMoney,
-                id_Address:newOrder.id_Address,
-                Date:new Date().toISOString(),
-                status:'pending'
+            let orderInfo = {
+                id_user: newOrder.id_user,
+                totalMoney: newOrder.totalMoney,
+                id_Address: newOrder.id_Address,
+                Date: new Date().toISOString(),
+                status: 'pending'
             }
             let data = {
                 id_user: newOrder.id_user,
@@ -119,7 +129,7 @@ class OrderService {
                             join \`order\` on order_detail.id_Order = \`order\`.idOrder
                    where \`order\`.idOrder = ${idOrder}`
         let order = await this.orderRepository.query(sql);
-        if(!order){
+        if (!order) {
             return 'Can not find by id order';
         }
         return order;
@@ -145,8 +155,10 @@ class OrderService {
         return 'Saved cart'
     }
 
-    countCart = async (idOrder)=> {
-        let sql =`select count(o_d.idOrderDetail) as countCart from order_detail o_d where o_d.id_Order = ${idOrder};`
+    countCart = async (idOrder) => {
+        let sql = `select count(o_d.idOrderDetail) as countCart
+                   from order_detail o_d
+                   where o_d.id_Order = ${idOrder};`
         let countCart = await this.orderRepository.query(sql);
         if (!countCart) {
             return 'Can not countCart';
@@ -209,13 +221,12 @@ class OrderService {
         let sql = `select \`order\`.*, user.username, user.phone, address.nameAddress
                    from \`order\`
                             join user on \`order\`.id_user = user.idUser
-                   join address on \`order\`.id_Address = address.idAddress
+                            join address on \`order\`.id_Address = address.idAddress
                    where \`order\`.idOrder = ${idOder}
                      and \`order\`.status != 'watching' `
         let order = await this.orderRepository.query(sql)
         return order[0]
     }
-
 }
 
 export default new OrderService();
