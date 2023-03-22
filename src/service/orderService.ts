@@ -19,6 +19,7 @@ class OrderService {
         return this.orderDetailRepository.delete({idOrderDetail: idOrder});
     }
 
+
     getOrder = async (idMerchant) => {
         let sql = `SELECT o.*, u.username
                    FROM merchant m
