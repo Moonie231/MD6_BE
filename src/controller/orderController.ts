@@ -13,8 +13,7 @@ class OrderController {
     }
     deleteCart = async (req: Request, res: Response)=>{
         let idOrder = req.params.idOrder;
-        let idFood = req.params.idFood;
-        let cart = await orderService.removeCart(idOrder,idFood);
+        let cart = await orderService.removeCart(idOrder);
         return res.status(200).json(cart);
     }
 
