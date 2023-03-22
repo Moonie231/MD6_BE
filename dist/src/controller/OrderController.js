@@ -8,7 +8,8 @@ class OrderController {
     constructor() {
         this.deleteCart = async (req, res) => {
             let idOrder = req.params.idOrder;
-            let cart = await orderService_1.default.removeCart(idOrder);
+            let idFood = req.params.idFood;
+            let cart = await orderService_1.default.removeCart(idOrder, idFood);
             return res.status(200).json(cart);
         };
         this.getOrder = async (req, res) => {

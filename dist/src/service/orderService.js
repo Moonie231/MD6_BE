@@ -5,12 +5,18 @@ const data_source_1 = require("../data-source");
 const OrderDetail_1 = require("../model/OrderDetail");
 class OrderService {
     constructor() {
-        this.removeCart = async (idOrder) => {
-            let cart = await this.orderDetailRepository.findOneBy({ idOrderDetail: idOrder });
-            if (!cart) {
-                return 'Can not remove order';
+        this.removeCart = async (idOrder, idFood) => {
+            let sql = `SELECT od.idOrderDetail, od.id_Food, f.quantityFood, SUM(od.quantity) as quantity, f.idFood
+                   FROM food f
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                   where o.idOrder = ${idOrder}
+                   group by f.idFood`;
+            let order = await this.orderRepository.query(sql);
+            for (let i = 0; i < order.length; i++) {
+                await this.orderDetailRepository.delete({ id_Food: idFood });
             }
-            return this.orderDetailRepository.delete({ idOrderDetail: idOrder });
+            return order;
         };
         this.getOrder = async (idMerchant) => {
             let sql = `SELECT o.*, u.username
@@ -22,6 +28,7 @@ class OrderService {
                             INNER JOIN user u ON o.id_user = u.idUser
                    where m.idMerchant = ${idMerchant} and o.status != 'watching'
                    group by o.idOrder`;
+
             let order = await this.orderRepository.query(sql);
             return order;
         };

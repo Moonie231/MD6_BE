@@ -11,15 +11,14 @@ class OrderService {
         this.orderDetailRepository = AppDataSource.getRepository(OrderDetail)
     }
 
-    removeCart = async (idOrder) => {
+  removeCart = async (idOrder) => {
         let cart = await this.orderDetailRepository.findOneBy({idOrderDetail: idOrder});
         if (!cart) {
             return 'Can not remove order';
         }
         return this.orderDetailRepository.delete({idOrderDetail: idOrder});
     }
-
-
+    
     getOrder = async (idMerchant) => {
         let sql = `SELECT o.*, u.username
                    FROM merchant m
@@ -30,6 +29,7 @@ class OrderService {
                             INNER JOIN user u ON o.id_user = u.idUser
                    where m.idMerchant = ${idMerchant} and o.status != 'watching'
                    group by o.idOrder`
+
         let order = await this.orderRepository.query(sql)
         return order
     }
@@ -233,6 +233,7 @@ class OrderService {
         }
         return order
     };
+
 
 }
 

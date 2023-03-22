@@ -11,7 +11,7 @@ orderRouter.get('/find-by-status/:idUser', orderController.findByStatus);
 orderRouter.get('/find-by-idUser/:idUser', orderController.findById);
 orderRouter.get('/find-by-idOrder/:idOrder', orderController.findByIdOrder);
 orderRouter.get('/show-cart/:idOrder', orderController.showCart);
-orderRouter.delete('/delete-cart/:idOrder', orderController.deleteCart);
+orderRouter.delete('/delete-cart/:idOrder/:idFood', orderController.deleteCart);
 orderRouter.put('/statusConfirm/:idOrder',orderController.setStatusConfirm);
 orderRouter.put('/statusCancelled/:idOrder',orderController.setStatusCancelled)
 orderRouter.put('/statusSuccess/:idOrder',orderController.setStatusSuccess)
