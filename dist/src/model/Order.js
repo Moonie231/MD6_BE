@@ -33,6 +33,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Order.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], Order.prototype, "id_Address", void 0);
 Order = __decorate([
     (0, typeorm_1.Entity)()
 ], Order);

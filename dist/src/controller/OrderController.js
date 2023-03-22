@@ -127,9 +127,8 @@ class OrderController {
         };
         this.myOrderFood = async (req, res) => {
             try {
-                let idUser = req.params.idUser;
                 let idOrder = req.params.idOrder;
-                let food = await this.orderService.myOrderFood(idUser, idOrder);
+                let food = await this.orderService.myOrderFood(idOrder);
                 res.status(200).json(food);
             }
             catch (e) {
@@ -146,11 +145,21 @@ class OrderController {
                 res.status(500).json(e.message);
             }
         };
+        this.orderDetail = async (req, res) => {
+            try {
+                let idOrder = req.params.idOrder;
+                let order = await this.orderService.orderDetail(idOrder);
+                res.status(200).json(order);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.findByOrder = async (req, res) => {
             try {
                 let data = req.body;
-                let idMerchant = req.body.idMerchant;
-                let order = await orderService_1.default.findByOrder(data[0], idMerchant);
+                console.log(req.body);
+                let order = await orderService_1.default.findByOrder(data[0], data[1]);
                 return res.status(200).json({ order: order });
             }
             catch (err) {
