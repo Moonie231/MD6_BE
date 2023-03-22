@@ -18,6 +18,7 @@ class OrderController {
         return res.status(200).json(cart);
     }
 
+
     getOrder = async (req: Request, res: Response)=>{
         try{
             let idMerchant = req.params.idMerchant

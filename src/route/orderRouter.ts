@@ -1,9 +1,5 @@
 import {Router} from "express";
 import orderController from "../controller/OrderController";
-import MerchantController from "../controller/merchantController";
-import {adminRouter} from "./adminRouter";
-import foodController from "../controller/foodController";
-import {foodRouter} from "./foodRouter";
 
 export const orderRouter = Router();
 orderRouter.get('/getOrder/:idMerchant', orderController.getOrder);

@@ -19,25 +19,16 @@ class OrderService {
             return order;
         };
         this.getOrder = async (idMerchant) => {
-            let sql = `SELECT o.idOrder,
-                          f.nameFood,
-                          f.img,
-                          c.nameCategory,
-                          u.username,
-                          u.phone,
-                          SUM(od.quantity) as quantity,
-                          SUM(od.price)    as price,
-                          o.totalMoney,
-                          o.status
+            let sql = `SELECT o.*, u.username
                    FROM merchant m
                             INNER JOIN food f ON m.idMerchant = f.id_Merchant
                             inner join category c on f.id_Category = c.idCategory
                             INNER JOIN order_detail od ON f.idFood = od.id_Food
                             INNER JOIN \`order\` o ON od.id_Order = o.idOrder
                             INNER JOIN user u ON o.id_user = u.idUser
-                   where m.idMerchant = ${idMerchant}
-                     and o.status != 'watching'
-                   group by f.idFood`;
+                   where m.idMerchant = ${idMerchant} and o.status != 'watching'
+                   group by o.idOrder`;
+
             let order = await this.orderRepository.query(sql);
             return order;
         };
