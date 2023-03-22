@@ -16,12 +16,12 @@ exports.orderRouter.get('/find-by-status/:idUser', OrderController_1.default.fin
 exports.orderRouter.get('/find-by-idUser/:idUser', OrderController_1.default.findById);
 exports.orderRouter.get('/find-by-idOrder/:idOrder', OrderController_1.default.findByIdOrder);
 exports.orderRouter.get('/show-cart/:idOrder', OrderController_1.default.showCart);
-exports.orderRouter.delete('/delete-cart/:idOrder/:idFood', OrderController_1.default.deleteCart);
+exports.orderRouter.delete('/delete-cart/:idOrder', OrderController_1.default.deleteCart);
 exports.orderRouter.put('/statusConfirm/:idOrder', OrderController_1.default.setStatusConfirm);
 exports.orderRouter.put('/statusCancelled/:idOrder', OrderController_1.default.setStatusCancelled);
 exports.orderRouter.put('/statusSuccess/:idOrder', OrderController_1.default.setStatusSuccess);
 exports.orderRouter.get('/my-order-food/:idOrder', OrderController_1.default.myOrderFood);
 exports.orderRouter.get('/my-order/:idUser', OrderController_1.default.myOrder);
 exports.orderRouter.get('/orderDetail/:idOrder', OrderController_1.default.orderDetail);
-exports.orderRouter.post('/find-by-order', OrderController_1.default.findByOrder);
+exports.orderRouter.get('/find-by-order/:idMerchant?', OrderController_1.default.findByOrder);
 //# sourceMappingURL=orderRouter.js.map

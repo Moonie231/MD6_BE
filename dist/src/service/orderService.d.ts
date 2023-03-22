@@ -2,7 +2,7 @@ declare class OrderService {
     private orderRepository;
     private orderDetailRepository;
     constructor();
-    removeCart: (idOrder: any, idFood: any) => Promise<any>;
+    removeCart: (idOrder: any) => Promise<any>;
     getOrder: (idMerchant: any) => Promise<any>;
     setStatusConfirm: (idOrder: any) => Promise<any>;
     setStatusCancelled: (idOrder: any) => Promise<any>;
@@ -18,7 +18,7 @@ declare class OrderService {
     myOrderFood: (idOder: any) => Promise<any>;
     myOrder: (idUser: any) => Promise<any>;
     orderDetail: (idOder: any) => Promise<any>;
-    findByOrder: (value: any) => Promise<any>;
+    findByOrder: (value: any, idMerchant: any) => Promise<any>;
 }
 declare const _default: OrderService;
 export default _default;
