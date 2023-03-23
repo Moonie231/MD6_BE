@@ -9,48 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Food = void 0;
+exports.Coupon = void 0;
 const typeorm_1 = require("typeorm");
-let Food = class Food {
+let Coupon = class Coupon {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Food.prototype, "idFood", void 0);
+], Coupon.prototype, "idCoupon", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], Food.prototype, "nameFood", void 0);
+], Coupon.prototype, "value", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], Food.prototype, "description", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true, type: "float" }),
+    (0, typeorm_1.Column)({ nullable: true, default: 2 }),
     __metadata("design:type", Number)
-], Food.prototype, "price", void 0);
+], Coupon.prototype, "role", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
-], Food.prototype, "id_Category", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Number)
-], Food.prototype, "id_Merchant", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Number)
-], Food.prototype, "quantityFood", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], Food.prototype, "img", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Number)
-], Food.prototype, "id_Coupon", void 0);
-Food = __decorate([
+], Coupon.prototype, "id_Merchant", void 0);
+Coupon = __decorate([
     (0, typeorm_1.Entity)()
-], Food);
-exports.Food = Food;
-//# sourceMappingURL=Food.js.map
+], Coupon);
+exports.Coupon = Coupon;
+//# sourceMappingURL=Coupon.js.map

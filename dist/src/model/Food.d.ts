@@ -7,4 +7,5 @@ export declare class Food {
     id_Merchant: number;
     quantityFood: number;
     img: string;
+    id_Coupon: number;
 }

@@ -16,7 +16,7 @@ declare class OrderService {
     saveCart: (values: any) => Promise<"Can not save cart" | "Saved cart">;
     countCart: (idOrder: any) => Promise<number | "Can not countCart">;
     myOrderFood: (idOder: any) => Promise<any>;
-    myOrder: (idUser: any) => Promise<any>;
+    myOrder: (idUser: any, limit: any, offset: any) => Promise<any>;
     countOrderUser: (idUser: any) => Promise<any>;
     orderDetail: (idOder: any) => Promise<any>;
     findByOrder: (value: any, idMerchant: any) => Promise<any>;
