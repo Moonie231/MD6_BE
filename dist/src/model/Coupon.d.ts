@@ -1,6 +1,6 @@
 export declare class Coupon {
     idCoupon: number;
-    value: string;
+    value: number;
     role: number;
     id_Merchant: number;
 }

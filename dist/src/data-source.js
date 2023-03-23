@@ -11,6 +11,7 @@ const Category_1 = require("./model/Category");
 const OrderDetail_1 = require("./model/OrderDetail");
 const Address_1 = require("./model/Address");
 const Coupon_1 = require("./model/Coupon");
+const Notification_1 = require("./model/Notification");
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "mysql",
     host: "localhost",
@@ -19,6 +20,6 @@ exports.AppDataSource = new typeorm_1.DataSource({
     password: "123456",
     database: "case_md6",
     synchronize: true,
-    entities: [Merchant_1.Merchant, User_1.User, Food_1.Food, Category_1.Category, Order_1.Order, OrderDetail_1.OrderDetail, Address_1.Address, Coupon_1.Coupon]
+    entities: [Merchant_1.Merchant, User_1.User, Food_1.Food, Category_1.Category, Order_1.Order, OrderDetail_1.OrderDetail, Address_1.Address, Coupon_1.Coupon, Notification_1.Notification]
 });
 //# sourceMappingURL=data-source.js.map

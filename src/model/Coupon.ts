@@ -4,7 +4,7 @@ export class Coupon {
     @PrimaryGeneratedColumn()
     idCoupon : number;
     @Column({nullable:true})
-    value : string;
+    value : number;
     @Column({nullable:true, default: 2})
     role : number;
     @Column({nullable:true})
