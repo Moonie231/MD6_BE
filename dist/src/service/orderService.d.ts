@@ -17,6 +17,7 @@ declare class OrderService {
     countCart: (idOrder: any) => Promise<number | "Can not countCart">;
     myOrderFood: (idOder: any) => Promise<any>;
     myOrder: (idUser: any) => Promise<any>;
+    countOrderUser: (idUser: any) => Promise<any>;
     orderDetail: (idOder: any) => Promise<any>;
     findByOrder: (value: any, idMerchant: any) => Promise<any>;
 }

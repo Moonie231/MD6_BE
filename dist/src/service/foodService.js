@@ -95,7 +95,6 @@ class FoodService {
             let order = await this.orderRepository.query(sql);
             let quantity = 0;
             for (let i = 0; i < order.length; i++) {
-                console.log(order[i]);
                 quantity = order[i].quantityFood - order[i].quantity;
                 await this.updateOneQuantity(order[i].idFood, quantity);
             }
