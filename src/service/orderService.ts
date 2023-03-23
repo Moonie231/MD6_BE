@@ -20,7 +20,7 @@ class OrderService {
     }
     
     getOrder = async (idMerchant) => {
-        let sql = `SELECT o.*, u.username
+        let sql = `SELECT o.*, u.username,u.idUser
                    FROM merchant m
                             INNER JOIN food f ON m.idMerchant = f.id_Merchant
                             inner join category c on f.id_Category = c.idCategory
