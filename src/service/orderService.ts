@@ -188,7 +188,7 @@ class OrderService {
         return food
     }
 
-    myOrder = async (idUser) => {
+    myOrder = async (idUser,limit,offset) => {
         let sql = `SELECT o.*, m.nameMerchant
                    FROM merchant m
                             INNER JOIN food f ON m.idMerchant = f.id_Merchant
@@ -197,7 +197,7 @@ class OrderService {
                             INNER JOIN \`order\` o ON od.id_Order = o.idOrder
                             INNER JOIN user u ON o.id_user = u.idUser
                    where u.idUser = ${idUser} and o.status != 'watching'
-                   group by o.idOrder `
+                   group by o.idOrder limit ${limit} offset ${offset}`
         let order = await this.orderRepository.query(sql)
         return order
     }

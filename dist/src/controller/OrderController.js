@@ -138,8 +138,22 @@ class OrderController {
         this.myOrder = async (req, res) => {
             try {
                 let idUser = req.params.idUser;
-                let order = await this.orderService.myOrder(idUser);
-                res.status(200).json(order);
+                let limit = 3;
+                let offset = 0;
+                let page = 1;
+                if (req.query.page) {
+                    page = +req.query.page;
+                    offset = (+page - 1) * limit;
+                }
+                let totalBlogs = await orderService_1.default.countOrderUser(idUser);
+                const count = parseInt(totalBlogs[0]['count(idOrder)']);
+                let totalPage = Math.ceil(count / limit);
+                let order = await this.orderService.myOrder(idUser, limit, offset);
+                res.status(200).json({
+                    order: order,
+                    currentPage: page,
+                    totalPage: totalPage
+                });
             }
             catch (e) {
                 res.status(500).json(e.message);
