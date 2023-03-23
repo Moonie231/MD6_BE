@@ -19,7 +19,7 @@ declare class OrderService {
     myOrder: (idUser: any, limit: any, offset: any) => Promise<any>;
     countOrderUser: (idUser: any) => Promise<any>;
     orderDetail: (idOder: any) => Promise<any>;
-    findByOrder: (value: any) => Promise<any>;
+    findByOrder: (value: any, idMerchant: any) => Promise<any>;
 }
 declare const _default: OrderService;
 export default _default;

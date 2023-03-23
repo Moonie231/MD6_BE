@@ -198,7 +198,7 @@ class OrderService {
             let order = await this.orderRepository.query(sql);
             return order[0];
         };
-        this.findByOrder = async (value) => {
+        this.findByOrder = async (value, idMerchant) => {
             let sql = `select u.username,
                           o.idOrder,
                           f.nameFood,
@@ -213,10 +213,11 @@ class OrderService {
                             join user u on o.id_User = u.idUser
                             join food f on o_d.id_Food = f.idFood
                             join category c on f.id_Category = c.idCategory
-
+                            join merchant m on f.id_Merchant = m.idMerchant
                    where u.phone like '%${value}%'
                       or u.username like '%${value}%'
-                      or o.idOrder like '%${value}%'`;
+                      or o.idOrder like '%${value}%' and m.idMerchant = ${idMerchant}
+                      group by o.idOrder`;
             let order = await this.orderRepository.query(sql);
             if (!order) {
                 return null;

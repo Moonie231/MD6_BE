@@ -23,5 +23,5 @@ exports.orderRouter.put('/statusSuccess/:idOrder', OrderController_1.default.set
 exports.orderRouter.get('/my-order-food/:idOrder', OrderController_1.default.myOrderFood);
 exports.orderRouter.get('/my-order/:idUser', OrderController_1.default.myOrder);
 exports.orderRouter.get('/orderDetail/:idOrder', OrderController_1.default.orderDetail);
-exports.orderRouter.post('/find-by-order', OrderController_1.default.findByOrder);
+exports.orderRouter.get('/find-by-order/:idMerchant?', OrderController_1.default.findByOrder);
 //# sourceMappingURL=orderRouter.js.map
