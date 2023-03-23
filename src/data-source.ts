@@ -7,6 +7,7 @@ import {Food} from "./model/Food";
 import {Category} from "./model/Category";
 import {OrderDetail} from "./model/OrderDetail";
 import {Address} from "./model/Address";
+import {Notification} from "./model/Notification";
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -16,5 +17,5 @@ export const AppDataSource = new DataSource({
     password: "123456",
     database: "case_md6",
     synchronize: true,
-    entities: [Merchant,User,Food,Category,Order,OrderDetail,Address]
+    entities: [Merchant,User,Food,Category,Order,OrderDetail,Address,Notification]
 })
