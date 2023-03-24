@@ -7,6 +7,7 @@ declare class CouponService {
     getCoupon: (idCoupon: any) => Promise<any>;
     editCoupon: (idCoupon: any, newCoupon: any) => Promise<any>;
     deleteCoupon: (idCoupon: any) => Promise<any>;
+    adminCoupon: () => Promise<any>;
 }
 declare const _default: CouponService;
 export default _default;

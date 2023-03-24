@@ -64,6 +64,15 @@ class CouponController {
                 res.status(500).json(e.message);
             }
         };
+        this.adminCoupon = async (req, res) => {
+            try {
+                let coupon = await this.couponService.adminCoupon();
+                res.status(200).json(coupon);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.couponService = couponService_1.default;
     }
 }
