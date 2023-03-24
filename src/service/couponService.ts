@@ -41,6 +41,10 @@ class CouponService {
         await this.getCoupon(idCoupon)
         return await this.couponRepository.delete({idCoupon: idCoupon})
     }
+
+    useCoupon = async (idMerchant) =>{
+
+    }
 }
 
 export default new CouponService();

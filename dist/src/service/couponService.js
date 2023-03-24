@@ -32,6 +32,8 @@ class CouponService {
             await this.getCoupon(idCoupon);
             return await this.couponRepository.delete({ idCoupon: idCoupon });
         };
+        this.useCoupon = async (idMerchant) => {
+        };
         this.couponRepository = data_source_1.AppDataSource.getRepository(Coupon_1.Coupon);
     }
 }
