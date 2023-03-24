@@ -42,8 +42,10 @@ class CouponService {
         return await this.couponRepository.delete({idCoupon: idCoupon})
     }
 
-    useCoupon = async (idMerchant) =>{
-
+    adminCoupon = async() => {
+        console.log(12)
+        let sql = `select * from coupon c where c.role = 1`
+        return await this.couponRepository.query(sql)
     }
 }
 

@@ -180,6 +180,110 @@ class OrderController {
                 res.status(500).json(err.message);
             }
         };
+        this.findByOrderPending = async (req, res) => {
+            try {
+                let idMerchant = req.params.idMerchant;
+                let order = await orderService_1.default.findOrderByStatus(idMerchant, 'pending');
+                return res.status(200).json(order);
+            }
+            catch (err) {
+                res.status(500).json(err.message);
+            }
+        };
+        this.findByOrderSuccess = async (req, res) => {
+            try {
+                let idMerchant = req.params.idMerchant;
+                let order = await orderService_1.default.findOrderByStatus(idMerchant, 'success');
+                return res.status(200).json(order);
+            }
+            catch (err) {
+                res.status(500).json(err.message);
+            }
+        };
+        this.findByOrderDelivery = async (req, res) => {
+            try {
+                let idMerchant = req.params.idMerchant;
+                let order = await orderService_1.default.findOrderByStatus(idMerchant, 'delivery');
+                return res.status(200).json(order);
+            }
+            catch (err) {
+                res.status(500).json(err.message);
+            }
+        };
+        this.findByOrderCancelled = async (req, res) => {
+            try {
+                let idMerchant = req.params.idMerchant;
+                let order = await orderService_1.default.findOrderByStatus(idMerchant, 'cancelled');
+                return res.status(200).json(order);
+            }
+            catch (err) {
+                res.status(500).json(err.message);
+            }
+        };
+        this.findByOrderCountPending = async (req, res) => {
+            try {
+                let idMerchant = req.params.idMerchant;
+                let order = await orderService_1.default.findOrderByCount(idMerchant, 'pending');
+                if (order.length < 1) {
+                    return res.status(200).json(0);
+                }
+                else {
+                    let count = +order[0].count;
+                    return res.status(200).json(count);
+                }
+            }
+            catch (err) {
+                res.status(500).json(err.message);
+            }
+        };
+        this.findByOrderCountSuccess = async (req, res) => {
+            try {
+                let idMerchant = req.params.idMerchant;
+                let order = await orderService_1.default.findOrderByCount(idMerchant, 'success');
+                if (order.length < 1) {
+                    return res.status(200).json(0);
+                }
+                else {
+                    let count = +order[0].count;
+                    return res.status(200).json(count);
+                }
+            }
+            catch (err) {
+                res.status(500).json(err.message);
+            }
+        };
+        this.findByOrderCountCancelled = async (req, res) => {
+            try {
+                let idMerchant = req.params.idMerchant;
+                let order = await orderService_1.default.findOrderByCount(idMerchant, 'cancelled');
+                if (order.length < 1) {
+                    return res.status(200).json(0);
+                }
+                else {
+                    let count = +order[0].count;
+                    return res.status(200).json(count);
+                }
+            }
+            catch (err) {
+                res.status(500).json(err.message);
+            }
+        };
+        this.findByOrderCountDelivery = async (req, res) => {
+            try {
+                let idMerchant = req.params.idMerchant;
+                let order = await orderService_1.default.findOrderByCount(idMerchant, 'delivery');
+                if (order.length < 1) {
+                    return res.status(200).json(0);
+                }
+                else {
+                    let count = +order[0].count;
+                    return res.status(200).json(count);
+                }
+            }
+            catch (err) {
+                res.status(500).json(err.message);
+            }
+        };
         this.orderService = orderService_1.default;
     }
 }

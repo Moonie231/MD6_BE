@@ -13,15 +13,17 @@ class OrderService {
             return this.orderDetailRepository.delete({ idOrderDetail: idOrder });
         };
         this.getOrder = async (idMerchant) => {
-            let sql = `SELECT o.*, u.username,u.idUser
+            let sql = `SELECT o.*, u.username, u.idUser
                    FROM merchant m
                             INNER JOIN food f ON m.idMerchant = f.id_Merchant
                             inner join category c on f.id_Category = c.idCategory
                             INNER JOIN order_detail od ON f.idFood = od.id_Food
                             INNER JOIN \`order\` o ON od.id_Order = o.idOrder
                             INNER JOIN user u ON o.id_user = u.idUser
-                   where m.idMerchant = ${idMerchant} and o.status != 'watching'
-                   group by o.idOrder`;
+                   where m.idMerchant = ${idMerchant}
+                     and o.status != 'watching'
+                   group by o.idOrder
+                   order by o.idOrder desc`;
             let order = await this.orderRepository.query(sql);
             return order;
         };
@@ -177,14 +179,19 @@ class OrderService {
                             INNER JOIN order_detail od ON f.idFood = od.id_Food
                             INNER JOIN \`order\` o ON od.id_Order = o.idOrder
                             INNER JOIN user u ON o.id_user = u.idUser
-                   where u.idUser = ${idUser} and o.status != 'watching'
-                   group by o.idOrder limit ${limit} offset ${offset}`;
+                   where u.idUser = ${idUser}
+                     and o.status != 'watching'
+                   group by o.idOrder
+                   order by o.idOrder desc limit ${limit}
+                   offset ${offset}`;
             let order = await this.orderRepository.query(sql);
             return order;
         };
         this.countOrderUser = async (idUser) => {
             let sql = `select count(idOrder)
-                   from \`order\` where id_user = ${idUser} and status != 'watching'`;
+                   from \`order\`
+                   where id_user = ${idUser}
+                     and status != 'watching'`;
             let count = await this.orderRepository.query(sql);
             return count;
         };
@@ -217,12 +224,41 @@ class OrderService {
                    where u.phone like '%${value}%'
                       or u.username like '%${value}%'
                       or o.idOrder like '%${value}%' and m.idMerchant = ${idMerchant}
-                      group by o.idOrder`;
+                   group by o.idOrder`;
             let order = await this.orderRepository.query(sql);
             if (!order) {
                 return null;
             }
             return order;
+        };
+        this.findOrderByCount = async (idMerchant, statusOrder) => {
+            let sql = `SELECT COUNT(DISTINCT o.idOrder) as count
+                   FROM merchant m
+                       INNER JOIN food f
+                   ON m.idMerchant = f.id_Merchant
+                       INNER JOIN order_detail od ON f.idFood = od.id_Food
+                       INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                       INNER JOIN user u ON o.id_user = u.idUser
+                   where m.idMerchant = ${idMerchant}
+                     and o.status='${statusOrder}'
+                   group by o.status`;
+            let count = await this.orderRepository.query(sql);
+            return count;
+        };
+        this.findOrderByStatus = async (idMerchant, status) => {
+            let sql = `SELECT o.*, u.username, u.idUser
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            inner join category c on f.id_Category = c.idCategory
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                            INNER JOIN user u ON o.id_user = u.idUser
+                   where m.idMerchant = ${idMerchant}
+                     and o.status ='${status}'
+                   group by o.idOrder
+                   order by o.idOrder desc`;
+            let count = await this.orderRepository.query(sql);
+            return count;
         };
         this.orderRepository = data_source_1.AppDataSource.getRepository(Order_1.Order);
         this.orderDetailRepository = data_source_1.AppDataSource.getRepository(OrderDetail_1.OrderDetail);
