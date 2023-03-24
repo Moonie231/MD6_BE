@@ -1,6 +1,5 @@
 import {Request, Response} from "express";
 import foodService from "../service/foodService"
-import CategoryService from "../service/categoryService";
 import categoryService from "../service/categoryService";
 
 class FoodController {
@@ -21,7 +20,7 @@ class FoodController {
             const count = parseInt(totalBlogs[0]['count(idFood)']);
             let totalPage = Math.ceil( count/limit);
             let foods = await foodService.getAll(limit, offset);
-            let categories = await CategoryService.getAllCategory();
+            let categories = await categoryService.getAllCategory();
             res.status(200).json({
                 foods:foods,
                 currentPage: page,
@@ -37,7 +36,7 @@ class FoodController {
         try {
             let data;
             let foods = await foodService.getAllFood();
-            let categories = await CategoryService.getAllCategory();
+            let categories = await categoryService.getAllCategory();
             if (req["decoded"]) {
                 data = [foods,categories];
             } else {
