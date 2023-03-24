@@ -19,6 +19,14 @@ declare class OrderController {
     myOrder: (req: Request, res: Response) => Promise<void>;
     orderDetail: (req: Request, res: Response) => Promise<void>;
     findByOrder: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    findByOrderPending: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    findByOrderSuccess: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    findByOrderDelivery: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    findByOrderCancelled: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    findByOrderCountPending: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    findByOrderCountSuccess: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    findByOrderCountCancelled: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    findByOrderCountDelivery: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
 }
 declare const _default: OrderController;
 export default _default;

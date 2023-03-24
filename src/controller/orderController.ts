@@ -193,6 +193,102 @@ class OrderController {
             res.status(500).json(err.message);
         }
     }
+    findByOrderPending = async (req: Request,res: Response) => {
+        try {
+            let idMerchant = req.params.idMerchant
+            let order = await orderService.findOrderByStatus(idMerchant,'pending');
+            return res.status(200).json(order);
+
+        } catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
+    findByOrderSuccess = async (req: Request,res: Response) => {
+        try {
+            let idMerchant = req.params.idMerchant
+            let order = await orderService.findOrderByStatus(idMerchant,'success');
+            return res.status(200).json(order);
+
+        } catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
+    findByOrderDelivery = async (req: Request,res: Response) => {
+        try {
+            let idMerchant = req.params.idMerchant
+            let order = await orderService.findOrderByStatus(idMerchant,'delivery');
+            return res.status(200).json(order);
+
+        } catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
+    findByOrderCancelled = async (req: Request,res: Response) => {
+        try {
+            let idMerchant = req.params.idMerchant
+            let order = await orderService.findOrderByStatus(idMerchant,'cancelled');
+            return res.status(200).json(order);
+
+        } catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
+    findByOrderCountPending = async (req: Request,res: Response) => {
+        try {
+            let idMerchant = req.params.idMerchant
+            let order = await orderService.findOrderByCount(idMerchant,'pending');
+            if (order.length < 1) {
+                return res.status(200).json(0)
+            } else {
+                let count = +order[0].count
+                return res.status(200).json(count);
+            }
+        } catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
+    findByOrderCountSuccess = async (req: Request,res: Response) => {
+        try {
+            let idMerchant = req.params.idMerchant
+            let order = await orderService.findOrderByCount(idMerchant,'success');
+            if (order.length < 1) {
+                return res.status(200).json(0)
+            } else {
+                let count = +order[0].count
+                return res.status(200).json(count);
+            }
+        } catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
+    findByOrderCountCancelled = async (req: Request,res: Response) => {
+        try {
+            let idMerchant = req.params.idMerchant
+            let order = await orderService.findOrderByCount(idMerchant,'cancelled');
+            if (order.length < 1) {
+                return res.status(200).json(0)
+            } else {
+                let count = +order[0].count
+                return res.status(200).json(count);
+            }
+        } catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
+    findByOrderCountDelivery = async (req: Request,res: Response) => {
+        try {
+            let idMerchant = req.params.idMerchant
+            let order = await orderService.findOrderByCount(idMerchant,'delivery');
+            if (order.length < 1) {
+                return res.status(200).json(0)
+            } else {
+                let count = +order[0].count
+                return res.status(200).json(count);
+            }
+        } catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
 
 }
 
