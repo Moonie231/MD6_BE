@@ -155,7 +155,6 @@ class UserServices {
                         id_Order: idOrder,
                         idMerchantByOrder: null
                     }
-
                     return userRes;
                 }else {
                     const idOrder = order[0].idOrder;

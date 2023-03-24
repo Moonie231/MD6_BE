@@ -18,4 +18,6 @@ export class Food{
     quantityFood : number;
     @Column({nullable:true})
     img : string;
+    @Column({nullable:true})
+    id_Coupon : number;
 }

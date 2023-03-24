@@ -112,7 +112,7 @@ class MerchantServices {
                        INNER JOIN order_detail od ON f.idFood = od.id_Food
                        INNER JOIN \`order\` o ON od.id_Order = o.idOrder
                        INNER JOIN user u ON o.id_user = u.idUser
-                   WHERE m.idMerchant = ${id} and MONTH(o.Date)=${month}
+                   WHERE m.idMerchant = ${id} and MONTH(o.Date)=${month} and o.status='success'
                    GROUP BY week
                    ORDER BY week ASC`;
             let statistics = await this.orderRepository.query(sql);
@@ -127,7 +127,7 @@ class MerchantServices {
                        INNER JOIN order_detail od ON f.idFood = od.id_Food
                        INNER JOIN \`order\` o ON od.id_Order = o.idOrder
                        INNER JOIN user u ON o.id_user = u.idUser 
-                   WHERE m.idMerchant = ${id} and YEAR(o.Date)=${year}
+                   WHERE m.idMerchant = ${id} and YEAR(o.Date)=${year} and o.status='success'
                    GROUP BY month
                    ORDER BY month ASC
         `;
@@ -142,7 +142,7 @@ class MerchantServices {
                    ON m.idMerchant = f.id_Merchant
                        INNER JOIN order_detail od ON f.idFood = od.id_Food
                        INNER JOIN \`order\` o ON od.id_Order = o.idOrder
-                       INNER JOIN user u ON o.id_user = u.idUser
+                       INNER JOIN user u ON o.id_user = u.idUser and o.status='success'
                    WHERE m.idMerchant = ${id}
                    GROUP BY year
                    ORDER BY year ASC
