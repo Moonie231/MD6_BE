@@ -11,17 +11,22 @@ class MerchantController {
     getNotificationMerchant = async (req: Request, res: Response) => {
         try {
             let id = req.params.id;
-            let notification = await this.notificationRepo.getNotificationOfMerchant(id)
-            res.status(200).json(notification);
+            if(id!==undefined){
+                let notification = await this.notificationRepo.getNotificationOfMerchant(id)
+                res.status(200).json(notification);
+            }
         } catch (err) {
             console.log(err)
         }
     }
     getNotificationUser = async (req: Request, res: Response) => {
         try {
+
             let id = req.params.id;
-            let notification = await this.notificationRepo.getNotificationOfUser(id)
-            res.status(200).json(notification);
+            if(id!==undefined){
+                let notification = await this.notificationRepo.getNotificationOfUser(id)
+                res.status(200).json(notification);
+            }
         } catch (err) {
             console.log(err)
         }
@@ -29,12 +34,14 @@ class MerchantController {
     countMerchant = async (req: Request, res: Response) => {
         try {
             let id = req.params.id;
-            let countMerchant = await this.notificationRepo.countMerchant(id)
-            if (countMerchant.length < 1) {
-                return res.status(200).json(0)
-            } else {
-                let count = +countMerchant[0].count
-                return res.status(200).json(count);
+            if(id!==undefined){
+                let countMerchant = await this.notificationRepo.countMerchant(id)
+                if (countMerchant.length < 1) {
+                    return res.status(200).json(0)
+                } else {
+                    let count = +countMerchant[0].count
+                    return res.status(200).json(count);
+                }
             }
         } catch (err) {
             console.log(err)
@@ -43,14 +50,15 @@ class MerchantController {
     countUser = async (req: Request, res: Response) => {
         try {
             let id = req.params.id;
-            let countUser = await this.notificationRepo.countUser(id)
-            if (countUser.length < 1) {
-                return res.status(200).json(0)
-            } else {
-                let count = +countUser[0].count
-                return res.status(200).json(count);
+            if(id!==undefined){
+                let countUser = await this.notificationRepo.countUser(id)
+                if (countUser.length < 1) {
+                    return res.status(200).json(0)
+                } else {
+                    let count = +countUser[0].count
+                    return res.status(200).json(count);
+                }
             }
-
         } catch (err) {
             console.log(err)
         }
