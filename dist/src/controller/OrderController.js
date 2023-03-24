@@ -158,7 +158,6 @@ class OrderController {
         this.findByOrder = async (req, res) => {
             try {
                 let data = req.body;
-                console.log(req.body);
                 let order = await orderService_1.default.findByOrder(data[0], data[1]);
                 return res.status(200).json({ order: order });
             }

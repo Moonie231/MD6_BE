@@ -170,7 +170,6 @@ class OrderController {
     findByOrder = async (req: Request,res: Response) => {
         try {
             let data = req.body
-            console.log(req.body)
             let order = await orderService.findByOrder(data[0],data[1]);
             return res.status(200).json({order: order});
 
