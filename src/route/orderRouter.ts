@@ -27,3 +27,6 @@ orderRouter.get('/count-order-pending/:idMerchant', orderController.findByOrderC
 orderRouter.get('/count-order-cancelled/:idMerchant', orderController.findByOrderCountCancelled);
 orderRouter.get('/count-order-success/:idMerchant', orderController.findByOrderCountSuccess);
 orderRouter.get('/count-order-delivery/:idMerchant', orderController.findByOrderCountDelivery);
+orderRouter.put('/coupon-price-admin/:id', orderController.updateAdminPriceOrder);
+orderRouter.put('/coupon-price-merchant/:id', orderController.updateMerchantPriceOrder);
+orderRouter.put('/reset-price/:id', orderController.resetPrice);

@@ -8,10 +8,11 @@ const express_1 = require("express");
 const couponCotroller_1 = __importDefault(require("../controller/couponCotroller"));
 exports.couponRouter = (0, express_1.Router)();
 exports.couponRouter.post('', couponCotroller_1.default.addCoupon);
+exports.couponRouter.post('/detail', couponCotroller_1.default.addCouponDetail);
 exports.couponRouter.get('', couponCotroller_1.default.allCoupon);
 exports.couponRouter.get('/:idMerchant', couponCotroller_1.default.myCoupon);
 exports.couponRouter.get('/:idCoupon', couponCotroller_1.default.getCoupon);
 exports.couponRouter.put('/:idCoupon', couponCotroller_1.default.editCoupon);
 exports.couponRouter.delete('/:idCoupon', couponCotroller_1.default.deleteCoupon);
-exports.couponRouter.get('/admin', couponCotroller_1.default.adminCoupon);
+exports.couponRouter.get('/admin/coupon', couponCotroller_1.default.adminCoupon);
 //# sourceMappingURL=couponRouter.js.map

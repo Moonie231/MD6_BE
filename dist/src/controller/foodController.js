@@ -106,6 +106,7 @@ class FoodController {
             try {
                 let id = req.params.id;
                 let foods = await foodService_1.default.updateQuantity(id);
+                console.log(foods);
                 return res.status(200).json(foods);
             }
             catch (err) {
