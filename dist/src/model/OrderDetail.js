@@ -45,6 +45,8 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true, type: "float" }),
     __metadata("design:type", Number)
 ], OrderDetail.prototype, "totalPrice", void 0);
+
+   
 OrderDetail = __decorate([
     (0, typeorm_1.Entity)()
 ], OrderDetail);

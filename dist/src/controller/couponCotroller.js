@@ -75,6 +75,7 @@ class CouponController {
         };
         this.adminCoupon = async (req, res) => {
             try {
+                console.log(1);
                 let coupon = await this.couponService.adminCoupon();
                 res.status(200).json(coupon);
             }
