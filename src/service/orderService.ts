@@ -1,6 +1,7 @@
 import {Order} from "../model/Order";
 import {AppDataSource} from "../data-source";
 import {OrderDetail} from "../model/OrderDetail";
+import {Request, Response} from "express";
 
 class OrderService {
     private orderRepository;
@@ -275,7 +276,7 @@ class OrderService {
                             INNER JOIN \`order\` o ON od.id_Order = o.idOrder
                             INNER JOIN user u ON o.id_user = u.idUser
                    where m.idMerchant = ${idMerchant}
-                     and o.status ='${status}'
+                     and o.status = '${status}'
                    group by o.idOrder
                    order by o.idOrder desc`
         let count = await this.orderRepository.query(sql)

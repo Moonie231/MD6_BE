@@ -33,6 +33,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true, type: "float" }),
     __metadata("design:type", Number)
 ], OrderDetail.prototype, "price", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], OrderDetail.prototype, "priceCoupon", void 0);
 OrderDetail = __decorate([
     (0, typeorm_1.Entity)()
 ], OrderDetail);

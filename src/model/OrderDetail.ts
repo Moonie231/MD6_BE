@@ -11,4 +11,6 @@ export class OrderDetail {
     quantity : number;
     @Column({nullable:true,type:"float"})
     price : number;
+    @Column({nullable:true})
+    priceCoupon : number;
 }
