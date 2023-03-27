@@ -8,6 +8,7 @@ declare class CouponController {
     getCoupon: (req: Request, res: Response) => Promise<void>;
     editCoupon: (req: Request, res: Response) => Promise<void>;
     deleteCoupon: (req: Request, res: Response) => Promise<void>;
+    adminCoupon: (req: Request, res: Response) => Promise<void>;
 }
 declare const _default: CouponController;
 export default _default;
