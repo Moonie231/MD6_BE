@@ -24,6 +24,15 @@ class CouponController {
                 res.status(500).json(e.message);
             }
         };
+        this.addCouponDetail = async (req, res) => {
+            try {
+                let coupon = await this.couponService.addCouponDetail(req.body);
+                res.status(201).json(coupon);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.myCoupon = async (req, res) => {
             try {
                 let idMerchant = req.params.idMerchant;

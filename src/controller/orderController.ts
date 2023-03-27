@@ -289,6 +289,35 @@ class OrderController {
             res.status(500).json(err.message);
         }
     }
+    updateAdminPriceOrder=async (req: Request,res: Response) => {
+        try {
+            let idOrderDetail = req.params.id
+            let body=req.body.value
+            let orderDetail=await orderService.updatePriceCouponAdmin(idOrderDetail,body)
+            return res.status(200).json(orderDetail);
+        }catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
+    updateMerchantPriceOrder=async (req: Request,res: Response) => {
+        try {
+            let idOrderDetail = req.params.id
+            let body=req.body.value
+            let orderDetail=await orderService.updatePriceCouponMerchant(idOrderDetail,body)
+            return res.status(200).json(orderDetail);
+        }catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
+    resetPrice=async (req: Request,res: Response) => {
+        try{
+            let idOrderDetail = req.params.id
+            let orderDetail=await orderService.resetPrice(idOrderDetail);
+            return res.status(200).json(orderDetail);
+        }catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
 
 }
 

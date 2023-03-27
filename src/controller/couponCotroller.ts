@@ -25,6 +25,14 @@ class CouponController {
             res.status(500).json(e.message)
         }
     }
+    addCouponDetail = async (req: Request, res: Response) => {
+        try{
+            let coupon = await this.couponService.addCouponDetail(req.body)
+            res.status(201).json(coupon);
+        }catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
 
     myCoupon = async (req: Request, res: Response) => {
         try {

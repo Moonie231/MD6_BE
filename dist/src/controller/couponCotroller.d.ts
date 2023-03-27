@@ -4,6 +4,7 @@ declare class CouponController {
     constructor();
     allCoupon: (req: Request, res: Response) => Promise<void>;
     addCoupon: (req: Request, res: Response) => Promise<void>;
+    addCouponDetail: (req: Request, res: Response) => Promise<void>;
     myCoupon: (req: Request, res: Response) => Promise<void>;
     getCoupon: (req: Request, res: Response) => Promise<void>;
     editCoupon: (req: Request, res: Response) => Promise<void>;

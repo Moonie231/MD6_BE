@@ -4,6 +4,7 @@ import CouponService from "../service/couponService";
 
 export const couponRouter = Router()
 couponRouter.post('', CouponController.addCoupon)
+couponRouter.post('/detail', CouponController.addCouponDetail)
 couponRouter.get('', CouponController.allCoupon)
 couponRouter.get('/:idMerchant', CouponController.myCoupon)
 couponRouter.get('/:idCoupon', CouponController.getCoupon)

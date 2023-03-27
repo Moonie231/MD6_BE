@@ -27,6 +27,9 @@ declare class OrderController {
     findByOrderCountSuccess: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     findByOrderCountCancelled: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     findByOrderCountDelivery: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    updateAdminPriceOrder: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    updateMerchantPriceOrder: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    resetPrice: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
 }
 declare const _default: OrderController;
 export default _default;
