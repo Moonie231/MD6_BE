@@ -12,5 +12,7 @@ export class OrderDetail {
     @Column({nullable:true,type:"float"})
     price : number;
     @Column({nullable:true})
-    priceCoupon : number;
+    priceMerchantCoupon : number;
+    @Column({nullable:true})
+    priceAdminCoupon : number;
 }
