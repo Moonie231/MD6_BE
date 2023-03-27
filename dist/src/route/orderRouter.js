@@ -32,4 +32,7 @@ exports.orderRouter.get('/count-order-pending/:idMerchant', OrderController_1.de
 exports.orderRouter.get('/count-order-cancelled/:idMerchant', OrderController_1.default.findByOrderCountCancelled);
 exports.orderRouter.get('/count-order-success/:idMerchant', OrderController_1.default.findByOrderCountSuccess);
 exports.orderRouter.get('/count-order-delivery/:idMerchant', OrderController_1.default.findByOrderCountDelivery);
+exports.orderRouter.put('/coupon-price-admin/:id', OrderController_1.default.updateAdminPriceOrder);
+exports.orderRouter.put('/coupon-price-merchant/:id', OrderController_1.default.updateMerchantPriceOrder);
+exports.orderRouter.put('/reset-price/:id', OrderController_1.default.resetPrice);
 //# sourceMappingURL=orderRouter.js.map

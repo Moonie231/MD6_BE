@@ -58,10 +58,13 @@ class OrderService {
             let sql = `select o_d.idOrderdetail,
                           f.nameFood,
                           f.id_Merchant,
+                          o_d.priceMerchantCoupon,
+                          o_d.priceAdminCoupon,
+                          o_d.price as priceOne,
                           f.img,
                           o_d.id_Food,
                           SUM(o_d.quantity) as quantity,
-                          SUM(o_d.price)    as price
+                          SUM(o_d.totalPrice) as price
                    from order_detail o_d
                             join food f on o_d.id_Food = f.idFood
                    where o_d.id_Order = ${idOrder}
@@ -259,6 +262,61 @@ class OrderService {
                    order by o.idOrder desc`;
             let count = await this.orderRepository.query(sql);
             return count;
+        };
+        this.updatePriceCouponMerchant = async (id_Food, value) => {
+            let sql = `select *
+                   from order_detail
+                   where  id_Food = ${id_Food}`;
+            let food = await this.orderDetailRepository.query(sql);
+            if (food.length === 0) {
+                return null;
+            }
+            else {
+                for (let i = 0; i < food.length; i++) {
+                    let info = {
+                        priceMerchantCoupon: food[i].price - food[i].price * (value / 100) - (food[i].price - food[i].priceAdminCoupon),
+                        totalPrice: food[i].price - food[i].price * (value / 100) - (food[i].price - food[i].priceAdminCoupon),
+                    };
+                    await this.orderDetailRepository.update({ idOrderDetail: food[i].idOrderDetail }, info);
+                }
+            }
+        };
+        this.updatePriceCouponAdmin = async (id_Food, value) => {
+            let sql = `select *
+                   from order_detail
+                    where id_Food = ${id_Food}`;
+            let food = await this.orderDetailRepository.query(sql);
+            if (food.length === 0) {
+                return null;
+            }
+            else {
+                for (let i = 0; i < food.length; i++) {
+                    let info = {
+                        priceAdminCoupon: food[i].price - food[i].price * (value / 100) - (food[i].price - food[i].priceMerchantCoupon),
+                        totalPrice: food[i].price - food[i].price * (value / 100) - (food[i].price - food[i].priceMerchantCoupon),
+                    };
+                    await this.orderDetailRepository.update({ idOrderDetail: food[i].idOrderDetail }, info);
+                }
+            }
+        };
+        this.resetPrice = async (id_Food) => {
+            let sql = `select *
+                   from order_detail
+                    where id_Food = ${id_Food}`;
+            let food = await this.orderDetailRepository.query(sql);
+            if (food.length === 0) {
+                return null;
+            }
+            else {
+                for (let i = 0; i < food.length; i++) {
+                    let info = {
+                        priceAdminCoupon: food[i].price,
+                        priceMerchantCoupon: food[i].price,
+                        totalPrice: food[i].price,
+                    };
+                    await this.orderDetailRepository.update({ idOrderDetail: food[i].idOrderDetail }, info);
+                }
+            }
         };
         this.orderRepository = data_source_1.AppDataSource.getRepository(Order_1.Order);
         this.orderDetailRepository = data_source_1.AppDataSource.getRepository(OrderDetail_1.OrderDetail);

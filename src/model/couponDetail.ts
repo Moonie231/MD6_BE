@@ -1,9 +1,11 @@
 import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
-export class Category {
+export class CouponDetail {
     @PrimaryGeneratedColumn()
-    idCategory: number;
+    idCouponDetail: number;
     @Column()
-    nameCategory: string;
+    id_Food: number;
+    @Column()
+    id_Coupon: number;
 }
