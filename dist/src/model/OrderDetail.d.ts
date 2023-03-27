@@ -4,4 +4,5 @@ export declare class OrderDetail {
     id_Order: number;
     quantity: number;
     price: number;
+    priceCoupon: number;
 }

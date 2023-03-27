@@ -71,6 +71,7 @@ class CouponController {
             let coupon = await this.couponService.adminCoupon()
             res.status(200).json(coupon)
         }catch (e) {
+            console.log(e.message)
             res.status(500).json(e.message)
         }
     }
