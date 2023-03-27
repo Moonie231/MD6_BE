@@ -227,21 +227,13 @@ class OrderService {
         return order[0]
     }
     findByOrder = async (value, idMerchant) => {
-        let sql = `select u.username,
-                          o.idOrder,
-                          f.nameFood,
-                          f.img,
-                          c.nameCategory,
-                          o_d.quantity,
-                          o_d.price,
-                          o.status,
-                          u.phone
-                   from order_detail o_d
-                            join \`order\` o on o_d.id_Order = o.idOrder
-                            join user u on o.id_User = u.idUser
-                            join food f on o_d.id_Food = f.idFood
-                            join category c on f.id_Category = c.idCategory
-                            join merchant m on f.id_Merchant = m.idMerchant
+        let sql = `SELECT *
+                   FROM merchant m
+                            INNER JOIN food f ON m.idMerchant = f.id_Merchant
+                            inner join category c on f.id_Category = c.idCategory
+                            INNER JOIN order_detail od ON f.idFood = od.id_Food
+                            INNER JOIN \`order\` o ON od.id_Order = o.idOrder
+                            INNER JOIN user u ON o.id_user = u.idUser
                    where u.phone like '%${value}%'
                       or u.username like '%${value}%'
                       or o.idOrder like '%${value}%' and m.idMerchant = ${idMerchant}
