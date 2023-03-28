@@ -5,4 +5,5 @@ export declare class Notification {
     setStatus: string;
     seenUser: boolean;
     seenMerchant: boolean;
+    time: Date;
 }

@@ -43,7 +43,7 @@ class FoodService {
                    from food f
                             join category c on f.id_Category = c.idCategory
                             join merchant m on f.id_Merchant = m.idMerchant
-                   where m.idMerchant = ${idMerchant}`;
+                   where m.idMerchant = ${idMerchant} order by f.idFood desc`;
         let foods = await this.FoodRepository.query(sql);
         if (!foods) {
             return null;

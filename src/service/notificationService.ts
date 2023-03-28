@@ -9,7 +9,7 @@ class CategoryService {
     }
 
     getNotificationOfMerchant = async (idMerchant) => {
-        let sql = `SELECT n.setStatus, o.totalMoney, u.email, o.idOrder
+        let sql = `SELECT n.setStatus, o.totalMoney, u.email, o.idOrder,n.time
                    FROM merchant m
                             INNER JOIN food f ON m.idMerchant = f.id_Merchant
                             INNER JOIN order_detail od ON f.idFood = od.id_Food
@@ -18,13 +18,13 @@ class CategoryService {
                             INNER JOIN user u ON n.id_User = u.idUser
                    where m.idMerchant = ${idMerchant}
                      and n.setStatus!='delivery'
-                   group by n.setStatus
+                   group by n.time
                    ORDER BY n.idNotification DESC`
         let notifications = await this.notificationRepository.query(sql)
         return notifications
     }
     getNotificationOfUser = async (idUser) => {
-        let sql = `SELECT n.setStatus, o.totalMoney, m.nameMerchant, o.idOrder
+        let sql = `SELECT n.setStatus, o.totalMoney, m.nameMerchant, o.idOrder,n.time
                    FROM merchant m
                             INNER JOIN food f ON m.idMerchant = f.id_Merchant
                             INNER JOIN order_detail od ON f.idFood = od.id_Food
@@ -32,7 +32,7 @@ class CategoryService {
                             INNER JOIN notification n ON o.idOrder = n.id_Order
                             INNER JOIN user u ON n.id_User = u.idUser
                    where u.idUser = ${idUser} and n.setStatus!='pending'
-                   group by n.setStatus
+                   group by n.time
                    ORDER BY n.idNotification DESC`
         let notifications = await this.notificationRepository.query(sql)
         return notifications
