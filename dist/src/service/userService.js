@@ -64,7 +64,7 @@ class UserServices {
                     Please click the following link to verify your email:
                 </p>
                 <a href="http://localhost:3000/verify-email/${token}">
-                    http://localhost:3000/verify-email/${token}
+                    Verify Email of your account
                 </a>
                 <p>
                     Please ignore this email if you didn't register.

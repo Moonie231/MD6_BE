@@ -13,4 +13,6 @@ export class Notification {
     seenUser : boolean ;
     @Column({nullable:true,default:false})
     seenMerchant : boolean ;
+    @Column({nullable:true})
+    time : Date ;
 }
