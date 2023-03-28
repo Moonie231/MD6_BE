@@ -7,4 +7,5 @@ export declare class OrderDetail {
     priceMerchantCoupon: number;
     priceAdminCoupon: number;
     totalPrice: number;
+    priceCoupon: number;
 }
