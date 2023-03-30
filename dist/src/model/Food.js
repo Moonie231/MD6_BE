@@ -45,6 +45,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Food.prototype, "img", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], Food.prototype, "id_Coupon", void 0);
 Food = __decorate([
     (0, typeorm_1.Entity)()
 ], Food);

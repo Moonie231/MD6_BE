@@ -18,4 +18,12 @@ orderRouter.put('/statusSuccess/:idOrder',orderController.setStatusSuccess)
 orderRouter.get('/my-order-food/:idOrder', orderController.myOrderFood);
 orderRouter.get('/my-order/:idUser', orderController.myOrder);
 orderRouter.get('/orderDetail/:idOrder', orderController.orderDetail);
-orderRouter.post('/find-by-order',orderController.findByOrder);
+orderRouter.get('/find-by-order/:idMerchant?',orderController.findByOrder);
+orderRouter.get('/find-by-order-pending/:idMerchant',orderController.findByOrderPending);
+orderRouter.get('/find-by-order-cancelled/:idMerchant',orderController.findByOrderCancelled);
+orderRouter.get('/find-by-order-success/:idMerchant',orderController.findByOrderSuccess);
+orderRouter.get('/find-by-order-delivery/:idMerchant',orderController.findByOrderDelivery);
+orderRouter.get('/count-order-pending/:idMerchant', orderController.findByOrderCountPending);
+orderRouter.get('/count-order-cancelled/:idMerchant', orderController.findByOrderCountCancelled);
+orderRouter.get('/count-order-success/:idMerchant', orderController.findByOrderCountSuccess);
+orderRouter.get('/count-order-delivery/:idMerchant', orderController.findByOrderCountDelivery);

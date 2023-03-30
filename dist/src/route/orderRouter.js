@@ -23,5 +23,13 @@ exports.orderRouter.put('/statusSuccess/:idOrder', OrderController_1.default.set
 exports.orderRouter.get('/my-order-food/:idOrder', OrderController_1.default.myOrderFood);
 exports.orderRouter.get('/my-order/:idUser', OrderController_1.default.myOrder);
 exports.orderRouter.get('/orderDetail/:idOrder', OrderController_1.default.orderDetail);
-exports.orderRouter.post('/find-by-order', OrderController_1.default.findByOrder);
+exports.orderRouter.get('/find-by-order/:idMerchant?', OrderController_1.default.findByOrder);
+exports.orderRouter.get('/find-by-order-pending/:idMerchant', OrderController_1.default.findByOrderPending);
+exports.orderRouter.get('/find-by-order-cancelled/:idMerchant', OrderController_1.default.findByOrderCancelled);
+exports.orderRouter.get('/find-by-order-success/:idMerchant', OrderController_1.default.findByOrderSuccess);
+exports.orderRouter.get('/find-by-order-delivery/:idMerchant', OrderController_1.default.findByOrderDelivery);
+exports.orderRouter.get('/count-order-pending/:idMerchant', OrderController_1.default.findByOrderCountPending);
+exports.orderRouter.get('/count-order-cancelled/:idMerchant', OrderController_1.default.findByOrderCountCancelled);
+exports.orderRouter.get('/count-order-success/:idMerchant', OrderController_1.default.findByOrderCountSuccess);
+exports.orderRouter.get('/count-order-delivery/:idMerchant', OrderController_1.default.findByOrderCountDelivery);
 //# sourceMappingURL=orderRouter.js.map
